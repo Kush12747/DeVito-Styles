@@ -6,6 +6,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -57,7 +58,7 @@ public class UserService {
     public Result<User> create(User user) throws DataAccessException {
         Result<User> result = new Result<>();
 
-        if (user.getEmail().isBlank()) {
+        if (user.getUsername().isBlank()) {
             result.addErrorMessage("Username cannot be blank", ResultType.INVALID);
         }
 
@@ -71,8 +72,14 @@ public class UserService {
             result.addErrorMessage("Username is already taken", ResultType.INVALID);
         }
 
-        User created = repository.create(user);
-        result.setpayload(created);
+        if (result.isSuccess()) {
+            int hashedPassword = Objects.hash(user.getPassword());
+            String hashedPasswordString = String.valueOf(hashedPassword);
+            user.setPassword(hashedPasswordString);
+
+            User created = repository.create(user);
+            result.setpayload(created);
+        }
 
         return result;
     }
