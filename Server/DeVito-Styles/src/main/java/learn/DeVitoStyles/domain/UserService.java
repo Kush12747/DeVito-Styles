@@ -1,0 +1,142 @@
+package learn.DeVitoStyles.domain;
+
+import learn.DeVitoStyles.data.UserRepository;
+import learn.DeVitoStyles.models.User;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class UserService {
+    private final UserRepository repository;
+
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+    }
+
+    // =========================
+    // AUTHENTICATION (LOGIN)
+    // =========================
+    public Result<User> authenticate(User proposedLoginUser) throws DataAccessException {
+        Result<User> result = new Result<>();
+
+        Optional<User> userFromDatabase = repository.findByUsername(proposedLoginUser.getUsername());
+
+        if (userFromDatabase.isEmpty()) {
+            result.addErrorMessage("User does not exist", ResultType.NOT_FOUND);
+            return result;
+        }
+
+        if (proposedLoginUser.getUsername() == null || proposedLoginUser.getUsername().isBlank()) {
+            result.addErrorMessage("Username cannot be blank", ResultType.INVALID);
+            return result;
+        }
+
+        if (proposedLoginUser.getPassword() == null || proposedLoginUser.getPassword().isBlank()) {
+            result.addErrorMessage("Password cannot be blank", ResultType.INVALID);
+            return result;
+        }
+
+        User dbUser = userFromDatabase.get();
+
+        // plain text comparison
+        if (!dbUser.getPassword().equals(proposedLoginUser.getPassword())) {
+            result.addErrorMessage("Incorrect password", ResultType.INVALID);
+            return result;
+        }
+
+        result.setpayload(dbUser);
+        return result;
+    }
+
+    // =========================
+    // CREATE USER (REGISTER)
+    // =========================
+    public Result<User> create(User user) throws DataAccessException {
+        Result<User> result = new Result<>();
+
+        if (user.getEmail().isBlank()) {
+            result.addErrorMessage("Username cannot be blank", ResultType.INVALID);
+        }
+
+        if (user.getPassword().isBlank()) {
+            result.addErrorMessage("Password cannot be blank", ResultType.INVALID);
+        }
+
+        Optional<User> existing = repository.findByUsername(user.getUsername());
+
+        if (existing.isPresent()) {
+            result.addErrorMessage("Username is already taken", ResultType.INVALID);
+        }
+
+        User created = repository.create(user);
+        result.setpayload(created);
+
+        return result;
+    }
+
+    // =========================
+    // GET USER PROFILE
+    // =========================
+    public Result<User> findById(int userId) {
+        Result<User> result = new Result<>();
+
+        Optional<User> user = repository.findById(userId);
+
+        if (userId <= 0) {
+            result.addErrorMessage("Invalid user ID", ResultType.INVALID);
+            return result;
+        }
+
+        if (user.isEmpty()) {
+            result.addErrorMessage("User not found", ResultType.NOT_FOUND);
+            return result;
+        }
+
+        result.setpayload(user.get());
+        return result;
+    }
+
+    // =========================
+    // UPDATE USER PROFILE
+    // =========================
+    public Result<User> update(User user) {
+        Result<User> result = new Result<>();
+
+        Optional<User> existing = repository.findById(user.getUserId());
+
+        if (user.getUserId() <= 0) {
+            result.addErrorMessage("Invalid user ID", ResultType.INVALID);
+            return result;
+        }
+
+        if (existing.isEmpty()) {
+            result.addErrorMessage("User not found", ResultType.NOT_FOUND);
+            return result;
+        }
+
+        if (!result.isSuccess()) {
+            return result;
+        }
+
+        repository.update(user);
+        result.setpayload(user);
+
+        return result;
+    }
+
+    // =========================
+    // ADMIN: GET ALL USERS
+    // =========================
+    public Result<List<User>> findAll() {
+        Result<List<User>> result = new Result<>();
+
+        List<User> users = repository.findAll();
+
+        result.setpayload(users);
+
+        return result;
+    }
+}
