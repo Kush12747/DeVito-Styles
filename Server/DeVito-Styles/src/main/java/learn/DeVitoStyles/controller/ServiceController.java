@@ -37,7 +37,7 @@ public class ServiceController {
             }
             return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok((result.getpayload()));
+        return ResponseEntity.ok(result.getpayload());
     }
 
     @PostMapping
