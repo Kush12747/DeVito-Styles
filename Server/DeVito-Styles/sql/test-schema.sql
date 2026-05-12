@@ -57,9 +57,9 @@ CREATE PROCEDURE set_known_good_state()
 BEGIN
 
 	DELETE FROM appointment;
-	DELETE FROM users;
-	DELETE FROM service;
-	DELETE FROM barber;
+    DELETE FROM service;
+    DELETE FROM barber;
+    DELETE FROM users;
 
 	ALTER TABLE users AUTO_INCREMENT = 1;
 	ALTER TABLE service AUTO_INCREMENT = 1;

@@ -31,7 +31,7 @@ CREATE TABLE barber (
 );
 
 CREATE TABLE appointment (
-	appoinment_id INT PRIMARY KEY AUTO_INCREMENT,
+	appointment_id INT PRIMARY KEY AUTO_INCREMENT,
 	user_id INT NOT NULL,
 	barber_id INT NOT NULL,
 	service_id INT NOT NULL,
