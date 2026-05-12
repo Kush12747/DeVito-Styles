@@ -1,6 +1,5 @@
 package learn.DeVitoStyles.data;
 
-import learn.DeVitoStyles.domain.Result;
 import learn.DeVitoStyles.models.Service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import org.springframework.jdbc.core.simple.JdbcClient;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.function.BooleanSupplier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
