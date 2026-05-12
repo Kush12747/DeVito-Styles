@@ -1,0 +1,40 @@
+@base_url = http://localhost:8080/api/service
+
+# get happy path
+GET {{base_url}}
+
+###
+
+# get by id
+GET {{base_url}}/1
+
+###
+
+# create service
+POST {{base_url}}
+Content-Type: application/json
+
+{
+    "name": "Beard Trim",
+    "durationMinutes": 20,
+    "price": 15.00,
+    "description": "Beard shaping and trim"
+}
+
+###
+
+# update service
+PUT {{base_url}}/6
+Content-Type: application/json
+
+{
+    "serviceId": 6,
+    "name": "Premium Haircut",
+    "durationMinutes": 45,
+    "price": 35.00,
+    "description": "Updated service"
+}
+
+###
+
+DELETE {{base_url}}/5
