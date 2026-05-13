@@ -44,7 +44,43 @@ public class BarberController {
     public ResponseEntity<Object> create(@RequestBody Barber barber) throws DataAccessException {
         Result<Barber> result = service.create(barber);
 
-        
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(result.getpayload(), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@PathVariable int id, @RequestBody Barber barber) throws DataAccessException {
+
+        if (id != barber.getBarberId()) {
+            return new ResponseEntity<>(List.of("Path IO and barber ID don't match"), HttpStatus.CONFLICT);
+        }
+
+        Result<Barber> result = service.update(barber);
+
+        if (!result.isSuccess()) {
+            if (result.getResultType() == ResultType.NOT_FOUND) {
+                return new ResponseEntity<>(result.getMessages(), HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(result.getpayload(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable int id) throws DataAccessException {
+        Result<Void> result = service.delete(id);
+
+        if (!result.isSuccess()) {
+            if (result.getResultType() == ResultType.NOT_FOUND) {
+                return new ResponseEntity<>(result.getMessages(), HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
 
