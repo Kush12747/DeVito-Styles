@@ -1,9 +1,9 @@
 package learn.DeVitoStyles.controller;
 
+import learn.DeVitoStyles.domain.BarberService;
 import learn.DeVitoStyles.domain.Result;
 import learn.DeVitoStyles.domain.ResultType;
-import learn.DeVitoStyles.domain.ShopService;
-import learn.DeVitoStyles.models.Service;
+import learn.DeVitoStyles.models.Barber;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,24 +12,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/service")
+@RequestMapping("api/barber")
 @CrossOrigin
-public class ServiceController {
-    private final ShopService service;
+public class BarberController {
+    private final BarberService service;
 
-    public ServiceController(ShopService service) {
+    public BarberController(BarberService service) {
         this.service = service;
     }
 
     @GetMapping
     public ResponseEntity<Object> findAll() throws DataAccessException {
-        Result<List<Service>> result = service.findAll();
+        Result<List<Barber>> result = service.findAll();
         return ResponseEntity.ok(result.getpayload());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> findById(@PathVariable int id) throws DataAccessException {
-        Result<Service> result = service.findById(id);
+        Result<Barber> result = service.findById(id);
 
         if (!result.isSuccess()) {
             if (result.getResultType() == ResultType.NOT_FOUND) {
@@ -41,8 +41,8 @@ public class ServiceController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@RequestBody Service serviceObj) throws DataAccessException {
-        Result<Service> result = service.create(serviceObj);
+    public ResponseEntity<Object> create(@RequestBody Barber barber) throws DataAccessException {
+        Result<Barber> result = service.create(barber);
 
         if (!result.isSuccess()) {
             return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
@@ -52,13 +52,13 @@ public class ServiceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable int id, @RequestBody Service serviceObj) throws DataAccessException {
+    public ResponseEntity<Object> update(@PathVariable int id, @RequestBody Barber barber) throws DataAccessException {
 
-        if (id != serviceObj.getServiceId()) {
-            return new ResponseEntity<>(List.of("Path ID and body ID must match"), HttpStatus.CONFLICT);
+        if (id != barber.getBarberId()) {
+            return new ResponseEntity<>(List.of("Path IO and barber ID don't match"), HttpStatus.CONFLICT);
         }
 
-        Result<Service> result = service.update(serviceObj);
+        Result<Barber> result = service.update(barber);
 
         if (!result.isSuccess()) {
             if (result.getResultType() == ResultType.NOT_FOUND) {
@@ -66,13 +66,12 @@ public class ServiceController {
             }
             return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
         }
-
         return new ResponseEntity<>(result.getpayload(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable int id) throws DataAccessException {
-        Result<Void> result = service.deleteById(id);
+        Result<Void> result = service.delete(id);
 
         if (!result.isSuccess()) {
             if (result.getResultType() == ResultType.NOT_FOUND) {
@@ -84,3 +83,10 @@ public class ServiceController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
+
+//Method	Endpoint	        Purpose
+//GET	    /api/barber	        Get all barbers
+//GET	    /api/barber/{id}	Get barber by ID
+//POST	    /api/barber	        Create barber (admin)
+//PUT	    /api/barber/{id}	Update barber (admin)
+//DELETE	/api/barber/{id}	Delete barber (admin)

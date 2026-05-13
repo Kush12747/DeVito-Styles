@@ -1,0 +1,41 @@
+@base_url = http://localhost:8080/api/barber
+
+// get all
+GET {{base_url}}
+
+###
+
+# get by id
+GET {{base_url}}/1
+
+###
+
+# create a barber
+POST {{base_url}}
+Content-Type: application/json
+
+{
+    "firstName": "Tony",
+    "lastName": "DeVito",
+    "availabilityStatus": "AVAILABLE",
+    "specialization": "Kids Haircut"
+}
+
+###
+
+# update barber
+PUT {{base_url}}/4
+Content-Type: application/json
+
+{
+    "barberId": 4,
+    "firstName": "Updated",
+    "lastName": "Barber",
+    "availabilityStatus": "AVAILABLE",
+    "specialization": "BEARD"
+}
+
+###
+
+# delete barber
+DELETE {{base_url}}/4 HTTP/1.1
