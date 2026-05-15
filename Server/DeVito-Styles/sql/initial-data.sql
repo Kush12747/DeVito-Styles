@@ -24,6 +24,8 @@ VALUES
     '3125551000',
     'ADMIN'
 ),
+('kush12', 'Kush', 'Gandhi', 'kushgandhi2099@gmail.com', 'password123', '22 Oak Ave', '2264534565', 'CUSTOMER'),
+('yg', 'yeng', 'test', 'yenghuevang@hotmail.com', 'password123', '22 Oak Ave', '2264534565', 'CUSTOMER'),
 (
     'jdoe',
     'John',
