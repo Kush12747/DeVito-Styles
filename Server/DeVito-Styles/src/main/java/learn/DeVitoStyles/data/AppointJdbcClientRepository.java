@@ -81,7 +81,7 @@ public class AppointJdbcClientRepository implements AppointmentRepository {
      */
     @Override
     public List<Appointment> findByBarberIdAndDate(int barberId, LocalDate date) {
-        final String sql = BASE_SELECT + " WHERE barber_id = ? AND DATE(appointment_datetime) = ?;";
+        final String sql = BASE_SELECT + "WHERE barber_id = ? AND DATE(appointment_datetime) = ?;";
 
         return jdbcClient.sql(sql)
                 .param(barberId)

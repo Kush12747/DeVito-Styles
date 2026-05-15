@@ -32,10 +32,7 @@ public class ServiceController {
         Result<Service> result = service.findById(id);
 
         if (!result.isSuccess()) {
-            if (result.getResultType() == ResultType.NOT_FOUND) {
-                return new ResponseEntity<>(result.getMessages(), HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
+            return buildErrorResponse(result);
         }
         return ResponseEntity.ok(result.getpayload());
     }
@@ -61,10 +58,7 @@ public class ServiceController {
         Result<Service> result = service.update(serviceObj);
 
         if (!result.isSuccess()) {
-            if (result.getResultType() == ResultType.NOT_FOUND) {
-                return new ResponseEntity<>(result.getMessages(), HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
+            return buildErrorResponse(result);
         }
 
         return new ResponseEntity<>(result.getpayload(), HttpStatus.OK);
@@ -75,12 +69,17 @@ public class ServiceController {
         Result<Void> result = service.deleteById(id);
 
         if (!result.isSuccess()) {
-            if (result.getResultType() == ResultType.NOT_FOUND) {
-                return new ResponseEntity<>(result.getMessages(), HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
+            return buildErrorResponse(result);
         }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    private ResponseEntity<Object> buildErrorResponse(Result<?> result) {
+        if (result.getResultType() == ResultType.NOT_FOUND) {
+            return new ResponseEntity<>(result.getMessages(), HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
     }
 }
