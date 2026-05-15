@@ -1,0 +1,66 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 20px;
+  height: 100px;
+
+  background-color: #111;
+  opacity: 90%;
+  border-bottom: 2px solid #d4af37;
+}
+
+/* LEFT SIDE */
+.nav-left {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-left a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-left a:hover {
+  color: #d4af37;
+}
+
+/* CENTER LOGO */
+.nav-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo-img {
+    height: 85px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* RIGHT SIDE */
+.nav-right {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.nav-right a {
+  color: white;
+  text-decoration: none;
+}
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: #d4af37;
+  color: black;
+}

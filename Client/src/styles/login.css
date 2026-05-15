@@ -1,0 +1,15 @@
+/* login.css */
+
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(to right, #111111, #1f1f1f);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  background-color: gold;
+  padding: 2rem;
+  border-radius: 12px;
+}
