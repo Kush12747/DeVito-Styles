@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate, useOutletContext } from "react-router-dom"
+import "../../styles/login.css";
 
 function Login() {
     const navigate = useNavigate()
@@ -50,49 +51,48 @@ function Login() {
     }
 
     return (
-        <>
-            <h4>Login</h4>
+        <div className="bg">
+            <div className="login-page">
+                <div className="login-card">
+                    <h2 className="login-title">Login</h2>
+                
 
-            <div className="row">
-                <div className="col-3" />
+                    <div className="login-form-box">
+                        <form onSubmit={handleSubmit}>
+                            {errors.length > 0 && (
+                                <ul className="error-list">
+                                    {errors.map((e) => (
+                                        <li key={e}>{e}</li>
+                                    ))}
+                                </ul>
+                            )}
 
-                <form className="col-6" onSubmit={handleSubmit}>
-                    {errors.length > 0 && (
-                        <ul>
-                            {errors.map((e) => (
-                                <li key={e}>{e}</li>
-                            ))}
-                        </ul>
-                    )}
+                            <div className="form-control">
+                                <label>Username:</label>
+                                <input
+                                    name="username"
+                                    value={credentials.username}
+                                    onChange={handleChange}
+                                    type="text"
+                                />
+                            </div>
 
-                    <div className="form-control">
-                        <label>Username:</label>
-                        <input
-                            name="username"
-                            value={credentials.username}
-                            onChange={handleChange}
-                            type="text"
-                        />
+                            <div className="form-control">
+                                <label>Password:</label>
+                                <input
+                                    name="password"
+                                    value={credentials.password}
+                                    onChange={handleChange}
+                                    type="password"
+                                />
+                            </div>
+
+                            <button className="login-btn" type="submit">Submit</button>
+                        </form>
                     </div>
-
-                    <div className="form-control">
-                        <label>Password:</label>
-                        <input
-                            name="password"
-                            value={credentials.password}
-                            onChange={handleChange}
-                            type="password"
-                        />
-                    </div>
-
-                    <div className="form-control">
-                        <button type="submit">Login</button>
-                    </div>
-                </form>
-
-                <div className="col-3" />
+                </div>
             </div>
-        </>
+        </div>
     )
 }
 

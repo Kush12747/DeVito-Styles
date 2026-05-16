@@ -5,7 +5,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 
 // Pages
-import Home from './components/pages/Home';
 import About from './components/pages/About';
 import Contact from './components/pages/Contact';
 import Services from './components/pages/Services';
@@ -15,6 +14,7 @@ import Profile from './components/pages/Profile';
 import AdminDashboard from './components/pages/AdminDashboard';
 import FormSubmit from './components/pages/FormSubmit';
 import InitialPage from './components/pages/InitialPage';
+import Landing from './components/pages/Landing';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />
+        element: <Landing />
       },
       {
         path: 'about',

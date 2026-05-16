@@ -8,7 +8,7 @@ function App() {
 
     return (
     <div>
-        <Navbar />
+        <Navbar loggedInUser={loggedInUser} />
         <Outlet context={{ loggedInUser, setLoggedInUser }} />
     </div>
     )

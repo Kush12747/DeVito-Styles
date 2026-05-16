@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "../../styles/home.css";
+import "../../styles/landing.css";
 import bg from "../../images/HomeBackground.png";
 
 function Home() {

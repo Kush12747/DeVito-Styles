@@ -43,7 +43,15 @@ public class UserService {
         User dbUser = userFromDatabase.get();
 
         // plain text comparison
-        if (!dbUser.getPassword().equals(proposedLoginUser.getPassword())) {
+//        if (!dbUser.getPassword().equals(proposedLoginUser.getPassword())) {
+//            result.addErrorMessage("Incorrect password", ResultType.INVALID);
+//            return result;
+//        }
+
+        String hashedLoginPassword =
+                String.valueOf(Objects.hash(proposedLoginUser.getPassword()));
+
+        if (!dbUser.getPassword().equals(hashedLoginPassword)) {
             result.addErrorMessage("Incorrect password", ResultType.INVALID);
             return result;
         }
