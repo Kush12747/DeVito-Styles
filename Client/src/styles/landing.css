@@ -1,0 +1,78 @@
+.home-page {
+    min-height: 100vh;
+
+    background-image: url("../images/HomeBackground.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.yellow-wrapper {
+    background-color: #d4af37;
+    padding: 18px;
+    border-radius: 18px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.white-card {
+  background-color: rgb(255, 234, 44);
+
+  padding: 30px;
+  border-radius: 12px;
+
+  width: 320px;
+
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.slogan-box h1 {
+    margin: 5px;
+    padding: 5px;
+    font-size: 24px;
+    color: black;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.button-box {
+    background-color: #d4af37;
+    padding: 15px;
+    border-radius: 10px;
+
+    display: flex;
+    gap: 15px;
+}
+
+.button-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.btn {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 2px solid #d4af37;
+
+  background-color: #d4af37;
+  color: #111;
+
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #111;
+  color: #d4af37;
+}
