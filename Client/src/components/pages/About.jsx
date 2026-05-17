@@ -34,7 +34,7 @@ function About() {
 
                     {/* Stats */}
                     <div className="stats-container">
-                        <div className="stats-card">
+                        <div className="stat-card">
                             <h2>10+</h2>
                             <p>Years Experience</p>
                         </div>
