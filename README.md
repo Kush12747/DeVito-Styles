@@ -39,6 +39,45 @@ DeVito-Styles is a full-stack barber shop management application that allows cus
 ![Database Schema](/images/image.png)
 
 # API Endpoints
+- Base URL: /api
+
+## Apoointments
+| Method | Endpoint                                             | Description                                 |
+| ------ | ---------------------------------------------------- | ------------------------------------------- |
+| `GET`  | `/api/appointment`                                   | Get all appointments                        |
+| `GET`  | `/api/appointment/{appointmentId}`                   | Get appointment by ID                       |
+| `GET`  | `/api/appointment/user/{userId}`                     | Get all appointments for a specific user    |
+| `GET`  | `/api/appointment/barber/{barberId}?date=YYYY-MM-DD` | Get barber appointments for a specific date |
+| `POST` | `/api/appointment`                                   | Create a new appointment                    |
+| `PUT`  | `/api/appointment/{appointmentId}`                   | Update an existing appointment              |
+| `PUT`  | `/api/appointment/cancel/{appointmentId}`            | Cancel an appointment                       |
+
+## Barbers
+| Method   | Endpoint           | Description               |
+| -------- | ------------------ | ------------------------- |
+| `GET`    | `/api/barber`      | Get all barbers           |
+| `GET`    | `/api/barber/{id}` | Get barber by ID          |
+| `POST`   | `/api/barber`      | Create a new barber       |
+| `PUT`    | `/api/barber/{id}` | Update barber information |
+| `DELETE` | `/api/barber/{id}` | Delete a barber           |
+
+## Services
+| Method   | Endpoint            | Description          |
+| -------- | ------------------- | -------------------- |
+| `GET`    | `/api/service`      | Get all services     |
+| `GET`    | `/api/service/{id}` | Get service by ID    |
+| `POST`   | `/api/service`      | Create a new service |
+| `PUT`    | `/api/service/{id}` | Update a service     |
+| `DELETE` | `/api/service/{id}` | Delete a service     |
+
+## Users
+| Method | Endpoint             | Description             |
+| ------ | -------------------- | ----------------------- |
+| `POST` | `/api/user/login`    | Authenticate a user     |
+| `POST` | `/api/user/register` | Register a new user     |
+| `GET`  | `/api/user/{id}`     | Get user by ID          |
+| `PUT`  | `/api/user/{id}`     | Update user information |
+| `GET`  | `/api/user`          | Get all users           |
 
 # User Stories
 User Stories - Barbershop Appointment System (DeVito Styles)
