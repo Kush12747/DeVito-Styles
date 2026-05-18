@@ -8,6 +8,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -100,7 +101,6 @@ public class AppointJdbcClientRepository implements AppointmentRepository {
                 """;
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-
         int rowsAffected = jdbcClient.sql(sql)
                 .param(appointment.getUserId())
                 .param(appointment.getBarberId())
@@ -114,7 +114,6 @@ public class AppointJdbcClientRepository implements AppointmentRepository {
         }
 
         appointment.setAppointmentId(keyHolder.getKey().intValue());
-
         return appointment;
     }
 
@@ -139,5 +138,22 @@ public class AppointJdbcClientRepository implements AppointmentRepository {
                 .param(appointment.getStatus())
                 .param(appointment.getAppointmentId())
                 .update() > 0;
+    }
+
+    @Override
+    public boolean existsByBarberIdAndAppointmentDatetime(int barberId, LocalDateTime datetime) {
+        final String sql = """
+        SELECT COUNT(*)
+        FROM appointment
+        WHERE barber_id = ? AND appointment_datetime = ?
+    """;
+
+        Integer count = jdbcClient.sql(sql)
+                .param(barberId)
+                .param(datetime)
+                .query(Integer.class)
+                .single();
+
+        return count != null && count > 0;
     }
 }

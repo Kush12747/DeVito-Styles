@@ -1,0 +1,310 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #0b0b0b;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    background-image: url("../images/form.jpg");
+}
+
+.services-grid {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+    gap: 35px;
+    padding: 120px 80px;
+}
+
+.service-card {
+    position: relative;
+
+    padding: 40px 35px;
+
+    border-radius: 24px;
+    
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20,20,20,0.95),
+            rgba(10,10,10,0.95)
+        );
+
+    border: 1px solid rgba(200, 169, 107, 0.18);
+
+    overflow: hidden;
+    cursor: pointer;
+
+    transition: 0.35s ease;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,0.45);
+}
+
+.service-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background: linear-gradient(
+        90deg,
+        #c8a96b,
+        #f5d48a
+    );
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+
+    border-color: rgba(200,169,107,0.5);
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,0.65),
+        0 0 25px rgba(200,169,107,0.15);
+}
+
+.service-card h3 {
+    font-size: 2rem;
+
+    margin-bottom: 15px;
+
+    color: #f5d48a;
+
+    font-weight: 700;
+}
+
+.service-card p {
+    color: #cfcfcf;
+
+    line-height: 1.7;
+
+    margin-bottom: 12px;
+
+    font-size: 1rem;
+}
+
+.service-card .price {
+    font-size: 2rem;
+
+    font-weight: 700;
+
+    color: #c8a96b;
+
+    margin-top: 20px;
+}
+
+.service-card .duration {
+    color: #999;
+
+    font-size: 0.95rem;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+/* =========================================
+   BOOKING PAGE
+========================================= */
+
+.booking-wrapper {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 80px 20px;
+
+    background:
+        linear-gradient(rgba(0,0,0,0.88), rgba(0,0,0,0.92)),
+        url("../images/contact.avif");
+
+    background-size: cover;
+    background-position: center;
+}
+
+.booking-form {
+    width: 100%;
+    max-width: 650px;
+    max-height: 90vh;
+    overflow-y: auto;
+
+    padding: 35px 40px;
+
+    border-radius: 30px;
+
+    background: rgba(10,10,10,0.82);
+
+    backdrop-filter: blur(18px);
+
+    border: 1px solid rgba(200,169,107,0.18);
+
+    box-shadow:
+        0 0 40px rgba(0,0,0,0.55),
+        0 0 30px rgba(200,169,107,0.08);
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.booking-subtitle {
+    color: #c8a96b;
+
+    text-transform: uppercase;
+
+    letter-spacing: 4px;
+
+    font-size: 0.9rem;
+}
+
+.booking-form h2 {
+    font-size: 2.4rem;
+
+    color: white;
+    margin: 5;
+}
+
+.booking-description {
+    color: #a5a5a5;
+
+    line-height: 1.7;
+
+    margin-bottom: 10px;
+}
+
+/* =========================================
+   LABELS
+========================================= */
+
+.booking-form label {
+    color: #f5d48a;
+
+    font-size: 0.95rem;
+
+    font-weight: 600;
+
+    letter-spacing: 1px;
+
+    margin-bottom: -10px;
+}
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.booking-form input,
+.booking-form select {
+    width: 100%;
+
+    padding: 15px;
+
+    border-radius: 16px;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    background: rgba(255,255,255,0.04);
+
+    color: white;
+
+    font-size: 1rem;
+
+    outline: none;
+
+    transition: 0.3s ease;
+}
+
+.booking-form input:focus,
+.booking-form select:focus {
+    border-color: #c8a96b;
+
+    box-shadow:
+        0 0 15px rgba(200,169,107,0.2);
+}
+
+.booking-form option {
+    background: #121212;
+}
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.booking-form button {
+    margin-top: 15px;
+
+    padding: 18px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background: linear-gradient(
+        135deg,
+        #c8a96b,
+        #f5d48a
+    );
+
+    color: black;
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.booking-form button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 30px rgba(200,169,107,0.3);
+}
+
+/* =========================================
+   IMAGE UNDER PRICE
+========================================= */
+
+.service-image-container {
+    margin-top: 22px;
+
+    width: 100%;
+    height: 180px;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    border: 1px solid rgba(200,169,107,0.12);
+}
+
+.service-bottom-image {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: 0.4s ease;
+}
+
+.service-card:hover .service-bottom-image {
+    transform: scale(1.06);
+}
+
+.booking-form input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) sepia(1) saturate(5) hue-rotate(10deg);
+}

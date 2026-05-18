@@ -57,6 +57,20 @@ VALUES
     'CUSTOMER'
 );
 
+INSERT INTO service (
+    name,
+    duration_minutes,
+    price,
+    description
+)
+VALUES
+(
+    'DeVito Style',
+    1,
+    1000.00,
+    'Danny DeVito Style Service'
+);
+
 -- =========================
 -- SERVICES
 -- =========================
