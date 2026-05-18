@@ -10,7 +10,7 @@ import Contact from './components/pages/Contact';
 import Services from './components/pages/Services';
 import Login from './components/pages/Login';
 import Register from './components/pages/Register';
-import Profile from './components/pages/Profile';
+import Profile from './components/Users_Profile/Profile';
 import AdminDashboard from './components/pages/AdminDashboard';
 import FormSubmit from './components/pages/FormSubmit';
 import InitialPage from './components/pages/InitialPage';
