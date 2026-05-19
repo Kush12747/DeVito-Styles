@@ -4,7 +4,7 @@ import classic from "../../images/haircut.png";
 import devito from "../../images/devito.jpg";
 import skinfade from "../../images/skinfade.png";
 import beardTrim from "../../images/beardtrim.png";
-import combo from "../../images/images.png";
+import combo from "../../images/combo.jpg";
 
 function ServiceCard({ service }) {
     const navigate = useNavigate();

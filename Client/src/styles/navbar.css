@@ -65,3 +65,17 @@
   background: #d4af37;
   color: black;
 }
+
+.admin-link {
+    color: #d4af37;
+    text-decoration: none;
+    border: 1px solid #ff0000;
+    padding: 6px 12px;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.admin-link:hover {
+    background: #ec2315;
+    color: rgb(0, 0, 0);
+}

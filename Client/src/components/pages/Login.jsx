@@ -42,9 +42,11 @@ function Login() {
             setLoggedInUser(parsedUser)
             localStorage.setItem("loggedInUser", JSON.stringify(parsedUser))
 
-            navigate("/initial", {
-                state: { message: "Login successful" }
-            })
+            if (parsedUser.role === "ADMIN") {
+                navigate("/admin")
+            } else {
+                navigate("/initial")
+            }
         } else {
             setErrors(payload)
         }
