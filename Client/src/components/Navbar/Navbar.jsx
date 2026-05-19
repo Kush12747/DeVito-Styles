@@ -35,6 +35,12 @@ function Navbar({ loggedInUser }) {
             <div className="nav-right">
                 {loggedInUser && (
                     <>
+                        {loggedInUser?.role === "ADMIN" && (
+                            <Link to="/admin" className="admin-link">
+                                Admin
+                            </Link>
+                        )}
+
                         <Link to="/profile">Profile</Link>
                         <button className="logout-btn" onClick={handleLogout}>Logout</button>
                     </>

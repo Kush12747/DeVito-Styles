@@ -97,6 +97,10 @@ function AdminDashboard() {
                     Dashboard
                 </button>
 
+                <button onClick={() => navigate("/admin/users")}>
+                    Users
+                </button>
+
                 <button onClick={logout} className="logout-btn">
                     Logout
                 </button>
@@ -140,6 +144,7 @@ function AdminDashboard() {
                                 <tr>
                                     <th>User</th>
                                     <th>Service</th>
+                                    <th>Barber</th>
                                     <th>Date</th>
                                     <th>Status</th>
                                     <th>Actions</th>
@@ -155,8 +160,6 @@ function AdminDashboard() {
                                         <td>
                                             {new Date(app.appointmentDatetime).toLocaleString()}
                                         </td>
-
-                                        <td>{app.status}</td>
 
                                         <td>
                                             <span className={`status ${app.status?.toLowerCase()}`}>

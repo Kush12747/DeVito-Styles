@@ -16,6 +16,7 @@ import FormSubmit from './components/pages/FormSubmit';
 import InitialPage from './components/pages/InitialPage';
 import Landing from './components/pages/Landing';
 import BookingPage from './components/AppointmentService/BookingPage';
+import AdminUsers from './components/Admin/AdminUsers';
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: 'admin',
         element: <AdminDashboard />
+      },
+      {
+        path: 'admin/users',
+        element: <AdminUsers />
       },
       {
         path: 'submit',
