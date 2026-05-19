@@ -7,9 +7,17 @@ function InitialPage() {
     return (
         <div className="background">
             <div className="hero-container">
-                <h1>Welcome to DeVito Styles</h1>
+                <p className="intro-text">
+                    Welcome to
+                </p>
 
-                <p>Your one-stop shop for all your fashion needs!</p>
+                <h1 className="typewriter">
+                    DeVito Styles
+                </h1>
+
+                <p className="sub-text">
+                    Luxury barber experience crafted for your style.
+                </p>
 
                 <button className="btn" onClick={() => navigate("/services")}>Book Appointment</button>
             </div>
