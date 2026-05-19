@@ -3,6 +3,7 @@ package learn.DeVitoStyles.data;
 import learn.DeVitoStyles.models.Appointment;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AppointmentRepository {
@@ -18,4 +19,6 @@ public interface AppointmentRepository {
     Appointment add(Appointment appointment);
 
     boolean update(Appointment appointment);
+
+    boolean existsByBarberIdAndAppointmentDatetime(int barberId, LocalDateTime datetime);
 }

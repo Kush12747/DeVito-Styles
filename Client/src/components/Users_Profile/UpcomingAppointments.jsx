@@ -1,4 +1,4 @@
-function UpcommingAppointments({ appointments }) {
+function UpcommingAppointments({ appointments, onEdit, onComplete, onCancel }) {
     return (
         <div className="appointment-card">
 
@@ -10,11 +10,20 @@ function UpcommingAppointments({ appointments }) {
                 appointments.map(a => (
                     <div className="appointment-item" key={a.appointmentId} >
 
-                    <h4>{a.appointmentId}</h4>
+                        <h4>{a.serviceName}</h4>
 
-                    <p>Barber: {a.barberName}</p>
+                        <p>Barber: {a.barberName}</p>
 
-                    <p>{new Date(a.appointmentDate).toLocaleDateString()}</p>
+                        <p>{new Date(a.appointmentDatetime).toLocaleString()}</p>
+                        <p className={`status ${a.status?.toLowerCase()}`}>Status: {a.status}</p>
+
+                        {a.status === "BOOKED" && (
+                            <div className="appointment-actions">
+                                <button className="reschedule-btn" onClick={() => onEdit(a)}>Reschedule</button>
+                                <button className="complete-btn" onClick={() => onComplete(a)}>Complete</button>
+                                <button className="cancel-btn" onClick={() => onCancel(a)}>Cancel</button>
+                            </div>
+                        )}
                     </div>
                 ))
             )}

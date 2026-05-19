@@ -7,7 +7,7 @@ import App from './App';
 // Pages
 import About from './components/pages/About';
 import Contact from './components/pages/Contact';
-import Services from './components/pages/Services';
+import Services from './components/AppointmentService/Services';
 import Login from './components/pages/Login';
 import Register from './components/pages/Register';
 import Profile from './components/Users_Profile/Profile';
@@ -15,6 +15,7 @@ import AdminDashboard from './components/pages/AdminDashboard';
 import FormSubmit from './components/pages/FormSubmit';
 import InitialPage from './components/pages/InitialPage';
 import Landing from './components/pages/Landing';
+import BookingPage from './components/AppointmentService/BookingPage';
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: 'initial',
         element: <InitialPage />
+      },
+      {
+        path: 'book/:serviceId',
+        element: <BookingPage />
       }
     ]
   }

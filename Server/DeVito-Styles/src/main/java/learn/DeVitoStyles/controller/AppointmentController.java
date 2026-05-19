@@ -1,5 +1,7 @@
 package learn.DeVitoStyles.controller;
 
+import learn.DeVitoStyles.data.AppointJdbcClientRepository;
+import learn.DeVitoStyles.data.AppointmentRepository;
 import learn.DeVitoStyles.domain.AppointmentService;
 import learn.DeVitoStyles.domain.Result;
 import learn.DeVitoStyles.domain.ResultType;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -19,6 +22,21 @@ public class AppointmentController {
 
     public AppointmentController(AppointmentService service) {
         this.service = service;
+    }
+
+    @GetMapping("/availability")
+    public ResponseEntity<Object> getAvailability(
+            @RequestParam int barberId,
+            @RequestParam LocalDate date) {
+
+        Result<List<Appointment>> result =
+                service.getByBarberAndDate(barberId, date);
+
+        if (!result.isSuccess()) {
+            return buildErrorResponse(result);
+        }
+
+        return ResponseEntity.ok(result.getpayload());
     }
 
     @GetMapping

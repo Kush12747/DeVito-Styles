@@ -99,7 +99,14 @@ public class AppointmentService {
         }
 
         // Prevent Double booking
-        if (hasConflict(appointment)) {
+//        if (hasConflict(appointment)) {
+//            result.addErrorMessage("Time slot already booked", ResultType.INVALID);
+//            return result;
+//        }
+        if (appointmentRepository.existsByBarberIdAndAppointmentDatetime(
+                appointment.getBarberId(),
+                appointment.getAppointmentDatetime())) {
+
             result.addErrorMessage("Time slot already booked", ResultType.INVALID);
             return result;
         }
@@ -161,6 +168,13 @@ public class AppointmentService {
             result.addErrorMessage("Time slot already booked", ResultType.INVALID);
             return result;
         }
+//        if (appointmentRepository.existsByBarberIdAndAppointmentDatetime(
+//                appointment.getBarberId(),
+//                appointment.getAppointmentDatetime())) {
+//
+//            result.addErrorMessage("Time slot already booked", ResultType.INVALID);
+//            return result;
+//        }
 
         boolean success = appointmentRepository.update(appointment);
 
