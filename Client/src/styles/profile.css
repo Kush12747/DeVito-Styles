@@ -255,6 +255,56 @@ button:active {
   color: #d0d0d0;
 }
 
+.complete-btn,
+.cancel-btn,
+.reschedule-btn {
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.complete-btn {
+    background: #d4af37;
+    color: black;
+}
+
+.cancel-btn {
+    background: #7a1f1f;
+    color: white;
+}
+
+.status {
+    margin-top: 0.5rem;
+    font-weight: 600;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    display: inline-block;
+    font-size: 0.85rem;
+}
+
+/* BOOKED */
+.status.booked {
+    background: rgba(212, 175, 55, 0.15);
+    color: #d4af37;
+    border: 1px solid #d4af37;
+}
+
+/* COMPLETED */
+.status.completed {
+    background: rgba(46, 125, 50, 0.15);
+    color: #66bb6a;
+    border: 1px solid #66bb6a;
+}
+
+/* CANCELLED */
+.status.cancelled {
+    background: rgba(183, 28, 28, 0.15);
+    color: #ef5350;
+    border: 1px solid #ef5350;
+}
+
 /* ===================== */
 /* RESPONSIVE */
 /* ===================== */

@@ -49,6 +49,58 @@ function Profile() {
     });
   };
 
+/* COMPLETE APPOINTMENT BTN*/
+
+  const handleCompleteAppointment = async (appointment) => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/appointment/${appointment.appointmentId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            ...appointment,
+            status: "COMPLETED"
+          })
+        }
+      );
+
+      if (response.ok) {
+        await fetchAppointments(user.userId);
+      }
+
+      } catch (err) {
+        console.error(err);
+      }
+  };
+
+
+/* CANCEL APPOOINTMENT BTN */
+const handleCancelAppointment = async (appointment) => {
+  try {
+    const response = await fetch(`http://localhost:8080/api/appointment/${appointment.appointmentId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          ...appointment,
+          status: "CANCELLED"
+        })
+      }
+    );
+
+    if (response.ok) {
+        await fetchAppointments(user.userId);
+      }
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 
   const handleAppointmentUpdate = async (e) => {
@@ -277,7 +329,7 @@ const appointmentHistory =
 
             <div className="appointments-wrapper">
 
-                <UpcomingAppointments appointments={upcomingAppointments} onEdit={handleEditAppointment} />
+                <UpcomingAppointments appointments={upcomingAppointments} onEdit={handleEditAppointment} onComplete={handleCompleteAppointment} onCancel={handleCancelAppointment} />
                 
                 {editingAppointment && (
                 <RescheduleAppointmentForm
