@@ -21,7 +21,7 @@ function Contact() {
         e.preventDefault();
         console.log(formData);
 
-        alert("Form submitted");
+        setSubmitted(true);
 
         setFormData({
             name: "",
@@ -29,6 +29,11 @@ function Contact() {
             phone: "",
             message: ""
         });
+
+        // hide message after 4 sec
+        setTimeout(() => {
+            setSubmitted(false);
+        }, 4000);
     }
 
     return (
@@ -39,9 +44,10 @@ function Contact() {
 
                 <p className="contact-tag">CONTACT</p>
                 
-                <h2>Book Your
+                <h2 className="contact-title">
+                    <span className="line-one">Book Your</span>
                     <br />
-                    Next Cut
+                    <span className="line-two">Next Cut</span>
                 </h2>
 
                 <div className="gold-line"></div>
@@ -66,7 +72,7 @@ function Contact() {
 
                     <div className="info-card">
                         <h3>Hours</h3>
-                        <p>Mon - Sat: 9AM - 7PM</p>
+                        <p>Mon - Sat: 9AM - 4PM</p>
                     </div>
                 </div>
             </div>
@@ -115,7 +121,7 @@ function Contact() {
 
                     <button type="submit">Send Message</button>
 
-                    {submitted && (<p className="success-message">Message submitted successfully.</p>)}
+                    {submitted && (<div className="success-message">✓ Message submitted successfully.</div>)}
 
                 </form>
             </div>
