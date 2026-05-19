@@ -5,6 +5,7 @@ import ProfileCard from "./ProfileCard";
 import EditProfileForm from "./EditProfileForm";
 import UpcomingAppointments from "./UpcomingAppointments";
 import AppointmentHistory from "./AppointmentHistory";
+import RescheduleAppointmentForm from "./RescheduleAppointmentForm";
 
 function Profile() {
 
@@ -17,6 +18,13 @@ function Profile() {
     phone: ""
   });
 
+  const [editingAppointment, setEditingAppointment] = useState(null);
+
+  const [appointmentForm, setAppointmentForm] = useState({
+    date: "",
+    time: "",
+  });
+
   const [editMode, setEditMode] = useState(false);
 
   const [appointments, setAppointments] = useState([]);
@@ -27,6 +35,51 @@ function Profile() {
 
   const barberCache = {};
   const serviceCache = {};
+
+
+  const handleEditAppointment = (appointment) => {
+
+    setEditingAppointment(appointment);
+
+    const existingDate = new Date(appointment.appointmentDatetime);
+
+    setAppointmentForm({
+      date: existingDate.toISOString().split("T")[0],
+      time: existingDate.toTimeString().split().slice(0, 5)
+    });
+  };
+
+
+
+  const handleAppointmentUpdate = async (e) => {
+    e.preventDefault();
+
+    const updatedDatetime = `${appointmentForm.date}T${appointmentForm.time}:00`;
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/appointment/${editingAppointment.appointmentId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          ...editingAppointment,
+          appointmentDatetime: updatedDatetime,
+          status: editingAppointment.status
+        })
+      }
+      );
+
+      if (response.ok) {
+        await fetchAppointments(user.userId);
+        setEditingAppointment(null);
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 const enrichAppointments = async (appointments) => {
 
@@ -224,7 +277,16 @@ const appointmentHistory =
 
             <div className="appointments-wrapper">
 
-                <UpcomingAppointments appointments={upcomingAppointments} />
+                <UpcomingAppointments appointments={upcomingAppointments} onEdit={handleEditAppointment} />
+                
+                {editingAppointment && (
+                <RescheduleAppointmentForm
+                  appointmentForm={appointmentForm}
+                  setAppointmentForm={setAppointmentForm}
+                  handleAppointmentUpdate={handleAppointmentUpdate}
+                  setEditingAppointment={setEditingAppointment}
+                />
+              )}
                 <AppointmentHistory appointments={appointmentHistory} />
 
             </div>   

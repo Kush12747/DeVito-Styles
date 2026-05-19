@@ -1,4 +1,4 @@
-function UpcommingAppointments({ appointments }) {
+function UpcommingAppointments({ appointments, onEdit }) {
     return (
         <div className="appointment-card">
 
@@ -15,6 +15,8 @@ function UpcommingAppointments({ appointments }) {
                     <p>Barber: {a.barberName}</p>
 
                     <p>{new Date(a.appointmentDatetime).toLocaleString()}</p>
+
+                    <button className="reschedule-btn" onClick={() => onEdit(a)}>Reschedule</button>
                     </div>
                 ))
             )}
