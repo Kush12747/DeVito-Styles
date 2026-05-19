@@ -1,0 +1,120 @@
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+    background: #0b0b0b;
+    color: white;
+}
+
+/* SIDEBAR */
+.admin-sidebar {
+    width: 220px;
+    background: #111;
+    padding: 20px;
+    border-right: 1px solid #222;
+}
+
+.admin-logo {
+    color: #d4af37;
+    margin-bottom: 30px;
+}
+
+.admin-sidebar button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #333;
+    color: white;
+    cursor: pointer;
+}
+
+.admin-sidebar button:hover {
+    border-color: #d4af37;
+    color: #d4af37;
+}
+
+/* MAIN */
+.admin-main {
+    flex: 1;
+    padding: 30px;
+}
+
+/* CARDS */
+.admin-cards {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+/* TABLE */
+.admin-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px;
+    border-bottom: 1px solid #222;
+}
+
+/* STATUS BADGES */
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.status.pending {
+    background: #f0ad4e;
+}
+
+.status.confirmed {
+    background: #2d8cff;
+}
+
+.status.completed {
+    background: #28a745;
+}
+
+.status.cancelled {
+    background: #dc3545;
+}
+
+/* ACTION BUTTONS */
+.actions button {
+    margin-right: 8px;
+    padding: 6px 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.confirm {
+    background: #2d8cff;
+    color: white;
+}
+
+.complete {
+    background: #28a745;
+    color: white;
+}
+
+.cancel {
+    background: #dc3545;
+    color: white;
+}
+
+.logout-btn {
+    margin-top: 30px;
+    border-color: #d4af37 !important;
+    color: #d4af37 !important;
+}
