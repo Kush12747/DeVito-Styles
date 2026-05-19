@@ -12,9 +12,9 @@ function AppointmentHistory({ appointments }) {
                         
                         <h4>{a.serviceName}</h4>
 
-                        <p>Barber: {a.barberDate}</p>
+                        <p>Barber: {a.barberName}</p>
                     
-                        <p>{new Date(a.appointmentDate).toLocaleString()}</p>
+                        <p>{new Date(a.appointmentDatetime).toLocaleString()}</p>
 
                     </div>
                 ))

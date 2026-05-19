@@ -23,23 +23,65 @@ function Profile() {
 
   const [profileImage, setProfileImage] = useState("");
 
+  const [enrichedAppointments, setEnrichedAppointments] = useState([]);
+
+  const barberCache = {};
+  const serviceCache = {};
+
+const enrichAppointments = async (appointments) => {
+
+  const enriched = await Promise.all(
+    appointments.map(async (a) => {
+
+      // BARBER (cached)
+      if (!barberCache[a.barberId]) {
+        const res = await fetch(
+          `http://localhost:8080/api/barber/${a.barberId}`
+        );
+        barberCache[a.barberId] = await res.json();
+      }
+
+      // SERVICE (cached)
+      if (!serviceCache[a.serviceId]) {
+        const res = await fetch(
+          `http://localhost:8080/api/service/${a.serviceId}`
+        );
+        serviceCache[a.serviceId] = await res.json();
+      }
+
+      const barber = barberCache[a.barberId];
+      const service = serviceCache[a.serviceId];
+
+      return {
+        ...a,
+        barberName: `${barber.firstName} ${barber.lastName}`,
+        serviceName: service.name
+      };
+    })
+  );
+
+  setEnrichedAppointments(enriched);
+};
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
 
     if (!file || !user) return;
 
-    const render = new FileReader();
+    const reader = new FileReader();
 
-     render.onloadend = () => {
+    reader.onloadend = () => {
 
-    setProfileImage(render.result);
+    // update the UI instantly
+    setProfileImage(reader.result);
 
+    // save to localStorage
     localStorage.setItem(
       `profileImage-${user.userId}`,
       reader.result
     );
   };
-    render.readAsDataURL(file);
+    reader.readAsDataURL(file);
 
     e.target.value = "";
   };
@@ -101,6 +143,8 @@ function Profile() {
 
       setAppointments(data);
 
+      await enrichAppointments(data);
+
     } catch (err) {
       console.error(err);
     }
@@ -156,15 +200,17 @@ function Profile() {
 
   };
 
-  const upcomingAppointments =
-    appointments.filter(a =>
-      new Date(a.appointmentDate) > new Date()
-    );
+  const now = new Date();
 
-  const appointmentHistory =
-    appointments.filter(a =>
-      new Date(a.appointmentDate) <= new Date()
-    );
+  const upcomingAppointments =
+  enrichedAppointments.filter(a =>
+    new Date(a.appointmentDatetime) > now
+  );
+
+const appointmentHistory =
+  enrichedAppointments.filter(a =>
+    new Date(a.appointmentDatetime) <= now
+  );
 
 
     return (
