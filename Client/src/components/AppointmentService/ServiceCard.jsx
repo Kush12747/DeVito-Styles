@@ -17,8 +17,7 @@ function ServiceCard({ service }) {
         "DeVito Style": devito
     };
 
-    const image =
-        serviceImages[service.name] || classic;
+    const image = serviceImages[service.name] || classic;
 
     return (
         <div className="service-card" onClick={() => navigate(`/book/${service.serviceId}`)}>
@@ -28,12 +27,27 @@ function ServiceCard({ service }) {
             <p className="price">${service.price}</p>
 
             <div className="service-image-wrapper">
-                <img
-                    src={image}
-                    alt={service.name}
-                    className="service-bottom-image"
-                />
-            </div>
+    {service.name?.toLowerCase().replace(/\s/g, "") === "devitostyle" ? (
+        <a
+            href="https://www.youtube.com/watch?v=QDia3e12czc"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            <img
+                src={image}
+                alt={service.name}
+                className="service-bottom-image"
+                style={{ cursor: "pointer" }}
+            />
+        </a>
+    ) : (
+        <img
+            src={image}
+            alt={service.name}
+            className="service-bottom-image"
+        />
+    )}
+</div>
         </div>
     );
 }
