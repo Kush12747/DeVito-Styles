@@ -25,7 +25,6 @@ VALUES
     'ADMIN'
 ),
 ('kush12', 'Kush', 'Gandhi', 'kushgandhi2099@gmail.com', 'password123', '22 Oak Ave', '2264534565', 'CUSTOMER'),
-('yg', 'yeng', 'test', 'yenghuevang@hotmail.com', 'password123', '22 Oak Ave', '2264534565', 'CUSTOMER'),
 (
     'jdoe',
     'John',
@@ -81,30 +80,10 @@ INSERT INTO service (
     description
 )
 VALUES
-(
-    'Classic Haircut',
-    30,
-    25.00,
-    'Standard haircut service'
-),
-(
-    'Skin Fade',
-    45,
-    35.00,
-    'Fade haircut with detailed blending'
-),
-(
-    'Beard Trim',
-    20,
-    15.00,
-    'Professional beard shaping and trim'
-),
-(
-    'Haircut and Beard Combo',
-    60,
-    45.00,
-    'Haircut combined with beard service'
-);
+('Classic Haircut', 30, 25.00, 'Standard haircut service'),
+('Skin Fade', 45, 35.00, 'Fade haircut with detailed blending'),
+('Beard Trim', 20, 15.00, 'Professional beard shaping and trim'),
+('Haircut and Beard Combo', 60, 45.00, 'Haircut combined with beard service');
 
 -- =========================
 -- BARBERS
@@ -116,24 +95,9 @@ INSERT INTO barber (
     specialization
 )
 VALUES
-(
-    'Antonio',
-    'DeVito',
-    'AVAILABLE',
-    'Fades'
-),
-(
-    'Chris',
-    'Lopez',
-    'AVAILABLE',
-    'Beard Styling'
-),
-(
-    'David',
-    'Miller',
-    'UNAVAILABLE',
-    'Classic Cuts'
-);
+('Antonio', 'DeVito', 'AVAILABLE', 'Fades'),
+('Chris', 'Lopez', 'AVAILABLE', 'Beard Styling'),
+('David', 'Miller', 'UNAVAILABLE', 'Classic Cuts');
 
 -- =========================
 -- APPOINTMENTS
@@ -146,31 +110,13 @@ INSERT INTO appointment (
     status
 )
 VALUES
-(
-    2,
-    1,
-    2,
-    '2026-05-12 10:00:00',
-    'BOOKED'
-),
-(
-    3,
-    2,
-    1,
-    '2026-05-12 11:30:00',
-    'BOOKED'
-),
-(
-    4,
-    1,
-    4,
-    '2026-05-13 14:00:00',
-    'COMPLETED'
-),
-(
-    2,
-    3,
-    3,
-    '2026-05-14 16:00:00',
-    'CANCELLED'
-);
+(2, 1, 2, '2026-05-23 10:00:00', 'BOOKED'),
+(3, 2, 1, '2026-05-23 11:30:00', 'BOOKED'),
+(4, 1, 4, '2026-05-21 14:00:00', 'COMPLETED'),
+(2, 3, 3, '2026-05-22 16:00:00','CANCELLED');
+
+INSERT INTO appointment (user_id, barber_id, service_id, appointment_datetime, status)
+VALUES
+(3, 1, 1, '2025-05-10 10:00:00', 'COMPLETED'),
+(3, 2, 2, '2025-05-12 11:00:00', 'CANCELLED'),
+(3, 1, 3, '2025-05-14 09:00:00', 'COMPLETED');

@@ -11,10 +11,10 @@ function About() {
                 <div className="about-content">
                     <p className="section-tag">DeVito Styles</p>
 
-                    <h1>
-                        Precision Cuts.
+                    <h1 className="about-title">
+                        <span className="line-one">Precesion Cuts.</span>
                         <br />
-                        Timeless Style.
+                        <span className="line-two">Timeless Style.</span>
                     </h1>
 
                     <div className="gold-line"></div>

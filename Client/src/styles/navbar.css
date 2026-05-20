@@ -10,6 +10,101 @@
   background-color: #111;
   opacity: 100%;
   border-bottom: 2px solid #d4af37;
+  
+}
+
+
+
+.active-link {
+    color: #d4af37;
+
+    text-shadow:
+        0 0 10px rgba(212,175,55,0.5),
+        0 0 20px rgba(212,175,55,0.25);
+}
+
+.active-link::after {
+    width: 100%;
+
+    box-shadow:
+        0 0 10px rgba(212,175,55,0.6);
+}
+
+.logo-img {
+    transition: 0.4s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05) rotate(-1deg);
+    filter: drop-shadow(0 0 10px rgba(212,175,55,0.4));
+}
+
+.nav-left a,
+.nav-right a {
+    position: relative;
+
+    color: white;
+    text-decoration: none;
+
+    font-size: 14px;
+
+    transition: 0.3s ease;
+}
+
+.nav-left a::after,
+.nav-right a::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+
+    width: 0%;
+    height: 2px;
+
+    background: #d4af37;
+
+    transition: 0.3s ease;
+}
+
+.nav-left a:hover::after,
+.nav-right a:hover::after {
+    width: 100%;
+}
+
+.nav-left a:hover,
+.nav-right a:hover {
+    color: #d4af37;
+
+    transform: translateY(-1px);
+
+    text-shadow: 0 0 10px rgba(212,175,55,0.4);
+}
+
+.navbar {
+    animation: navDrop 0.8s ease;
+}
+
+@keyframes navDrop {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ACTIVE LINK */
+.active-link {
+    color: #d4af37;
+}
+
+.active-link::after {
+    width: 100%;
+    box-shadow: 0 0 10px rgba(212,175,55,0.6);
 }
 
 /* LEFT SIDE */
@@ -18,11 +113,7 @@
   gap: 20px;
 }
 
-.nav-left a {
-  color: white;
-  text-decoration: none;
-  font-size: 14px;
-}
+
 
 .nav-left a:hover {
   color: #d4af37;
@@ -48,10 +139,7 @@
   align-items: center;
 }
 
-.nav-right a {
-  color: white;
-  text-decoration: none;
-}
+
 
 .logout-btn {
   background: transparent;
@@ -78,4 +166,34 @@
 .admin-link:hover {
     background: #ec2315;
     color: rgb(0, 0, 0);
+}
+
+.navbar::after {
+    content: "";
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    height: 2px;
+    width: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #d4af37,
+        transparent
+    );
+
+    animation: slideGlow 3s linear infinite;
+}
+
+@keyframes slideGlow {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
 }

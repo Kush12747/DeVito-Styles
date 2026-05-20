@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import "../../styles/navbar.css";
 import logo from "../../images/logo.png";
 
@@ -18,10 +18,11 @@ function Navbar({ loggedInUser }) {
             <div className="nav-left">
                 {loggedInUser && (
                     <>
-                        <Link to="/initial">Home</Link>
-                        <Link to="/contact">Contact</Link>
-                        <Link to="/services">Services</Link>
-                        <Link to="/about">About</Link>
+                        <NavLink to="/initial" className={({ isActive }) => isActive ? "active-link" : ""}>Home</NavLink>
+                        <NavLink to="/contact" className={({ isActive }) => isActive ? "active-link" : ""}>Contact</NavLink>
+                        <NavLink to="/services" className={({ isActive }) => isActive ? "active-link" : ""}>Services</NavLink>
+                        <NavLink to="/about" className={({ isActive }) => isActive ? "active-link" : ""}>About</NavLink>
+
                     </>
                 )}
             </div>
@@ -36,12 +37,12 @@ function Navbar({ loggedInUser }) {
                 {loggedInUser && (
                     <>
                         {loggedInUser?.role === "ADMIN" && (
-                            <Link to="/admin" className="admin-link">
+                            <NavLink to="/admin" className="admin-link">
                                 Admin
-                            </Link>
+                            </NavLink>
                         )}
 
-                        <Link to="/profile">Profile</Link>
+                        <NavLink to="/profile">Profile</NavLink>
                         <button className="logout-btn" onClick={handleLogout}>Logout</button>
                     </>
                 )}

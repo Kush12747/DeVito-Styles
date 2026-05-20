@@ -18,12 +18,44 @@
     background-position: center;
 }
 
+.info-card {
+    padding: 22px;
+
+    border-radius: 18px;
+
+    background: rgba(255,255,255,0.05);
+
+    border: 1px solid rgba(200,169,107,0.15);
+
+    backdrop-filter: blur(8px);
+
+    transition: 0.3s ease;
+
+    opacity: 0;
+
+    animation:
+        fadeUp 0.8s ease forwards;
+}
+
+.info-card:nth-child(1) {
+    animation-delay: 4s;
+}
+
+.info-card:nth-child(2) {
+    animation-delay: 4.2s;
+}
+
+.info-card:nth-child(3) {
+    animation-delay: 4.4s;
+}
+
 .contact-info {
     max-width: 550px;
 
     color: white;
 
     z-index: 2;
+    animation: slideleft 1s ease;
 }
 
 .contact-info h2 {
@@ -68,9 +100,12 @@
 }
 
 .info-card:hover {
-    transform: translateY(-4px);
+    transform:
+        translateY(-6px)
+        scale(1.02);
 
-    border-color: rgba(200,169,107,0.5);
+    box-shadow:
+        0 10px 30px rgba(200,169,107,0.12);
 }
 
 .info-card h3 {
@@ -108,7 +143,14 @@
 
     color: #d0d0d0;
 
-    margin-bottom: 10px;
+    margin-bottom: 30px;
+
+    opacity: 0;
+
+    animation:
+        fadeUp 1s ease forwards;
+
+    animation-delay: 3.4s;
 }
 
 .contact-form {
@@ -132,6 +174,12 @@
     box-shadow:
         0 0 40px rgba(0,0,0,0.5),
         0 0 25px rgba(200,169,107,0.08);
+}
+
+.contact-form:hover {
+    box-shadow:
+        0 0 50px rgba(0,0,0,0.55),
+        0 0 35px rgba(200,169,107,0.18);
 }
 
 .contact-form h2 {
@@ -191,15 +239,192 @@
     cursor: pointer;
 
     transition: 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-form button::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 100%;
+    height: 100%;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.5),
+        transparent
+    );
+
+    transition: 0.7s;
+}
+
+.contact-form button:hover::before {
+    left: 120%;
 }
 
 .contact-form button:hover {
-    transform: translateY(-3px);
+    background: transparent;
 
-    box-shadow:
-        0 10px 25px rgba(200,169,107,0.3);
+    color: #c8a96b;
+
+    border: 1px solid #c8a96b;
+}
+
+.contact-form input:hover,
+.contact-form textarea:hover {
+    border-color: rgba(200,169,107,0.3);
+}
+
+/*Success message*/
+.success-message {
+    padding: 16px;
+
+    border-radius: 14px;
+
+    background: rgba(200,169,107,0.12);
+
+    border: 1px solid rgba(200,169,107,0.3);
+
+    color: #c8a96b;
+
+    font-weight: 600;
+
+    text-align: center;
+
+    animation:
+        successSlide 0.5s ease,
+        glowPulse 2s ease-in-out infinite;
+}
+
+.contact-tag {
+    color: #c8a96b;
+
+    letter-spacing: 5px;
+
+    text-transform: uppercase;
+
+    font-size: 0.9rem;
+
+    margin-bottom: 15px;
+
+    opacity: 0;
+
+    animation: fadeUp 1s ease forwards;
+}
+
+.contact-title {
+    line-height: 1.05;
+
+    margin-bottom: 25px;
+}
+
+.contact-title span {
+    display: inline-block;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    width: 0;
+
+    border-right: 3px solid #c8a96b;
+}
+
+/* first line */
+
+.line-one {
+    color: white;
+
+    font-size: 4rem;
+    font-weight: 700;
+
+    animation:
+        typing 1.8s steps(14, end) forwards,
+        blink 0.7s infinite;
+}
+
+/* second line */
+
+.line-two {
+    color: #c8a96b;
+
+    font-size: 4.5rem;
+    font-weight: 800;
+
+    animation:
+        typing 2s steps(12, end) forwards,
+        blink 0.7s infinite;
+
+    animation-delay: 1.8s;
+
+    animation-fill-mode: forwards;
+}
+
+/* slide in */
+
+@keyframes successSlide {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* subtle glow */
+
+@keyframes glowPulse {
+    0% {
+        box-shadow: 0 0 0 rgba(200,169,107,0.1);
+    }
+
+    50% {
+        box-shadow:
+            0 0 18px rgba(200,169,107,0.18);
+    }
+
+    100% {
+        box-shadow: 0 0 0 rgba(200,169,107,0.1);
+    }
 }
 
 * {
     box-sizing: border-box;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

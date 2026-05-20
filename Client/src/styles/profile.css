@@ -296,6 +296,7 @@ button:active {
     background: rgba(46, 125, 50, 0.15);
     color: #66bb6a;
     border: 1px solid #66bb6a;
+    
 }
 
 /* CANCELLED */
@@ -303,6 +304,11 @@ button:active {
     background: rgba(183, 28, 28, 0.15);
     color: #ef5350;
     border: 1px solid #ef5350;
+}
+
+.status.completed,
+.status.cancelled {
+    color: white;
 }
 
 /* ===================== */
