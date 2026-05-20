@@ -8,7 +8,7 @@ function AppointmentHistory({ appointments }) {
                 <p>No Appointment History</p>
             ) : (
                 appointments.map(a => (
-                    <div className="appointmeent-item" key={a.appointmentId}>
+                    <div className="appointment-item" key={a.appointmentId}>
                         
                         <h4>{a.serviceName}</h4>
 

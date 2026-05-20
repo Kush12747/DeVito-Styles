@@ -21,9 +21,9 @@ function ProfileCard({ user, setEditMode, profileImage, handleImageUpload }) {
                         {user?.firstName} {user?.lastName}
                     </h2>
 
-                    <p>{user?.email}</p>
+                    <p>Email: {user?.email}</p>
 
-                    <p>{user?.phone}</p>
+                    <p>Phone: {user?.phone}</p>
 
                 </div>
 

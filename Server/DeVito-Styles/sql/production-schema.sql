@@ -3,10 +3,6 @@ CREATE DATABASE barber_shop;
 USE barber_shop;
 
 
-ALTER TABLE appointment
-ADD CONSTRAINT unique_barber_time
-UNIQUE (barber_id, appointment_datetime);
-
 CREATE TABLE users (
 	user_id INT PRIMARY KEY AUTO_INCREMENT,
 	first_name VARCHAR(50) NOT NULL,
@@ -55,3 +51,7 @@ CREATE TABLE appointment (
 		FOREIGN KEY (service_id)
 		REFERENCES service(service_id)
 );
+
+ALTER TABLE appointment
+ADD CONSTRAINT unique_barber_time
+UNIQUE (barber_id, appointment_datetime);
