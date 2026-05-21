@@ -311,6 +311,13 @@ button:active {
     color: white;
 }
 
+.appointment-actions {
+  display: flex;
+  gap: 0.75rem; /* controls spacing between buttons */
+  flex-wrap: wrap; /* prevents overflow on small screens */
+  margin-top: 1rem;
+}
+
 /* ===================== */
 /* RESPONSIVE */
 /* ===================== */
