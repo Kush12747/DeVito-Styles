@@ -13,30 +13,107 @@ import java.util.Map;
 @Service
 public class ChatBotService {
 
+    /*
+     * Used to make HTTP requests from Spring Boot
+     * to external services (Ollama in this case).
+     */
     private final RestTemplate restTemplate = new RestTemplate();
 
+    /*
+     * Main chatbot method.
+     *
+     * Receives:
+     *     User's message from the frontend
+     *
+     * Returns:
+     *     AI-generated response from Ollama
+     */
     public String chat(String message) {
 
-        // 1. System prompt (controls behavior)
+        /*
+         * Builds the full prompt sent to Ollama.
+         *
+         * This includes:
+         * - Business information
+         * - Rules
+         * - Customer's question
+         */
         String fullPrompt = getFullPrompt(message);
 
-        //2. Ollama request body
-        Map<String, Object> requestBody = Map.of("model", "llama3", "prompt", fullPrompt, "stream", false);
+        /*
+         * JSON body sent to Ollama.
+         *
+         * Equivalent JSON:
+         *
+         * {
+         *   "model":"llama3",
+         *   "prompt":"...",
+         *   "stream":false
+         * }
+         */
+        Map<String, Object> requestBody = Map.of(
+                "model", "llama3",
+                "prompt", fullPrompt,
+                "stream", false
+        );
 
+        /*
+         * Configure request headers.
+         *
+         * Tells Ollama we are sending JSON.
+         */
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
+        /*
+         * Combines:
+         * - Headers
+         * - Request body
+         *
+         * into one HTTP request object.
+         */
+        HttpEntity<Map<String, Object>> request =
+                new HttpEntity<>(requestBody, headers);
 
-        // 3. Call Ollama
-        ResponseEntity<Map> response = restTemplate.postForEntity("http://localhost:11434/api/generate", request, Map.class);
+        /*
+         * Sends POST request to Ollama.
+         *
+         * URL:
+         * http://localhost:11434/api/generate
+         *
+         * Ollama processes the prompt and
+         * returns a JSON response.
+         */
+        ResponseEntity<Map> response =
+                restTemplate.postForEntity(
+                        "http://localhost:11434/api/generate",
+                        request,
+                        Map.class
+                );
 
-        // 4. Extract response text
+        /*
+         * Extract JSON body from response.
+         */
         Map body = response.getBody();
 
+        /*
+         * Ollama response contains:
+         *
+         * {
+         *   "response":"Hello! How can I help?"
+         * }
+         *
+         * Return only the AI text.
+         */
         return body.get("response").toString();
     }
 
+    /*
+     * Creates the prompt sent to Ollama.
+     *
+     * This is where the chatbot's behavior
+     * is controlled.
+     */
     @Nonnull
     private static String getFullPrompt(String message) {
         String systemPrompt = """
