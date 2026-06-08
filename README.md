@@ -13,6 +13,7 @@ DeVito-Styles is a full-stack barber shop management application that allows cus
 - Customer profile customization
 - Barber schedule management
 - Email notifications for appointments
+- AI Customer Service Chat Bot
 
 # Tech Stack
 
@@ -145,7 +146,6 @@ User Stories - Barbershop Appointment System (DeVito Styles)
 - Integrating payment processing for online bookings
 - Implementing a loyalty program for customers
 - Adding a review and rating system for services and barbers
-- Implementing a chatbot for customer support
 - Adding a calendar view for barbers to manage their schedules more efficiently
 - Integrating with third-party services for marketing and promotions
 
