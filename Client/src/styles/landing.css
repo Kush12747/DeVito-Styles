@@ -1,61 +1,8 @@
-/* ==================================================
-   DESIGN TOKENS / VARIABLES
-================================================== */
-
-:root {
-    /* Colors */
-    --color-gold: #d4af37;
-    --color-gold-light: #f5d76e;
-
-    --color-bg-dark: #0a0a0a;
-    --color-text-muted: rgba(255, 255, 255, 0.7);
-
-    --overlay-dark-1: rgba(0, 0, 0, 0.75);
-    --overlay-dark-2: rgba(0, 0, 0, 0.82);
-
-    /* Card */
-    --card-bg: rgba(10, 10, 10, 0.88);
-    --card-border: rgba(212, 175, 55, 0.25);
-
-    /* Glow */
-    --gold-glow-sm: 0 0 10px rgba(212, 175, 55, 0.7);
-    --gold-glow-md: 0 0 20px rgba(212, 175, 55, 0.5);
-
-    --card-shadow:
-        0 0 30px rgba(212, 175, 55, 0.12),
-        0 15px 45px rgba(0, 0, 0, 0.7);
-
-    --logo-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
-
-    /* Layout */
-    --card-width: 380px;
-    --card-padding: 45px 35px;
-
-    --button-min-width: 125px;
-
-    /* Radius */
-    --radius-md: 12px;
-    --radius-lg: 24px;
-    --radius-circle: 50%;
-
-    /* Transitions */
-    --transition-fast: 0.25s ease;
-    --transition-medium: 0.7s;
-}
-
-/* ==================================================
-   GLOBAL RESET
-================================================== */
-
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-
-/* ==================================================
-   HOME PAGE BACKGROUND
-================================================== */
 
 .home-page {
     position: relative;
@@ -69,24 +16,18 @@
     overflow: hidden;
 
     background:
-        linear-gradient(
-            var(--overlay-dark-1),
-            var(--overlay-dark-2)
-        ),
+        linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.82)),
         url("../images/HomeBackground.png");
 
-    background-position: center;
     background-size: cover;
+    background-position: center;
 }
 
-/* ==================================================
-   PARTICLES
-================================================== */
+/* particles */
 
 .particles {
     position: absolute;
     inset: 0;
-
     overflow: hidden;
 }
 
@@ -95,69 +36,170 @@
 
     bottom: -120px;
 
-    border-radius: var(--radius-circle);
+    border-radius: 50%;
 
     background: rgba(212, 175, 55, 0.75);
 
     box-shadow:
-        var(--gold-glow-sm),
-        var(--gold-glow-md);
+        0 0 10px rgba(212,175,55,0.7),
+        0 0 20px rgba(212,175,55,0.5);
 
     animation: floatParticle linear infinite;
 }
 
-/* particle variations */
-.particles span:nth-child(1)  { left: 5%;  width: 5px;  height: 5px;  animation-duration: 5s; }
-.particles span:nth-child(2)  { left: 12%; width: 10px; height: 10px; animation-duration: 8s; animation-delay: 1s; }
-.particles span:nth-child(3)  { left: 20%; width: 6px;  height: 6px;  animation-duration: 6s; }
-.particles span:nth-child(4)  { left: 30%; width: 14px; height: 14px; animation-duration: 10s; }
-.particles span:nth-child(5)  { left: 40%; width: 8px;  height: 8px;  animation-duration: 7s; }
-.particles span:nth-child(6)  { left: 48%; width: 12px; height: 12px; animation-duration: 9s; }
-.particles span:nth-child(7)  { left: 58%; width: 7px;  height: 7px;  animation-duration: 5s; }
-.particles span:nth-child(8)  { left: 66%; width: 16px; height: 16px; animation-duration: 11s; }
-.particles span:nth-child(9)  { left: 74%; width: 6px;  height: 6px;  animation-duration: 6s; }
-.particles span:nth-child(10) { left: 82%; width: 11px; height: 11px; animation-duration: 8s; }
-.particles span:nth-child(11) { left: 90%; width: 7px;  height: 7px;  animation-duration: 5s; }
-.particles span:nth-child(12) { left: 96%; width: 13px; height: 13px; animation-duration: 9s; }
+/* different particle sizes + speeds */
 
-/* ==================================================
-   HOME CARD
-================================================== */
+.particles span:nth-child(1) {
+    left: 5%;
+    width: 5px;
+    height: 5px;
+    animation-duration: 5s;
+}
+
+.particles span:nth-child(2) {
+    left: 12%;
+    width: 10px;
+    height: 10px;
+    animation-duration: 8s;
+    animation-delay: 1s;
+}
+
+.particles span:nth-child(3) {
+    left: 20%;
+    width: 6px;
+    height: 6px;
+    animation-duration: 6s;
+}
+
+.particles span:nth-child(4) {
+    left: 30%;
+    width: 14px;
+    height: 14px;
+    animation-duration: 10s;
+}
+
+.particles span:nth-child(5) {
+    left: 40%;
+    width: 8px;
+    height: 8px;
+    animation-duration: 7s;
+}
+
+.particles span:nth-child(6) {
+    left: 48%;
+    width: 12px;
+    height: 12px;
+    animation-duration: 9s;
+}
+
+.particles span:nth-child(7) {
+    left: 58%;
+    width: 7px;
+    height: 7px;
+    animation-duration: 5s;
+}
+
+.particles span:nth-child(8) {
+    left: 66%;
+    width: 16px;
+    height: 16px;
+    animation-duration: 11s;
+}
+
+.particles span:nth-child(9) {
+    left: 74%;
+    width: 6px;
+    height: 6px;
+    animation-duration: 6s;
+}
+
+.particles span:nth-child(10) {
+    left: 82%;
+    width: 11px;
+    height: 11px;
+    animation-duration: 8s;
+}
+
+.particles span:nth-child(11) {
+    left: 90%;
+    width: 7px;
+    height: 7px;
+    animation-duration: 5s;
+}
+
+.particles span:nth-child(12) {
+    left: 96%;
+    width: 13px;
+    height: 13px;
+    animation-duration: 9s;
+}
+
+@keyframes floatParticle {
+    0% {
+        transform:
+            translateY(0)
+            translateX(0)
+            scale(0);
+
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    50% {
+        transform:
+            translateY(-50vh)
+            translateX(20px)
+            scale(1);
+    }
+
+    100% {
+        transform:
+            translateY(-120vh)
+            translateX(-30px)
+            scale(0.2);
+
+        opacity: 0;
+    }
+}
+/* main card */
 
 .home-card {
     position: relative;
     z-index: 1;
 
-    width: var(--card-width);
-    padding: var(--card-padding);
+    width: 380px;
 
-    text-align: center;
+    padding: 45px 35px;
 
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
+    border-radius: 24px;
 
-    border-radius: var(--radius-lg);
+    background: rgba(10, 10, 10, 0.88);
+
+    border: 1px solid rgba(212,175,55,0.25);
 
     backdrop-filter: blur(12px);
 
-    box-shadow: var(--card-shadow);
+    box-shadow:
+        0 0 30px rgba(212,175,55,0.12),
+        0 15px 45px rgba(0,0,0,0.7);
+
+    text-align: center;
 
     animation:
         fadeUp 1s ease,
         floatCard 5s ease-in-out infinite;
 }
 
-/* ==================================================
-   LOGO
-================================================== */
+/* logo */
 
 .logo-wrapper {
     margin-bottom: 24px;
 
     display: flex;
     justify-content: center;
-
-    position: relative;
 }
 
 .logo-wrapper::before {
@@ -168,9 +210,9 @@
     width: 120px;
     height: 120px;
 
-    border-radius: var(--radius-circle);
+    border-radius: 50%;
 
-    border: 2px solid rgba(212, 175, 55, 0.25);
+    border: 2px solid rgba(212,175,55,0.25);
 
     animation: pulseRing 3s infinite;
 }
@@ -181,51 +223,48 @@
 
     object-fit: cover;
 
-    border-radius: var(--radius-circle);
+    border-radius: 50%;
 
-    border: 3px solid var(--color-gold);
+    border: 3px solid #d4af37;
 
-    box-shadow: var(--logo-shadow);
+    box-shadow: 0 0 25px rgba(212,175,55,0.35);
 
     animation: logoFloat 4s ease-in-out infinite;
 }
 
-/* ==================================================
-   SLOGAN
-================================================== */
+/* slogan */
 
 .slogan-box {
     margin-bottom: 32px;
 }
 
 .slogan-box h1 {
-    margin-bottom: 12px;
-
-    color: var(--color-gold-light);
+    color: #f5d76e;
 
     font-size: 2rem;
     font-weight: 700;
+
     line-height: 1.3;
 
     text-transform: uppercase;
     letter-spacing: 1px;
+
+    margin-bottom: 12px;
 }
 
 .slogan-box p {
-    color: var(--color-text-muted);
+    color: rgba(255,255,255,0.7);
 
     font-size: 0.95rem;
     letter-spacing: 1px;
 }
 
-/* ==================================================
-   BUTTONS
-================================================== */
+/* buttons */
 
 .button-group {
     display: flex;
-    justify-content: center;
     gap: 18px;
+    justify-content: center;
 }
 
 .button-group a {
@@ -237,14 +276,16 @@
 
     overflow: hidden;
 
-    min-width: var(--button-min-width);
+    min-width: 125px;
+
     padding: 13px 22px;
 
-    background: var(--color-gold);
-    color: #111;
+    border: 2px solid #d4af37;
+    border-radius: 12px;
 
-    border: 2px solid var(--color-gold);
-    border-radius: var(--radius-md);
+    background: #d4af37;
+
+    color: #111;
 
     font-size: 1rem;
     font-weight: 700;
@@ -252,13 +293,14 @@
     cursor: pointer;
 
     transition:
-        transform var(--transition-fast),
-        background var(--transition-fast),
-        color var(--transition-fast),
-        box-shadow var(--transition-fast);
+        transform 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
-/* shine */
+/* shine effect */
+
 .btn::before {
     content: "";
 
@@ -273,11 +315,11 @@
     background: linear-gradient(
         120deg,
         transparent,
-        rgba(255, 255, 255, 0.55),
+        rgba(255,255,255,0.55),
         transparent
     );
 
-    transition: var(--transition-medium);
+    transition: 0.7s;
 }
 
 .btn:hover::before {
@@ -286,20 +328,20 @@
 
 .btn:hover {
     background: transparent;
-    color: var(--color-gold);
+
+    color: #d4af37;
 
     transform: translateY(-4px);
 
-    box-shadow: 0 8px 22px rgba(212, 175, 55, 0.3);
+    box-shadow:
+        0 8px 22px rgba(212,175,55,0.3);
 }
 
 .btn:active {
     transform: scale(0.97);
 }
 
-/* ==================================================
-   ANIMATIONS
-================================================== */
+/* animations */
 
 @keyframes fadeUp {
     from {
@@ -314,13 +356,31 @@
 }
 
 @keyframes floatCard {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
 }
 
 @keyframes logoFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
 }
 
 @keyframes pulseRing {
@@ -331,24 +391,6 @@
 
     100% {
         transform: scale(1.25);
-        opacity: 0;
-    }
-}
-
-@keyframes floatParticle {
-    0% {
-        transform: translateY(0) scale(0);
-        opacity: 0;
-    }
-
-    10% { opacity: 1; }
-
-    50% {
-        transform: translateY(-50vh) translateX(20px) scale(1);
-    }
-
-    100% {
-        transform: translateY(-120vh) translateX(-30px) scale(0.2);
         opacity: 0;
     }
 }

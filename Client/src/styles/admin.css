@@ -1,72 +1,27 @@
 /* ==================================================
-   DESIGN TOKENS / VARIABLES
-================================================== */
-
-:root {
-    /* Colors */
-    --color-gold: #d4af37;
-    --color-white: #ffffff;
-
-    --bg-primary: #0b0b0b;
-    --bg-secondary: #111;
-    --bg-card: #1a1a1a;
-
-    --border-dark: #222;
-    --border-medium: #333;
-
-    /* Status Colors */
-    --status-active: #28a745;
-    --status-banned: #dc3545;
-    --status-pending: #f0ad4e;
-    --status-confirmed: #2d8cff;
-    --status-completed: #28a745;
-    --status-cancelled: #dc3545;
-
-    /* Effects */
-    --gold-border-light: rgba(212, 175, 55, 0.3);
-    --gold-border-medium: rgba(212, 175, 55, 0.4);
-    --gold-hover-bg: rgba(212, 175, 55, 0.08);
-    --glass-bg: rgba(10, 10, 10, 0.85);
-
-    /* Radius */
-    --radius-sm: 5px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-
-    /* Shadows */
-    --table-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.7),
-        0 0 20px rgba(212, 175, 55, 0.15);
-
-    /* Transitions */
-    --transition-fast: 0.2s ease;
-}
-
-/* ==================================================
-   LAYOUT
+   ADMIN LAYOUT
 ================================================== */
 
 .admin-container {
     display: flex;
     min-height: 100vh;
 
-    background: var(--bg-primary);
-    color: var(--color-white);
+    background: #0b0b0b;
+    color: white;
 }
 
-.admin-main {
-    flex: 1;
-    padding: 30px;
-}
+/* ==================================================
+   ADMIN USERS PAGE BACKGROUND
+================================================== */
 
 .admin-users-page {
     display: flex;
     min-height: 100vh;
 
     background-image: url("../images/admin.webp");
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
 }
 
 /* ==================================================
@@ -78,14 +33,14 @@
 
     padding: 20px;
 
-    background: var(--bg-secondary);
-
-    border-right: 1px solid var(--border-dark);
+    background: #111;
+    border-right: 1px solid #222;
 }
 
 .admin-logo {
     margin-bottom: 30px;
-    color: var(--color-gold);
+
+    color: #d4af37;
 }
 
 .admin-sidebar button {
@@ -96,29 +51,29 @@
 
     background: transparent;
 
-    border: 1px solid var(--border-medium);
+    border: 1px solid #333;
 
-    color: var(--color-white);
+    color: white;
 
     cursor: pointer;
-
-    transition: var(--transition-fast);
 }
 
 .admin-sidebar button:hover {
-    color: var(--color-gold);
-    border-color: var(--color-gold);
-}
-
-.logout-btn {
-    margin-top: 30px;
-
-    color: var(--color-gold) !important;
-    border-color: var(--color-gold) !important;
+    border-color: #d4af37;
+    color: #d4af37;
 }
 
 /* ==================================================
-   DASHBOARD CARDS
+   MAIN CONTENT
+================================================== */
+
+.admin-main {
+    flex: 1;
+    padding: 30px;
+}
+
+/* ==================================================
+   CARDS
 ================================================== */
 
 .admin-cards {
@@ -131,112 +86,119 @@
 .card {
     padding: 20px;
 
-    background: var(--bg-card);
+    background: #1a1a1a;
 
-    border: 1px solid var(--border-medium);
-    border-radius: var(--radius-md);
+    border-radius: 8px;
+    border: 1px solid #333;
 }
 
 /* ==================================================
-   TABLE CONTAINER
+   TABLE BASE
+================================================== */
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    color: white;
+    font-weight: 500;
+}
+
+/* table cells */
+.admin-table th,
+.admin-table td {
+    padding: 12px;
+    border-bottom: 1px solid #222;
+}
+
+/* header styling */
+.admin-table th {
+    text-align: left;
+
+    color: #d4af37;
+
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    border-bottom: 2px solid rgba(212, 175, 55, 0.4);
+}
+
+/* row behavior */
+.admin-table tr {
+    transition: all 0.2s ease;
+}
+
+.admin-table tr:hover {
+    background: rgba(212, 175, 55, 0.08);
+    transform: scale(1.01);
+}
+
+/* ==================================================
+   TABLE CARD WRAPPER
 ================================================== */
 
 .table-card {
     margin: 20px;
     padding: 20px;
 
-    background: var(--glass-bg);
+    background: rgba(10, 10, 10, 0.85);
 
-    border: 1px solid var(--gold-border-light);
-    border-radius: var(--radius-lg);
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
 
     backdrop-filter: blur(6px);
 
-    box-shadow: var(--table-shadow);
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.7),
+        0 0 20px rgba(212, 175, 55, 0.15);
 }
 
 /* ==================================================
-   TABLE
-================================================== */
-
-.admin-table {
-    width: 100%;
-
-    border-collapse: collapse;
-
-    color: var(--color-white);
-    font-weight: 500;
-}
-
-.admin-table th,
-.admin-table td {
-    padding: 12px;
-    border-bottom: 1px solid var(--border-dark);
-}
-
-.admin-table th {
-    color: var(--color-gold);
-
-    font-size: 14px;
-    text-align: left;
-
-    text-transform: uppercase;
-    letter-spacing: 1px;
-
-    border-bottom: 2px solid var(--gold-border-medium);
-}
-
-.admin-table tr {
-    transition: var(--transition-fast);
-}
-
-.admin-table tr:hover {
-    background: var(--gold-hover-bg);
-    transform: scale(1.01);
-}
-
-/* ==================================================
-   STATUS BADGES
+   STATUS BADGES (BASE)
 ================================================== */
 
 .status {
-    display: inline-block;
+    padding: 5px 10px;
 
-    padding: 6px 12px;
+    border-radius: 5px;
 
     font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-
-    border-radius: 6px;
 }
 
-/* User Status */
-
+/* legacy status style variants (kept for compatibility) */
 .status.active {
-    background: var(--status-active);
+    background: green;
 }
 
 .status.banned {
-    background: var(--status-banned);
+    background: red;
 }
 
-/* Booking Status */
-
+/* extended status system */
 .status.pending {
-    background: var(--status-pending);
+    background: #f0ad4e;
 }
 
 .status.confirmed {
-    background: var(--status-confirmed);
+    background: #2d8cff;
 }
 
 .status.completed {
-    background: var(--status-completed);
+    background: #28a745;
 }
 
 .status.cancelled {
-    background: var(--status-cancelled);
+    background: #dc3545;
+}
+
+/* older duplicated variant preserved intentionally */
+.status.active {
+    background: rgba(40, 167, 69, 0.9);
+}
+
+.status.banned {
+    background: rgba(220, 53, 69, 0.9);
 }
 
 /* ==================================================
@@ -249,21 +211,33 @@
 
     border: none;
 
-    cursor: pointer;
-
-    color: var(--color-white);
-
     font-size: 12px;
+
+    cursor: pointer;
 }
 
 .confirm {
-    background: var(--status-confirmed);
+    background: #2d8cff;
+    color: white;
 }
 
 .complete {
-    background: var(--status-completed);
+    background: #28a745;
+    color: white;
 }
 
 .cancel {
-    background: var(--status-cancelled);
+    background: #dc3545;
+    color: white;
+}
+
+/* ==================================================
+   LOGOUT BUTTON OVERRIDE
+================================================== */
+
+.admin-container .logout-btn {
+    margin-top: 30px;
+
+    border-color: #d4af37 !important;
+    color: #d4af37 !important;
 }
