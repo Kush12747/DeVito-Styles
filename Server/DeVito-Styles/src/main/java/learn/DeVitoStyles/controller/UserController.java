@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import learn.DeVitoStyles.domain.Result;
 import learn.DeVitoStyles.domain.ResultType;
 import learn.DeVitoStyles.domain.UserService;
+import learn.DeVitoStyles.domain.security.JwtUtil;
 import learn.DeVitoStyles.models.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -20,9 +21,11 @@ import java.util.Objects;
 @CrossOrigin
 public class UserController {
     private final UserService service;
+    private final JwtUtil jwtUtil;
 
-    public UserController(UserService service) {
+    public UserController(UserService service, JwtUtil jwtUtil) {
         this.service = service;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/login")
@@ -35,24 +38,18 @@ public class UserController {
             return new ResponseEntity<>(result.getMessages(), HttpStatus.UNAUTHORIZED);
         }
 
-        // convert user to json
-        ObjectMapper objectMapper = new ObjectMapper();
-        String userJson = objectMapper.writeValueAsString(result.getpayload());
+        User authenticatedUser = result.getpayload();
 
-        // add secret string
-        String userJsonWithSecret =
-                userJson + "backend-secret-string";
+        String token = jwtUtil.generateToken(authenticatedUser);
 
-        // hash it
-        int hashTotal = Objects.hash(userJsonWithSecret);
-
-        // final output
-        String outputString = userJson + "|" + hashTotal;
-
-        Map<String, String> outputMap =
-                Map.of("user", outputString);
-
-        return new ResponseEntity<>(outputMap, HttpStatus.OK);
+        return ResponseEntity.ok(
+                Map.of(
+                        "token", token,
+                        "userId", authenticatedUser.getUserId(),
+                        "username", authenticatedUser.getUsername(),
+                        "role", authenticatedUser.getRole()
+                )
+        );
     }
 
     @PostMapping("/register")

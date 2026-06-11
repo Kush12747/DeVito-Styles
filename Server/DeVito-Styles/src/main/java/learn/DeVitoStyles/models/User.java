@@ -104,15 +104,18 @@ public class User {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId && Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) &&
-                Objects.equals(username, user.username) && Objects.equals(password, user.password) &&
-                Objects.equals(address, user.address) && Objects.equals(phone, user.phone) &&
+        return userId == user.userId &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(address, user.address) &&
+                Objects.equals(phone, user.phone) &&
                 Objects.equals(role, user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, firstName, lastName, email, username, password, address, phone, role);
+        return Objects.hash(userId, firstName, lastName, email, username, address, phone, role);
     }
 }
