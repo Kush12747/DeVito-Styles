@@ -1,100 +1,199 @@
-/* login.css */
+/* ==================================================
+   DESIGN TOKENS / VARIABLES
+================================================== */
+
+:root {
+    /* Colors */
+    --color-gold: #d4af37;
+    --color-gold-light: #f1c94a;
+
+    --color-black: #111;
+    --color-white: #ffffff;
+
+    --color-error: #ff6b6b;
+
+    /* Backgrounds */
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+    --bg-card: gold;
+    --bg-form: #fffdfd;
+
+    /* Shadows */
+    --shadow-card: 0 0 20px rgba(0, 0, 0, 0.5);
+    --shadow-input-focus: 0 0 10px rgba(255, 215, 0, 0.6);
+    --shadow-button-hover: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+    /* Radius */
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+
+    /* Layout */
+    --login-card-width: 420px;
+    --form-padding: 30px;
+
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.3s ease;
+}
+
+/* ==================================================
+   GLOBAL BACKGROUND
+================================================== */
 
 .bg {
-  background-image: url("../images/form.jpg");
+    background-image: url("../images/form.jpg");
+    background-size: cover;
+    background-position: center;
 }
+
+/* ==================================================
+   PAGE LAYOUT
+================================================== */
 
 .login-page {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+/* ==================================================
+   LOGIN CARD
+================================================== */
 
 .login-card {
-  background-color: gold;
-  padding: 40px;
-  border-radius: 16px;
-  width: 420px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  animation: fadeSlideUp 0.7s ease;
+    width: var(--login-card-width);
+
+    padding: 40px;
+
+    background: var(--bg-card);
+
+    border-radius: var(--radius-xl);
+
+    box-shadow: var(--shadow-card);
+
+    animation: fadeSlideUp 0.7s ease;
 }
+
+/* ==================================================
+   ANIMATION
+================================================== */
 
 @keyframes fadeSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+
+/* ==================================================
+   TITLE
+================================================== */
 
 .login-title {
-  text-align: center;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  color: #111111;
-  font-size: 2rem;
-  font-weight: bold;
-  font-style: italic;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 10px 0 10px;
+
+    text-align: center;
+
+    color: var(--color-black);
+
+    font-size: 2rem;
+    font-weight: bold;
+    font-style: italic;
+
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+/* ==================================================
+   FORM BOX
+================================================== */
+
 .login-form-box {
-  background-color: #fffdfd;
-  padding: 30px;
-  border-radius: 12px;
-  transition: 0.3s ease;
+    padding: var(--form-padding);
+
+    background: var(--bg-form);
+
+    border-radius: var(--radius-lg);
+
+    transition: var(--transition-medium);
 }
+
+/* ==================================================
+   FORM CONTROLS
+================================================== */
 
 .form-control {
     display: flex;
     flex-direction: column;
+
     margin-bottom: 25px;
 }
 
 .form-control input {
     margin-top: 6px;
     padding: 8px;
-    transition: 0.25s ease;
+
+    transition: var(--transition-fast);
 }
 
 .form-control input:focus {
-  outline: none;
-  border-color: gold;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-  transform: scale(1.02);
+    outline: none;
+
+    border-color: var(--color-gold);
+
+    transform: scale(1.02);
+
+    box-shadow: var(--shadow-input-focus);
 }
 
+/* ==================================================
+   BUTTON
+================================================== */
+
 .login-btn {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border: none;
-  background-color: #d4af37;
-  border-radius: 8px;
-  color: black;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease,
-    box-shadow 0.2s ease;
+    width: 100%;
+
+    margin: 10px 0;
+
+    padding: 12px;
+
+    background: var(--color-gold);
+    color: var(--color-black);
+
+    border: none;
+    border-radius: var(--radius-md);
+
+    font-size: 1rem;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform var(--transition-fast),
+        background-color var(--transition-fast),
+        box-shadow var(--transition-fast);
 }
 
 .login-btn:hover {
-    background-color: #f1c94a;
+    background: var(--color-gold-light);
+
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+
+    box-shadow: var(--shadow-button-hover);
 }
 
-/* ERRORS */
+/* ==================================================
+   ERRORS
+================================================== */
+
 .error-list {
-    color: #ff6b6b;
     margin-bottom: 15px;
+
+    color: var(--color-error);
 }
