@@ -1,3 +1,7 @@
+/* ==================================================
+   CHAT BUTTON (FLOATING TRIGGER)
+================================================== */
+
 .chat-button {
     position: fixed;
     bottom: 20px;
@@ -24,6 +28,10 @@
     transform: scale(1.05);
 }
 
+/* ==================================================
+   CHAT WINDOW CONTAINER
+================================================== */
+
 .chat-window {
     position: fixed;
     bottom: 95px;
@@ -45,19 +53,50 @@
     box-shadow: 0 8px 30px rgba(0,0,0,.35);
 }
 
+/* ==================================================
+   CHAT HEADER
+================================================== */
+
 .chat-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-style: italic;
+
+    padding: 18px;
 
     background: #111;
     color: white;
 
-    padding: 18px;
+    font-style: italic;
 
     border-bottom: 1px solid #333;
 }
+
+/* close button */
+.close-chat-btn {
+    padding: 4px 8px;
+
+    background: transparent;
+    border: none;
+
+    color: white;
+
+    font-size: 1.2rem;
+
+    cursor: pointer;
+
+    border-radius: 6px;
+
+    transition: background .2s ease;
+}
+
+.close-chat-btn:hover {
+    background: rgba(255,255,255,.1);
+}
+
+/* ==================================================
+   CHAT BODY (MESSAGE AREA)
+================================================== */
 
 .chat-body {
     flex: 1;
@@ -66,10 +105,18 @@
 
     overflow-y: auto;
 
+    background: #1f1f1f;
     color: white;
 
-    background: #1f1f1f;
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
 }
+
+/* ==================================================
+   CHAT FOOTER (INPUT AREA)
+================================================== */
 
 .chat-footer {
     display: flex;
@@ -82,16 +129,17 @@
     border-top: 1px solid #333;
 }
 
+/* input field */
 .chat-footer input {
     flex: 1;
 
     padding: 12px;
 
-    border: 1px solid #444;
-    border-radius: 10px;
-
     background: #2b2b2b;
     color: white;
+
+    border: 1px solid #444;
+    border-radius: 10px;
 
     outline: none;
 }
@@ -100,51 +148,24 @@
     border-color: #777;
 }
 
+/* send button */
 .chat-footer button {
     padding: 12px 18px;
 
-    border: none;
-    border-radius: 10px;
-
     background: #d4af37;
     color: black;
+
+    border: none;
+    border-radius: 10px;
 
     font-weight: 600;
 
     cursor: pointer;
 }
 
-.close-chat-btn {
-    background: transparent;
-    border: none;
-
-    color: white;
-
-    font-size: 1.2rem;
-    cursor: pointer;
-
-    padding: 4px 8px;
-
-    border-radius: 6px;
-
-    transition: background .2s ease;
-}
-
-.close-chat-btn:hover {
-    background: rgba(255,255,255,.1);
-}
-
-.chat-body {
-    flex: 1;
-    overflow-y: auto;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 10px;
-
-    padding: 15px;
-}
+/* ==================================================
+   CHAT MESSAGES
+================================================== */
 
 .message {
     max-width: 75%;
@@ -156,6 +177,7 @@
     word-wrap: break-word;
 }
 
+/* user message */
 .message.user {
     align-self: flex-end;
 
@@ -165,6 +187,7 @@
     border-bottom-right-radius: 6px;
 }
 
+/* bot message */
 .message.bot {
     align-self: flex-start;
 
@@ -174,11 +197,11 @@
     border-bottom-left-radius: 6px;
 }
 
+/* typing indicator */
 .message.typing {
     align-self: flex-start;
 
     background: #333;
-
     color: #999;
 
     font-style: italic;
