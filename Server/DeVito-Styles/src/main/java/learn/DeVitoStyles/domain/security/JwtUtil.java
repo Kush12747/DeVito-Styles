@@ -12,7 +12,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String SECRET = "super-secret-key-devito-styles";
+    private final String SECRET = "devito-styles-super-secret-key-for-jwt-authentication-2026";
 
     public String generateToken(User user){
 
