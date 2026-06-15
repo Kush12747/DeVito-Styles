@@ -20,10 +20,15 @@ function BookingPage() {
 
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
     const userId = user?.userId;
+    const token = localStorage.getItem("token");
 
     // Load Service
     useEffect(() => {
-        fetch(`${SERVICE_URL}/${serviceId}`)
+        fetch(`${SERVICE_URL}/${serviceId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
         .then(response => response.json())
         .then(data => setService(data))
         .catch(error => console.error("Error fetching service:", error));
@@ -31,7 +36,11 @@ function BookingPage() {
 
     // Load Barbers
     useEffect(() => {
-        fetch(BARBER_URL)
+        fetch(BARBER_URL, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
         .then(response => response.json())
         .then(data => setBarbers(data))
         .catch(error => console.error("Error fetching barbers:", error));
@@ -41,10 +50,14 @@ function BookingPage() {
     useEffect(() => {
         if (!barberId || !date) return;
 
-        fetch(`http://localhost:8080/api/appointment/availability?barberId=${barberId}&date=${date}`)
-            .then(res => res.json())
-            .then(data => setBookedAppointments(data))
-            .catch(err => console.error(err));
+        fetch(`http://localhost:8080/api/appointment/availability?barberId=${barberId}&date=${date}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(res => res.json())
+        .then(data => setBookedAppointments(data))
+        .catch(err => console.error(err));
     }, [barberId, date]);
 
     // ---------------- TIME LOGIC ----------------
