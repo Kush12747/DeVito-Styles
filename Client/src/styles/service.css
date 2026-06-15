@@ -332,8 +332,6 @@ body {
         0 0 35px rgba(200,169,107,0.12);
 }
 
-
-
 .service-card:hover::after {
     opacity: 1;
 }

@@ -1,18 +1,29 @@
-html, body {
+/* =========================
+   GLOBAL PAGE BEHAVIOR
+========================= */
+html,
+body {
   height: 100%;
   margin: 0;
   overflow-y: auto;
   scroll-behavior: smooth;
 }
 
+/* =========================
+   PROFILE PAGE BACKGROUND
+========================= */
 .profile-page {
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: visible;
-    min-height: 100vh;
-    padding: 2rem;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+
+  min-height: 100vh;
+
+  padding: 2rem;
+
+  overflow-x: hidden;
+  overflow-y: visible;
+
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
 
   background: linear-gradient(
     -45deg,
@@ -28,7 +39,7 @@ html, body {
   animation: gradientFlow 8s ease infinite;
 }
 
-/* Ambient glow */
+/* ambient glow layer */
 .profile-page::before {
   content: "";
 
@@ -49,103 +60,106 @@ html, body {
   animation: pulseGlow 6s ease infinite alternate;
 }
 
-/*Layout Containers*/
+/* =========================
+   LAYOUT CARDS (SHARED)
+========================= */
 .profile-card,
 .edit-form-card,
 .appointments-card {
-    position: relative;
-    z-index: 2;
+  position: relative;
+  z-index: 2;
 
-    background: rgba(18, 18, 18, 0.85);
-    border: 1px solid rgba(255, 215, 0 , 0.08);
+  padding: 2rem;
 
-    backdrop-filter: blur(14px);
-    border-radius: 22px;
-    padding: 2rem;
+  border-radius: 22px;
 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  background: rgba(18, 18, 18, 0.85);
+  border: 1px solid rgba(255, 215, 0, 0.08);
 
-    transition: 0.3 ease;
+  backdrop-filter: blur(14px);
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+
+  transition: 0.3 ease;
 }
 
 .profile-card:hover,
 .edit-form-card:hover,
 .appointments-card:hover {
-    transform: translateY(-6px);
+  transform: translateY(-6px);
 
-    border: 1px solid rgba(255, 215, 0, 0.18);
+  border: 1px solid rgba(255, 215, 0, 0.18);
 
-    box-shadow:
-        0 12px 36px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
 }
 
-/*Profile Header*/
-
+/* =========================
+   PROFILE HEADER
+========================= */
 .profile-header {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
 .profile-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
+  width: 150px;
+  height: 150px;
 
-    border: 4px solid rgba(255, 215, 0, 0.9);
+  border-radius: 50%;
+  object-fit: cover;
 
-    box-shadow:
-        0 0 20px rgba(255, 215, 0, 0.25),
-        0 0 40px rgba(255, 215, 0, 0.08);
-    
-    transition: 0.3s ease;
+  border: 4px solid rgba(255, 215, 0, 0.9);
+
+  box-shadow:
+    0 0 20px rgba(255, 215, 0, 0.25),
+    0 0 40px rgba(255, 215, 0, 0.08);
+
+  transition: 0.3s ease;
 }
 
 .profile-image:hover {
-    transform: scale(1.04);
+  transform: scale(1.04);
 }
 
 .profile-info h2 {
-    font-size: 2.2rem;
-    margin-bottom: 0.3rem;
+  font-size: 2.2rem;
+  margin-bottom: 0.3rem;
 }
 
 .profile-info p {
-    color: #cfcfcf;
-    margin: 0.2rem 0;
+  margin: 0.2rem 0;
+  color: #cfcfcf;
 }
 
-/*image upload*/
-
+/* =========================
+   IMAGE UPLOAD OVERLAY
+========================= */
 .image-upload-container {
-    position: relative;
-    cursor: pointer;
+  position: relative;
+  cursor: pointer;
 }
 
 .image-upload-container label {
-    cursor: pointer;
-    display: block;
+  cursor: pointer;
+  display: block;
 }
 
 .image-upload-container::after {
-
   content: "Change Photo";
 
   position: absolute;
-
   inset: 0;
 
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 
   border-radius: 50%;
 
   background: rgba(0, 0, 0, 0.55);
 
   color: white;
-
   font-size: 0.9rem;
   font-weight: bold;
 
@@ -160,55 +174,60 @@ html, body {
   opacity: 1;
 }
 
-/*Buttons*/
-
+/* =========================
+   BUTTONS (GLOBAL)
+========================= */
 button {
-    background: linear-gradient(135deg, #d4af37, #ffd700);
-    color: #111;
+  padding: 0.9rem 1.4rem;
 
-    border: none;
-    padding: 0.9rem 1.4rem;
+  border: none;
+  border-radius: 12px;
 
-    border-radius: 12px;
-    font-weight: 700;
+  background: linear-gradient(135deg, #d4af37, #ffd700);
+  color: #111;
 
-    cursor: pointer;
-    
-    transition: 0.25s ease;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
 }
 
 button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 18px rgba(255, 215, 0, 0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 18px rgba(255, 215, 0, 0.25);
 }
 
 button:active {
   transform: scale(0.98);
 }
 
-/*Form*/
+/* =========================
+   EDIT FORM
+========================= */
 .edit-form-card form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .edit-form-card input {
-    padding: 1rem;
+  padding: 1rem;
 
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 
-    background: rgba(40, 40, 40, 0.7);
-    color: white;
+  background: rgba(40, 40, 40, 0.7);
+  color: white;
 
-    font-size: 1rem;
+  font-size: 1rem;
 
-    transition: 0.25s ease;
+  transition: 0.25s ease;
 }
 
 .edit-form-card input:focus {
   outline: none;
+
   border: 1px solid rgba(255, 215, 0, 0.6);
   background: rgba(55, 55, 55, 0.8);
 }
@@ -218,24 +237,25 @@ button:active {
   gap: 1rem;
 }
 
-/*Appointments*/
-
+/* =========================
+   APPOINTMENTS GRID
+========================= */
 .appointments-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
 
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 .appointment-item {
-  background: rgba(35, 35, 35, 0.75);
-  border: 1px solid rgba(255, 215, 0, 0.06);
-
+  margin-bottom: 1rem;
   padding: 1.2rem;
+
   border-radius: 14px;
 
-  margin-bottom: 1rem;
+  background: rgba(35, 35, 35, 0.75);
+  border: 1px solid rgba(255, 215, 0, 0.06);
 
   transition: 0.25s ease;
 }
@@ -246,8 +266,8 @@ button:active {
 }
 
 .appointment-item h4 {
-  color: #ffd700;
   margin-bottom: 0.4rem;
+  color: #ffd700;
 }
 
 .appointment-item p {
@@ -255,73 +275,79 @@ button:active {
   color: #d0d0d0;
 }
 
-.complete-btn,
-.cancel-btn,
-.reschedule-btn {
-    border: none;
-    padding: 0.6rem 1rem;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.complete-btn {
-    background: #d4af37;
-    color: black;
-}
-
-.cancel-btn {
-    background: #7a1f1f;
-    color: white;
-}
-
-.status {
-    margin-top: 0.5rem;
-    font-weight: 600;
-    padding: 0.35rem 0.7rem;
-    border-radius: 999px;
-    display: inline-block;
-    font-size: 0.85rem;
-}
-
-/* BOOKED */
-.status.booked {
-    background: rgba(212, 175, 55, 0.15);
-    color: #d4af37;
-    border: 1px solid #d4af37;
-}
-
-/* COMPLETED */
-.status.completed {
-    background: rgba(46, 125, 50, 0.15);
-    color: #66bb6a;
-    border: 1px solid #66bb6a;
-    
-}
-
-/* CANCELLED */
-.status.cancelled {
-    background: rgba(183, 28, 28, 0.15);
-    color: #ef5350;
-    border: 1px solid #ef5350;
-}
-
-.status.completed,
-.status.cancelled {
-    color: white;
-}
-
+/* =========================
+   APPOINTMENT ACTIONS
+========================= */
 .appointment-actions {
   display: flex;
-  gap: 0.75rem; /* controls spacing between buttons */
-  flex-wrap: wrap; /* prevents overflow on small screens */
+  flex-wrap: wrap;
+  gap: 0.75rem;
+
   margin-top: 1rem;
 }
 
-/* ===================== */
-/* RESPONSIVE */
-/* ===================== */
+.complete-btn,
+.cancel-btn,
+.reschedule-btn {
+  padding: 0.6rem 1rem;
 
+  border: none;
+  border-radius: 8px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.complete-btn {
+  background: #d4af37;
+  color: black;
+}
+
+.cancel-btn {
+  background: #7a1f1f;
+  color: white;
+}
+
+/* =========================
+   STATUS BADGES
+========================= */
+.status {
+  display: inline-block;
+
+  margin-top: 0.5rem;
+  padding: 0.35rem 0.7rem;
+
+  border-radius: 999px;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* booked */
+.status.booked {
+  background: rgba(212, 175, 55, 0.15);
+  color: #d4af37;
+  border: 1px solid #d4af37;
+}
+
+/* completed */
+.status.completed {
+  background: rgba(46, 125, 50, 0.15);
+  border: 1px solid #66bb6a;
+  color: white;
+}
+
+/* cancelled */
+.status.cancelled {
+  background: rgba(183, 28, 28, 0.15);
+  border: 1px solid #ef5350;
+  color: white;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 900px) {
   .appointments-wrapper {
     grid-template-columns: 1fr;
@@ -338,8 +364,10 @@ button:active {
   }
 }
 
+/* =========================
+   ANIMATIONS
+========================= */
 @keyframes pulseGlow {
-
   from {
     transform: scale(1);
     opacity: 0.5;
@@ -349,21 +377,10 @@ button:active {
     transform: scale(1.2);
     opacity: 0.9;
   }
-
 }
 
 @keyframes gradientFlow {
-
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }

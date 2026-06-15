@@ -1,8 +1,16 @@
+/* ==================================================
+   GLOBAL RESET
+================================================== */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
+
+/* ==================================================
+   BACKGROUND LAYER
+================================================== */
 
 .background {
     position: relative;
@@ -25,8 +33,7 @@
     animation: bgZoom 14s ease-in-out infinite alternate;
 }
 
-/* cinematic smoke glow */
-
+/* cinematic glow overlay */
 .background::before {
     content: "";
 
@@ -34,23 +41,17 @@
     inset: -20%;
 
     background:
-        radial-gradient(
-            circle at 20% 30%,
-            rgba(212,175,55,0.10),
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 80% 70%,
-            rgba(212,175,55,0.08),
-            transparent 40%
-        );
+        radial-gradient(circle at 20% 30%, rgba(212,175,55,0.10), transparent 35%),
+        radial-gradient(circle at 80% 70%, rgba(212,175,55,0.08), transparent 40%);
 
     filter: blur(60px);
 
     animation: smokeMove 10s ease-in-out infinite alternate;
 }
 
-/* hero card */
+/* ==================================================
+   HERO CARD
+================================================== */
 
 .hero-container {
     position: relative;
@@ -77,9 +78,13 @@
     animation: fadeUp 1.2s ease;
 }
 
-/* top intro text */
+/* ==================================================
+   INTRO TEXT
+================================================== */
 
 .intro-text {
+    margin-bottom: 10px;
+
     color: rgba(255,255,255,0.75);
 
     font-size: 1.1rem;
@@ -87,14 +92,14 @@
     letter-spacing: 3px;
     text-transform: uppercase;
 
-    margin-bottom: 10px;
-
     opacity: 0;
 
     animation: fadeIn 1s ease forwards;
 }
 
-/* TYPEWRITER */
+/* ==================================================
+   TYPEWRITER TITLE
+================================================== */
 
 .typewriter {
     width: 0;
@@ -111,15 +116,16 @@
     font-size: 4.5rem;
     font-weight: 800;
 
-    text-shadow:
-        0 0 10px rgba(212,175,55,0.4);
+    text-shadow: 0 0 10px rgba(212,175,55,0.4);
 
     animation:
         typing 2.8s steps(18, end) forwards,
         blink 0.7s infinite;
 }
 
-/* subtitle */
+/* ==================================================
+   SUB TEXT
+================================================== */
 
 .sub-text {
     margin-top: 24px;
@@ -134,7 +140,9 @@
     animation-delay: 2.5s;
 }
 
-/* button */
+/* ==================================================
+   CTA BUTTON
+================================================== */
 
 .btn {
     margin-top: 35px;
@@ -147,7 +155,6 @@
     border-radius: 12px;
 
     background: #d4af37;
-
     color: black;
 
     font-size: 1rem;
@@ -168,13 +175,11 @@
     animation-delay: 3.2s;
 }
 
-/* shine effect */
-
+/* button shine effect */
 .btn::before {
     content: "";
 
     position: absolute;
-
     top: 0;
     left: -120%;
 
@@ -199,29 +204,22 @@
     transform: translateY(-4px);
 
     background: transparent;
-
     color: #d4af37;
 
-    box-shadow:
-        0 10px 25px rgba(212,175,55,0.35);
+    box-shadow: 0 10px 25px rgba(212,175,55,0.35);
 }
 
-/* animations */
+/* ==================================================
+   ANIMATIONS
+================================================== */
 
 @keyframes typing {
-    from {
-        width: 0;
-    }
-
-    to {
-        width: 100%;
-    }
+    from { width: 0; }
+    to { width: 100%; }
 }
 
 @keyframes blink {
-    50% {
-        border-color: transparent;
-    }
+    50% { border-color: transparent; }
 }
 
 @keyframes fadeUp {
@@ -229,7 +227,6 @@
         opacity: 0;
         transform: translateY(30px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -237,32 +234,22 @@
 }
 
 @keyframes fadeIn {
-    to {
-        opacity: 1;
-    }
+    to { opacity: 1; }
 }
 
 @keyframes bgZoom {
-    from {
-        background-size: 100%;
-    }
-
-    to {
-        background-size: 108%;
-    }
+    from { background-size: 100%; }
+    to { background-size: 108%; }
 }
 
 @keyframes smokeMove {
-    from {
-        transform: translateX(-30px) translateY(-20px);
-    }
-
-    to {
-        transform: translateX(30px) translateY(20px);
-    }
+    from { transform: translateX(-30px) translateY(-20px); }
+    to { transform: translateX(30px) translateY(20px); }
 }
 
-/* mobile */
+/* ==================================================
+   MOBILE
+================================================== */
 
 @media (max-width: 768px) {
     .hero-container {
