@@ -4,17 +4,20 @@ import learn.DeVitoStyles.data.UserRepository;
 import learn.DeVitoStyles.models.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class UserService {
     private final UserRepository repository;
 
-    public UserService(UserRepository repository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // =========================
@@ -42,20 +45,8 @@ public class UserService {
 
         User dbUser = userFromDatabase.get();
 
-        // plain text comparison
-//        if (!dbUser.getPassword().equals(proposedLoginUser.getPassword())) {
-//            result.addErrorMessage("Incorrect password", ResultType.INVALID);
-//            return result;
-//        }
-
-//        String hashedLoginPassword =
-//                String.valueOf(Objects.hash(proposedLoginUser.getPassword()));
-//
-//        if (!dbUser.getPassword().equals(hashedLoginPassword)) {
-//            result.addErrorMessage("Incorrect password", ResultType.INVALID);
-//            return result;
-//        }
-        if (!dbUser.getPassword().equals(proposedLoginUser.getPassword())) {
+        // Secure password check
+        if (!passwordEncoder.matches(proposedLoginUser.getPassword(), dbUser.getPassword())) {
             result.addErrorMessage("Incorrect password", ResultType.INVALID);
             return result;
         }
@@ -84,14 +75,15 @@ public class UserService {
             result.addErrorMessage("Username is already taken", ResultType.INVALID);
         }
 
-        if (result.isSuccess()) {
-            int hashedPassword = Objects.hash(user.getPassword());
-            String hashedPasswordString = String.valueOf(hashedPassword);
-            user.setPassword(hashedPasswordString);
-
-            User created = repository.create(user);
-            result.setpayload(created);
+        if (!result.isSuccess()) {
+            return result;
         }
+
+        // Real Password Hashing
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        User created = repository.create(user);
+        result.setpayload(created);
 
         return result;
     }

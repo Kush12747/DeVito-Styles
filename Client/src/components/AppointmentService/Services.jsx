@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import ServiceCard from "./ServiceCard";
-import { data } from "react-router-dom";
 import "../../styles/service.css";
 
 const BASE_URL = "http://localhost:8080/api/service";
@@ -9,7 +8,14 @@ function Services() {
     const [services, setServices] = useState([]);
 
     useEffect(() => {
-        fetch(BASE_URL)
+
+        const token = localStorage.getItem("token");
+
+        fetch(BASE_URL, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
         .then(response => response.json())
         .then(data => setServices(data))
         .catch(err => console.error("Error loading services:", err));

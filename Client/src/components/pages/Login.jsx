@@ -34,21 +34,25 @@ function Login() {
         const payload = await response.json()
 
         if (response.ok) {
-            const [userJson] = payload.user.split("|")
-            const parsedUser = JSON.parse(userJson)
+            
+            const loggedInUser = {
+                userId: payload.userId,
+                username: payload.username,
+                role: payload.role
+            };
 
-            parsedUser.diyJwt = payload.user
+            setLoggedInUser(loggedInUser);
 
-            setLoggedInUser(parsedUser)
-            localStorage.setItem("loggedInUser", JSON.stringify(parsedUser))
+            localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+            localStorage.setItem("token", payload.token);
 
-            if (parsedUser.role === "ADMIN") {
+            if (payload.role === "ADMIN") {
                 navigate("/admin")
             } else {
                 navigate("/initial")
             }
         } else {
-            setErrors(payload)
+            setErrors(Array.isArray(payload) ? payload : [payload.message || "Login failed"]);
         }
     }
 

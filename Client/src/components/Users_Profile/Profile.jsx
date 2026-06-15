@@ -33,6 +33,8 @@ function Profile() {
 
   const [enrichedAppointments, setEnrichedAppointments] = useState([]);
 
+  const token = localStorage.getItem("token");
+
   const barberCache = {};
   const serviceCache = {};
 
@@ -57,7 +59,8 @@ function Profile() {
         {
           method: "PUT",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
           },
           body: JSON.stringify({
             ...appointment,
@@ -83,7 +86,8 @@ const handleCancelAppointment = async (appointment) => {
       {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
           ...appointment,
@@ -101,8 +105,6 @@ const handleCancelAppointment = async (appointment) => {
   }
 }
 
-
-
   const handleAppointmentUpdate = async (e) => {
     e.preventDefault();
 
@@ -113,7 +115,8 @@ const handleCancelAppointment = async (appointment) => {
       {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
           ...editingAppointment,
@@ -141,7 +144,12 @@ const enrichAppointments = async (appointments) => {
       // BARBER (cached)
       if (!barberCache[a.barberId]) {
         const res = await fetch(
-          `http://localhost:8080/api/barber/${a.barberId}`
+          `http://localhost:8080/api/barber/${a.barberId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
         );
         barberCache[a.barberId] = await res.json();
       }
@@ -149,7 +157,12 @@ const enrichAppointments = async (appointments) => {
       // SERVICE (cached)
       if (!serviceCache[a.serviceId]) {
         const res = await fetch(
-          `http://localhost:8080/api/service/${a.serviceId}`
+          `http://localhost:8080/api/service/${a.serviceId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
         );
         serviceCache[a.serviceId] = await res.json();
       }
@@ -217,7 +230,13 @@ const enrichAppointments = async (appointments) => {
     try {
 
       const response =
-        await fetch(`http://localhost:8080/api/user/${id}`);
+        await fetch(`http://localhost:8080/api/user/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
 
       const data = await response.json();
 
@@ -241,8 +260,13 @@ const enrichAppointments = async (appointments) => {
     try {
 
       const response = await fetch(
-        `http://localhost:8080/api/appointment/user/${userId}`
-      );
+        `http://localhost:8080/api/appointment/user/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+        }
+      }
+    );
 
       const data = await response.json();
 
@@ -276,7 +300,8 @@ const enrichAppointments = async (appointments) => {
         {
           method: "PUT",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
           },
           body: JSON.stringify({
             ...user,
