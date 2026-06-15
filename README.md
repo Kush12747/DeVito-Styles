@@ -141,7 +141,6 @@ User Stories - Barbershop Appointment System (DeVito Styles)
 
 # Future Enhancements
 - Implementing a mobile app version of the application
-- Implment JWT authentication for enhanced security
 - Adding support for multiple languages
 - Integrating payment processing for online bookings
 - Implementing a loyalty program for customers
