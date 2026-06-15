@@ -29,6 +29,14 @@ public class User {
         this.role = role;
     }
 
+    public String getProfileUrl() {
+        return profileUrl;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
+    }
+
     public int getUserId() {
         return userId;
     }

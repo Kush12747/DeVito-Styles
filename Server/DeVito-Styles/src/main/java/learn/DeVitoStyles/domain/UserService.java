@@ -5,7 +5,10 @@ import learn.DeVitoStyles.models.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +17,23 @@ public class UserService {
     private final UserRepository repository;
 
     private final PasswordEncoder passwordEncoder;
+    private final CloudinaryService service;
 
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, CloudinaryService service) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
+        this.service = service;
+    }
+
+    @Transactional
+    public User uploadProfilePicture(int userId, MultipartFile file) throws IOException {
+        User user = repository.findById(userId).orElseThrow();
+
+        String imageUrl = service.uploadImage(file);
+
+        user.setProfileUrl(imageUrl);
+
+        return repository.save(user);
     }
 
     // =========================
