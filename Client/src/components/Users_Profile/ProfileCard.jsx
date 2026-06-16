@@ -1,6 +1,6 @@
 import "../../styles/profile.css";
 
-function ProfileCard({ user, setEditMode, profileImage, handleImageUpload }) {
+function ProfileCard({ user, setEditMode, handleImageUpload }) {
     if (!user) return null;
     
     return (
@@ -9,7 +9,7 @@ function ProfileCard({ user, setEditMode, profileImage, handleImageUpload }) {
                 <div className="image-upload-container">
                     <label htmlFor="profile-upload">
 
-                        <img src={profileImage || "https://placehold.co/150x150"} alt="profile" className="profile-image" />
+                        <img src={user?.profileUrl || "https://placehold.co/150x150"} alt="profile" className="profile-image" />
 
                     </label>
 
