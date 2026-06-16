@@ -17,23 +17,25 @@ public class UserService {
     private final UserRepository repository;
 
     private final PasswordEncoder passwordEncoder;
-    private final CloudinaryService service;
+    private final CloudinaryService cloudinaryService;
 
     public UserService(UserRepository repository, PasswordEncoder passwordEncoder, CloudinaryService service) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
-        this.service = service;
+        this.cloudinaryService = service;
     }
 
     @Transactional
     public User uploadProfilePicture(int userId, MultipartFile file) throws IOException {
-        User user = repository.findById(userId).orElseThrow();
+        User user = repository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
-        String imageUrl = service.uploadImage(file);
+        String imageUrl = cloudinaryService.uploadImage(file);
+
+        repository.updateProfileUrl(userId, imageUrl);
 
         user.setProfileUrl(imageUrl);
 
-        return repository.save(user);
+        return user;
     }
 
     // =========================

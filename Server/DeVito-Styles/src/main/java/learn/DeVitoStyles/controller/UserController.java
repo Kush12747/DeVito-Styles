@@ -33,6 +33,8 @@ public class UserController {
     @PostMapping("/{userId}/profile-picture")
     public ResponseEntity<?> uploadProfilePicture(@PathVariable int userId, @RequestParam("file") MultipartFile file) throws IOException {
         User user = service.uploadProfilePicture(userId, file);
+
+        return ResponseEntity.ok(user.getProfileUrl());
     }
 
     @PostMapping("/login")
