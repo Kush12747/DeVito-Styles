@@ -19,6 +19,19 @@ public class UserJdbcClientRepository implements UserRepository {
         this.jdbcClient = jdbcClient;
     }
 
+    @Override
+    public boolean updateProfileUrl(int userId, String url) {
+        final String sql = """
+                update users set profile_picture_url = ?
+                where user_id = ?;
+                """;
+
+        return jdbcClient.sql(sql)
+                .param(url)
+                .param(userId)
+                .update() > 0;
+    }
+
     // Register user (signup)
     @Override
     public User create(User user) throws DataAccessException {
@@ -90,6 +103,7 @@ public class UserJdbcClientRepository implements UserRepository {
                     address = ?,
                     phone = ?,
                     role = ?
+                    profile_picture_url = ?
                 WHERE user_id = ?;
                 """;
 
@@ -103,6 +117,7 @@ public class UserJdbcClientRepository implements UserRepository {
                 .param(user.getPhone())
                 .param(user.getRole())
                 .param(user.getUserId())
+                .param(user.getProfileUrl())
                 .update() > 0;
     }
 

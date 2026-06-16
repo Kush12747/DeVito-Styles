@@ -29,8 +29,6 @@ function Profile() {
 
   const [appointments, setAppointments] = useState([]);
 
-  const [profileImage, setProfileImage] = useState("");
-
   const [enrichedAppointments, setEnrichedAppointments] = useState([]);
 
   const token = localStorage.getItem("token");
@@ -47,7 +45,7 @@ function Profile() {
 
     setAppointmentForm({
       date: existingDate.toISOString().split("T")[0],
-      time: existingDate.toTimeString().split().slice(0, 5)
+      time: existingDate.toTimeString().slice(0, 5)
     });
   };
 
@@ -181,28 +179,39 @@ const enrichAppointments = async (appointments) => {
   setEnrichedAppointments(enriched);
 };
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
 
     if (!file || !user) return;
 
-    const reader = new FileReader();
+    try {
 
-    reader.onloadend = () => {
+      const formData = new FormData();
 
-    // update the UI instantly
-    setProfileImage(reader.result);
+      formData.append("file", file);
 
-    // save to localStorage
-    localStorage.setItem(
-      `profileImage-${user.userId}`,
-      reader.result
-    );
-  };
-    reader.readAsDataURL(file);
+      const response = await fetch(
+        `http://localhost:8080/api/user/${user.userId}/profile-picture`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          body: formData
+        }
+      );
 
-    e.target.value = "";
-  };
+      if (response.ok) {
+        const updatedUser = await response.json();
+
+        setUser(updatedUser);
+
+        localStorage.setItem("loggedInUser", JSON.stringify(updatedUser));
+      }
+    } catch(error) {
+      console.log(error);
+    }
+  }
 
 
   useEffect(() => {
@@ -215,12 +224,6 @@ const enrichAppointments = async (appointments) => {
     if (storedUser) {
       fetchUser(storedUser.userId);
       fetchAppointments(storedUser.userId);
-    
-      const savedImage = localStorage.getItem(`profileImage-${storedUser.userId}`);
-
-      if (savedImage) {
-        setProfileImage(savedImage);
-      }
     }
 
   }, []);
@@ -346,7 +349,7 @@ const appointmentHistory =
     return (
         <div className="profile-page">
 
-            <ProfileCard user={user} setEditMode={setEditMode} profileImage={profileImage} handleImageUpload={handleImageUpload} />
+            <ProfileCard user={user} setEditMode={setEditMode} handleImageUpload={handleImageUpload} />
 
             {editMode && (
                 <EditProfileForm formData={formData} handleChange={handleChange} handleSubmit={handleSubmit} setEditMode={setEditMode} />

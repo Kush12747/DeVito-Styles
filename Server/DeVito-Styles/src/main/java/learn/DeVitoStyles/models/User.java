@@ -12,6 +12,7 @@ public class User {
     private String address;
     private String phone;
     private String role;
+    private String profileUrl;
 
     public User() {
     }
@@ -26,6 +27,14 @@ public class User {
         this.address = address;
         this.phone = phone;
         this.role = role;
+    }
+
+    public String getProfileUrl() {
+        return profileUrl;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
     }
 
     public int getUserId() {

@@ -55,3 +55,6 @@ CREATE TABLE appointment (
 ALTER TABLE appointment
 ADD CONSTRAINT unique_barber_time
 UNIQUE (barber_id, appointment_datetime);
+
+ALTER TABLE users
+ADD profile_picture_url VARCHAR(500);
