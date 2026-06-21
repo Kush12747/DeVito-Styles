@@ -34,7 +34,7 @@ public class UserController {
     public ResponseEntity<?> uploadProfilePicture(@PathVariable int userId, @RequestParam("file") MultipartFile file) throws IOException {
         User user = service.uploadProfilePicture(userId, file);
 
-        return ResponseEntity.ok(user.getProfileUrl());
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping("/login")

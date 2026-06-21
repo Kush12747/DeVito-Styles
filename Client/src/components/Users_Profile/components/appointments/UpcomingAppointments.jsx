@@ -1,35 +1,33 @@
-function UpcommingAppointments({ appointments, onEdit, onComplete, onCancel }) {
-    return (
-        <div className="appointment-card">
+import AppointmentCard from "./AppointmentCard";
 
-            <h3>Upcomming Appointments</h3>
+function UpcomingAppointments({
+  appointments,
+  onComplete,
+  onCancel,
+  onEdit
+}) {
 
-            {appointments.length == 0 ? (
-                <p>No Upcomming Appointments.</p>
-            ) : (
-                appointments.map(a => (
-                    <div className="appointment-item" key={a.appointmentId} >
+  return (
+    <div className="upcoming-appointments">
 
-                        <h4>{a.serviceName}</h4>
+      <h3>Upcoming Appointments</h3>
 
-                        <p>Barber: {a.barberName}</p>
+      {appointments.length === 0 ? (
+        <p>No Upcoming Appointments</p>
+      ) : (
+        appointments.map((appointment) => (
+          <AppointmentCard
+            key={appointment.appointmentId}
+            appointment={appointment}
+            onComplete={onComplete}
+            onCancel={onCancel}
+            onEdit={onEdit}
+          />
+        ))
+      )}
 
-                        <p>{new Date(a.appointmentDatetime).toLocaleString()}</p>
-                        <p className={`status ${a.status?.toLowerCase()}`}>Status: {a.status}</p>
-
-                        {a.status === "BOOKED" && (
-                            <div className="appointment-actions">
-                                <button className="reschedule-btn" onClick={() => onEdit(a)}>Reschedule</button>
-                                <button className="complete-btn" onClick={() => onComplete(a)}>Complete</button>
-                                <button className="cancel-btn" onClick={() => onCancel(a)}>Cancel</button>
-                            </div>
-                        )}
-                    </div>
-                ))
-            )}
-
-        </div>
-    );
+    </div>
+  );
 }
 
-export default UpcommingAppointments;
+export default UpcomingAppointments;

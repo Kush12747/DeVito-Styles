@@ -80,7 +80,7 @@ body {
 
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
 
-  transition: 0.3 ease;
+  transition: 0.3s ease;
 }
 
 .profile-card:hover,
@@ -343,6 +343,25 @@ button:active {
   background: rgba(183, 28, 28, 0.15);
   border: 1px solid #ef5350;
   color: white;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.4rem 0;
+  padding: 0.2rem 0;
+}
+
+.label {
+  color: #b5b5b5;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.value {
+  color: #ffffff;
+  text-align: right;
 }
 
 /* =========================

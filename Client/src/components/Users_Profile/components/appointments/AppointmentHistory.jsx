@@ -1,26 +1,41 @@
 function AppointmentHistory({ appointments }) {
-    return (
-        <div className="appointment-card">
 
-            <h3>Appointment History</h3>
+  return (
+    <div className="appointment-history">
 
-            {appointments.length === 0 ? (
-                <p>No Appointment History</p>
-            ) : (
-                appointments.map(a => (
-                    <div className="appointment-item" key={a.appointmentId}>
-                        
-                        <h4>{a.serviceName}</h4>
+      <h3>Appointment History</h3>
 
-                        <p>Barber: {a.barberName}</p>
-                    
-                        <p>{new Date(a.appointmentDatetime).toLocaleString()}</p>
+      {appointments.length === 0 ? (
+        <p>No Appointment History</p>
+      ) : (
+        appointments.map(appointment => (
+          <div
+            className="appointment-item"
+            key={appointment.appointmentId}
+          >
 
-                    </div>
-                ))
-            )}
-        </div>
-    );
+            <h4>{appointment.serviceName}</h4>
+
+            <p>
+              Barber: {appointment.barberName}
+            </p>
+
+            <p>
+              {new Date(
+                appointment.appointmentDatetime
+              ).toLocaleString()}
+            </p>
+
+            <p>
+              Status: {appointment.status}
+            </p>
+
+          </div>
+        ))
+      )}
+
+    </div>
+  );
 }
 
 export default AppointmentHistory;

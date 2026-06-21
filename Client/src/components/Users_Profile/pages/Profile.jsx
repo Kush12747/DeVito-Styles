@@ -1,11 +1,10 @@
-import "../../styles/profile.css";
+import "../../../styles/profile.css";
 import { useEffect, useState } from "react";
 
-import ProfileCard from "../ProfileCard";
-import EditProfileForm from "../EditProfileForm";
-import UpcomingAppointments from "../UpcomingAppointments";
-import AppointmentHistory from "../AppointmentHistory";
-import RescheduleAppointmentForm from "../RescheduleAppointmentForm";
+import ProfileCard from "../components/profile/ProfileCard";
+import UpcomingAppointments from "../components/appointments/UpcomingAppointments";
+import AppointmentHistory from "../components/appointments/AppointmentHistory";
+import EditProfileForm from "../components/profile/EditProfileForm";
 
 import useUser from "../hooks/useUser";
 import useAppointments from "../hooks/useAppointments";
@@ -14,72 +13,96 @@ function Profile() {
 
   const token = localStorage.getItem("token");
 
-  const {
-    user,
-    formData,
-    setFormData,
-    loadUser,
-    saveUser,
-    uploadImage
-  } = useUser(token);
-
-  const {
-    enriched,
-    loadAppointments
-  } = useAppointments(token);
-
+  const user = useUser(token);
+  const appointments = useAppointments(token);
   const [editMode, setEditMode] = useState(false);
-  const [editingAppointment, setEditingAppointment] = useState(null);
-  const [appointmentForm, setAppointmentForm] = useState({
-    date: "",
-    time: ""
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: ""
   });
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    const storedUser = JSON.parse(
+      localStorage.getItem("loggedInUser")
+    );
 
     if (storedUser) {
-      loadUser(storedUser.userId);
-      loadAppointments(storedUser.userId);
+      user.loadUser(storedUser.userId);
+      appointments.loadAppointments(storedUser.userId);
     }
+
   }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    await user.saveUser();
+
+    setEditMode(false);
+  }
 
   const now = new Date();
 
-  const upcoming = enriched.filter(a => new Date(a.appointmentDatetime) > now);
-  const history = enriched.filter(a => new Date(a.appointmentDatetime) <= now);
+  const upcoming = appointments.enriched.filter(
+    a => new Date(a.appointmentDatetime) > now
+  );
+
+  const history = appointments.enriched.filter(
+    a => new Date(a.appointmentDatetime) <= now
+  );
+
+  const handleComplete = (appointment) => {
+    console.log("Complete:", appointment);
+  };
+
+  const handleCancel = (appointment) => {
+    console.log("Cancel:", appointment);
+  };
+
+  const handleReschedule = (appointment) => {
+    console.log("Reschedule:", appointment);
+  };
 
   return (
     <div className="profile-page">
 
-      <ProfileCard
-        user={user}
+      {editMode ? (
+      <EditProfileForm
+        formData={user.formData}
+        handleChange={user.handleChange}
+        handleSubmit={handleSubmit}
         setEditMode={setEditMode}
-        handleImageUpload={uploadImage}
       />
-
-      {editMode && (
-        <EditProfileForm
-          formData={formData}
-          handleChange={(e) =>
-            setFormData({
-              ...formData,
-              [e.target.name]: e.target.value
-            })
-          }
-          handleSubmit={saveUser}
-          setEditMode={setEditMode}
-        />
-      )}
+    ) : (
+      <ProfileCard
+        user={user.user}
+        handleImageUpload={user.uploadImage}
+        setEditMode={setEditMode}
+      />
+    )}
 
       <div className="appointments-wrapper">
 
-        <UpcomingAppointments appointments={upcoming} />
-
-        <AppointmentHistory appointments={history} />
+        <div className="appointments-card">
+          
+          <UpcomingAppointments
+            appointments={upcoming}
+            onComplete={appointments.handleComplete}
+            onCancel={appointments.handleCancel}
+            onEdit={appointments.handleReschedule}
+          />
+        </div>
+        
+          
+          <div className="appointments-card">
+            
+            <AppointmentHistory appointments={history} />
+        </div>
 
       </div>
-
     </div>
   );
 }
