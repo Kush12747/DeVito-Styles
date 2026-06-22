@@ -58,3 +58,29 @@ UNIQUE (barber_id, appointment_datetime);
 
 ALTER TABLE users
 ADD profile_picture_url VARCHAR(500);
+
+
+CREATE TABLE review (
+	review_id INT PRIMARY KEY AUTO_INCREMENT,
+	
+	user_id INT NOT NULL,
+	appointment_id INT NOT NULL UNIQUE,
+	barber_id INT NOT NULL,
+	
+	rating TINYINT NOT NULL,	
+	review_text TEXT,
+	
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	
+	CONSTRAINT fk_review_user
+		FOREIGN KEY (user_id)
+		REFERENCES users(user_id),
+	
+	CONSTRAINT fk_review_barber
+		FOREIGN KEY	(barber_id)
+		REFERENCES barber(barber_id),
+		
+	CONSTRAINT fk_review_appointment
+		FOREIGN KEY (appointment_id)
+		REFERENCES appointment(appointment_id)
+);

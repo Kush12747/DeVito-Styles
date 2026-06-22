@@ -102,24 +102,19 @@ VALUES
 -- =========================
 -- APPOINTMENTS
 -- =========================
-INSERT INTO appointment (
-    user_id,
-    barber_id,
-    service_id,
-    appointment_datetime,
-    status
-)
-VALUES
-(2, 1, 2, '2026-05-23 10:00:00', 'BOOKED'),
-(3, 2, 3, '2026-05-23 11:30:00', 'BOOKED'),
-(3, 2, 2, '2026-05-23 09:00:00', 'BOOKED'),
-(4, 1, 4, '2026-05-21 14:00:00', 'COMPLETED'),
-(2, 3, 3, '2026-05-22 16:00:00','CANCELLED'),
-(4, 2, 3, '2026-05-23 14:00:00', 'BOOKED' ),
-(5, 3, 4, '2026-05-31 10:00:00', 'BOOKED');
-
 INSERT INTO appointment (user_id, barber_id, service_id, appointment_datetime, status)
 VALUES
-(3, 1, 1, '2025-05-10 10:00:00', 'COMPLETED'),
-(3, 2, 2, '2025-05-12 11:00:00', 'CANCELLED'),
-(3, 1, 3, '2025-05-14 09:00:00', 'COMPLETED');
+(2,1,2,'2026-05-12 10:00:00','COMPLETED'),
+(3,2,1,'2026-05-12 11:30:00','COMPLETED'),
+(4,1,4,'2026-05-13 14:00:00','COMPLETED'),
+(2,3,3,'2026-05-14 16:00:00','BOOKED');
+
+
+-- =========================
+-- REVIEWS
+-- =========================
+	INSERT INTO review (user_id, barber_id, appointment_id, rating, review_text)
+	VALUES
+	(2,1,1,5,'Excellent haircut. Will definitely come back.'),
+	(3,2,2,4,'Great service and very professional.'),
+	(4,1,3,5,'Best fade I have ever had.');

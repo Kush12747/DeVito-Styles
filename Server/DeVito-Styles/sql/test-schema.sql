@@ -51,11 +51,37 @@ CREATE TABLE appointment (
 		REFERENCES service(service_id)
 );
 
+CREATE TABLE review (
+	review_id INT PRIMARY KEY AUTO_INCREMENT,
+	
+	user_id INT NOT NULL,
+	appointment_id INT NOT NULL UNIQUE,
+	barber_id INT NOT NULL,
+	
+	rating TINYINT NOT NULL,	
+	review_text TEXT,
+	
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	
+	CONSTRAINT fk_review_user
+		FOREIGN KEY (user_id)
+		REFERENCES users(user_id),
+	
+	CONSTRAINT fk_review_barber
+		FOREIGN KEY	(barber_id)
+		REFERENCES barber(barber_id),
+		
+	CONSTRAINT fk_review_appointment
+		FOREIGN KEY (appointment_id)
+		REFERENCES appointment(appointment_id)
+);
+
 DELIMITER //
 
 CREATE PROCEDURE set_known_good_state()
 BEGIN
 
+	DELETE FROM review;
 	DELETE FROM appointment;
     DELETE FROM service;
     DELETE FROM barber;
@@ -65,6 +91,7 @@ BEGIN
 	ALTER TABLE service AUTO_INCREMENT = 1;
 	ALTER TABLE barber AUTO_INCREMENT = 1;
 	ALTER TABLE appointment AUTO_INCREMENT = 1;
+	ALTER TABLE review AUTO_INCREMENT = 1;
 
 	-- USERS
 	INSERT INTO users (username, first_name, last_name, email, password, address, phone, role)
@@ -92,10 +119,17 @@ BEGIN
 	-- APPOINTMENTS
 	INSERT INTO appointment (user_id, barber_id, service_id, appointment_datetime, status)
 	VALUES
-	(2,1,2,'2026-05-12 10:00:00','BOOKED'),
-	(3,2,1,'2026-05-12 11:30:00','BOOKED'),
+	(2,1,2,'2026-05-12 10:00:00','COMPLETED'),
+	(3,2,1,'2026-05-12 11:30:00','COMPLETED'),
 	(4,1,4,'2026-05-13 14:00:00','COMPLETED'),
-	(2,3,3,'2026-05-14 16:00:00','CANCELLED');
+	(2,3,3,'2026-05-14 16:00:00','BOOKED');
+	
+	-- REVIEWS
+	INSERT INTO review (user_id, barber_id, appointment_id, rating, review_text)
+	VALUES
+	(2,1,1,5,'Excellent haircut. Will definitely come back.'),
+	(3,2,2,4,'Great service and very professional.'),
+	(4,1,3,5,'Best fade I have ever had.');
 
 END //
 
