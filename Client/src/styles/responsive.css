@@ -1,0 +1,142 @@
+/* ================================
+   GLOBAL RESPONSIVE BASE FIXES
+================================ */
+
+/* Prevent layout overflow issues */
+* {
+  box-sizing: border-box;
+}
+
+/* Images scale correctly */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent horizontal scroll on mobile */
+html, body {
+  overflow-x: hidden;
+}
+
+
+/* ================================
+   TABLET (<= 1024px)
+================================ */
+@media (max-width: 1024px) {
+
+  /* Reduce large paddings/margins */
+  .container,
+  .wrapper,
+  .main,
+  .content {
+    padding: 16px !important;
+  }
+
+  /* Convert multi-column layouts to softer stacking */
+  .row,
+  .flex-row {
+    flex-wrap: wrap;
+  }
+
+  /* Common sidebar fix */
+  .sidebar {
+    width: 100% !important;
+    position: static !important;
+  }
+
+  /* Reduce font scaling slightly */
+  body {
+    font-size: 15px;
+  }
+}
+
+
+/* ================================
+   MOBILE (<= 768px)
+================================ */
+@media (max-width: 768px) {
+
+  /* Force single column layouts */
+  .row,
+  .flex-row,
+  .grid,
+  .grid-2,
+  .grid-3 {
+    display: block !important;
+  }
+
+  /* Full-width sections */
+  .container,
+  .wrapper,
+  .main,
+  .content {
+    width: 100% !important;
+    padding: 12px !important;
+  }
+
+  /* Navigation stacking */
+  nav,
+  .nav,
+  .navbar {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  /* Buttons easier to tap */
+  button,
+  .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  /* Forms mobile-friendly */
+  input,
+  select,
+  textarea {
+    width: 100%;
+  }
+
+  /* Typography scaling */
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+}
+
+
+/* ================================
+   SMALL MOBILE (<= 480px)
+================================ */
+@media (max-width: 480px) {
+
+  body {
+    font-size: 14px;
+  }
+
+  .container,
+  .wrapper,
+  .main,
+  .content {
+    padding: 10px !important;
+  }
+
+  /* Reduce spacing further */
+  section {
+    margin-bottom: 12px;
+  }
+
+  /* Make buttons even more touch-friendly */
+  button,
+  .btn {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
