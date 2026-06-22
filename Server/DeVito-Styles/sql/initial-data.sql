@@ -113,8 +113,8 @@ VALUES
 -- =========================
 -- REVIEWS
 -- =========================
-	INSERT INTO review (user_id, barber_id, appointment_id, rating, review_text)
-	VALUES
-	(2,1,1,5,'Excellent haircut. Will definitely come back.'),
-	(3,2,2,4,'Great service and very professional.'),
-	(4,1,3,5,'Best fade I have ever had.');
+INSERT INTO review (user_id, barber_id, appointment_id, rating, review_text)
+VALUES
+(2,1,1,5,'Excellent haircut. Will definitely come back.'),
+(3,2,2,4,'Great service and very professional.'),
+(4,1,3,5,'Best fade I have ever had.');
