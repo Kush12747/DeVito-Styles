@@ -32,10 +32,41 @@ class ReviewJdbcClientRepositoryTest {
     }
 
     @Test
-    void add() {
+    void shouldNotFindReviewById() {
+        Review review = repository.findById(9999);
+        assertNull(review);
     }
 
     @Test
-    void findByAppointmentId() {
+    void shouldAddReview() {
+        Review review = new Review();
+
+        review.setUserId(2);
+        review.setBarberId(1);
+        review.setAppointmentId(4);
+        review.setRating(4);
+        review.setReviewText("Great Service.");
+
+        Review result = repository.add(review);
+
+        assertNotNull(result);
+        assertTrue(result.getReviewId() > 0);
+
+        Review fromDb = repository.findById(result.getReviewId());
+        assertEquals("Great Service.", fromDb.getReviewText());
+    }
+
+    @Test
+    void shouldFindReviewByAppointmentId() {
+        Review review = repository.findByAppointmentId(1);
+
+        assertNotNull(review);
+        assertEquals(1, review.getAppointmentId());
+    }
+
+    @Test
+    void shouldNotFindReviewByAppointmentId() {
+        Review review = repository.findByAppointmentId(9999);
+        assertNull(review);
     }
 }
