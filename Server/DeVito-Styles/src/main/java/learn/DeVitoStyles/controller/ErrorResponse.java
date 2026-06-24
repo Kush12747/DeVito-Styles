@@ -4,6 +4,8 @@ import learn.DeVitoStyles.domain.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import static org.springframework.http.HttpStatus.*;
+
 public class ErrorResponse {
 
     private ErrorResponse() {
@@ -18,7 +20,17 @@ public class ErrorResponse {
         HttpStatus status = switch (result.getResultType()) {
             case NOT_FOUND -> HttpStatus.NOT_FOUND;
 
-            case
-        }
+            case CONFLICT -> HttpStatus.CONFLICT;
+
+            case UNAUTHORIZED -> UNAUTHORIZED;
+
+            case FORBIDDEN -> FORBIDDEN;
+
+            case INVALID -> HttpStatus.BAD_REQUEST;
+
+            default -> HttpStatus.BAD_REQUEST;
+        };
+
+        return new ResponseEntity<>(result.getMessages(), status);
     }
 }

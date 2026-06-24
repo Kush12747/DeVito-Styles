@@ -2,7 +2,6 @@ package learn.DeVitoStyles.controller;
 
 import learn.DeVitoStyles.domain.BarberService;
 import learn.DeVitoStyles.domain.Result;
-import learn.DeVitoStyles.domain.ResultType;
 import learn.DeVitoStyles.models.Barber;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -32,7 +31,7 @@ public class BarberController {
         Result<Barber> result = service.findById(id);
 
         if (!result.isSuccess()) {
-            return buildErrorResponse(result);
+            return ErrorResponse.build(result);
         }
         return ResponseEntity.ok(result.getpayload());
     }
@@ -42,7 +41,7 @@ public class BarberController {
         Result<Barber> result = service.create(barber);
 
         if (!result.isSuccess()) {
-            return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
+            return ErrorResponse.build(result);
         }
 
         return new ResponseEntity<>(result.getpayload(), HttpStatus.CREATED);
@@ -58,7 +57,7 @@ public class BarberController {
         Result<Barber> result = service.update(barber);
 
         if (!result.isSuccess()) {
-            return buildErrorResponse(result);
+            return ErrorResponse.build(result);
         }
         return new ResponseEntity<>(result.getpayload(), HttpStatus.OK);
     }
@@ -68,18 +67,10 @@ public class BarberController {
         Result<Void> result = service.delete(id);
 
         if (!result.isSuccess()) {
-            return buildErrorResponse(result);
+            return ErrorResponse.build(result);
         }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    private ResponseEntity<Object> buildErrorResponse(Result<?> result) {
-        if (result.getResultType() == ResultType.NOT_FOUND) {
-            return new ResponseEntity<>(result.getMessages(), HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
     }
 }
 
