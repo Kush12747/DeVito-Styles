@@ -79,7 +79,10 @@ function BookingPage() {
 
         const res = await fetch(APPOINTMENT_URL, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
             body: JSON.stringify({
                 userId,
                 barberId: Number(barberId),

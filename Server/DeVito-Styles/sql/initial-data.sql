@@ -104,11 +104,11 @@ VALUES
 -- =========================
 INSERT INTO appointment (user_id, barber_id, service_id, appointment_datetime, status)
 VALUES
-(2,1,2,'2026-05-12 10:00:00','COMPLETED'),
+(2,1,2,'2026-05-12 09:00:00','COMPLETED'),
 (3,2,1,'2026-05-12 11:30:00','COMPLETED'),
 (4,1,4,'2026-05-13 14:00:00','COMPLETED'),
-(2,3,3,'2026-05-14 16:00:00','BOOKED');
-
+(2,3,3,'2026-05-14 16:00:00','BOOKED'),
+(6,2,4,'2026-05-15 10:00:00','COMPLETED');
 
 -- =========================
 -- REVIEWS
