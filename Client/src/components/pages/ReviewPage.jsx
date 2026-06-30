@@ -5,17 +5,20 @@
 *   - Rendering the review form
 */
 
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { addReview } from "../../Services/reviewService";
 import { fetchAppointmentById } from "../../Services/appointmentService";
 
 import ReviewForm from "../AppointmentService/ReviewForm";
+import "../../styles/ReviewPage.css";
 
 function ReviewPage() {
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const passedAppointment = location.state?.appointment;
 
     const { appointmentId } = useParams();
 
@@ -30,6 +33,13 @@ function ReviewPage() {
         async function loadAppointment() {
 
             try {
+
+                if (passedAppointment) {
+
+                    setAppointment(passedAppointment);
+
+                    return;
+                }
 
                 const data = await fetchAppointmentById(
                     appointmentId,
@@ -81,55 +91,59 @@ function ReviewPage() {
     }
 
     if (!appointment) {
-
         return <p>Loading appointment...</p>;
-
     }
 
     return (
 
-        <div>
+        <div className="review-page">
 
-            <h2>Leave a Review</h2>
+            <div className="review-container">
+                
+                <div className="review-header">
+                    <h2>Leave a Review</h2>
 
-            <p>
+                    <p>Tell us about your expereince with your appointment.</p>
+                </div>
 
-                <strong>Date:</strong>{" "}
+                    <div className="appointment-summary">
+                        <h3>Appointment Details</h3>
 
-                {new Date(
-                    appointment.appointmentDatetime
-                ).toLocaleString()}
+                        <div className="summary-row">
+                            <span>Service</span>
+                            <span>{appointment.serviceName}</span>
+                        </div>
 
-            </p>
+                        <div className="summary-row">
+                            <span>Barber</span>
+                            <span>{appointment.barberName}</span>
+                        </div>
+                        
+                        <div className="summary-row">
+                            <span>Date</span>
 
-            <p>
+                            <span>
+                                {new Date(appointment.appointmentDatetime).toLocaleString()}
+                            </span>
+                        </div>
 
-                <strong>Barber ID:</strong>{" "}
+                    </div>
+                    
+                    {errors.length > 0 && (
+                        <div className="review-errors">
+                            {errors.map(error => (
+                                <p key={error}>{error}</p>
+                            ))}
+                        </div>
+                    )}
 
-                {appointment.barberId}
+                    <ReviewForm onSubmit={handleSubmit} />
 
-            </p>
+                </div>
+            </div>
 
-            {errors.length > 0 && (
+        );
 
-                <ul>
-
-                    {errors.map(error => (
-
-                        <li key={error}>{error}</li>
-
-                    ))}
-
-                </ul>
-
-            )}
-
-            <ReviewForm onSubmit={handleSubmit} />
-
-        </div>
-
-    );
-
-}
+    }
 
 export default ReviewPage;

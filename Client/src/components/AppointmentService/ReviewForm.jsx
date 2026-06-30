@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../../styles/reviewPage.css";
 
 function ReviewForm({ onSubmit }) {
 
@@ -22,13 +23,9 @@ function ReviewForm({ onSubmit }) {
 
     return (
 
-        <form onSubmit={handleSubmit}>
-
-            <h2>Leave a Review</h2>
+        <form onSubmit={handleSubmit} className="review-form">
 
             <label>Rating</label>
-
-            <br />
 
             <select
                 value={rating}
@@ -36,45 +33,29 @@ function ReviewForm({ onSubmit }) {
                     setRating(Number(e.target.value))
                 }
             >
-
-                <option value={5}>5 Stars</option>
-
-                <option value={4}>4 Stars</option>
-
-                <option value={3}>3 Stars</option>
-
-                <option value={2}>2 Stars</option>
-
-                <option value={1}>1 Star</option>
-
+                <option value={5}>⭐⭐⭐⭐⭐ Excellent</option>
+                <option value={4}>⭐⭐⭐⭐ Very Good</option>
+                <option value={3}>⭐⭐⭐ Good</option>
+                <option value={2}>⭐⭐ Fair</option>
+                <option value={1}>⭐ Poor</option>
             </select>
 
-            <br />
-            <br />
-
-            <label>Review</label>
-
-            <br />
+            <label>Tell us about your experience</label>
 
             <textarea
-                rows="5"
+                rows="6"
+                placeholder="Share your experience..."
                 value={reviewText}
                 onChange={(e) =>
                     setReviewText(e.target.value)
                 }
             />
 
-            <br />
-            <br />
-
             <button type="submit">
-
                 Submit Review
-
             </button>
 
         </form>
-
     );
 
 }

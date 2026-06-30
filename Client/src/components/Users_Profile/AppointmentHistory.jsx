@@ -23,6 +23,7 @@ function AppointmentHistory({ appointments }) {
                         {a.status === "COMPLETED" && (
                             <Link
                                 to={`/appointments/${a.appointmentId}/review`}
+                                state={{ appointment: a }}
                             >
                                 Leave Review
                             </Link>
