@@ -10,6 +10,9 @@ import { useEffect, useState } from "react";
 
 import { addReview } from "../../Services/reviewService";
 import { fetchAppointmentById } from "../../Services/appointmentService";
+import { FaCut } from "react-icons/fa";
+import { GiRazor } from "react-icons/gi";
+import { FaCalendarAlt } from "react-icons/fa";
 
 import ReviewForm from "../AppointmentService/ReviewForm";
 import "../../styles/ReviewPage.css";
@@ -110,17 +113,28 @@ function ReviewPage() {
                         <h3>Appointment Details</h3>
 
                         <div className="summary-row">
-                            <span>Service</span>
+                            <span>
+                                <FaCut className="summary-icon" />
+                                Service
+                            </span>
+                            
                             <span>{appointment.serviceName}</span>
                         </div>
 
                         <div className="summary-row">
-                            <span>Barber</span>
+                            <span>
+                                <GiRazor className="summary-icon" />
+                                Barber
+                            </span>
+                            
                             <span>{appointment.barberName}</span>
                         </div>
-                        
+
                         <div className="summary-row">
-                            <span>Date</span>
+                            <span>
+                                <FaCalendarAlt className="summary-icon" />
+                                Date
+                            </span>
 
                             <span>
                                 {new Date(appointment.appointmentDatetime).toLocaleString()}
@@ -141,7 +155,6 @@ function ReviewPage() {
 
                 </div>
             </div>
-
         );
 
     }

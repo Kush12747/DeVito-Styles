@@ -1,97 +1,196 @@
 .review-page {
     min-height: 100vh;
-    background: #f5f5f5;
+    background-image: url("../images/form.jpg");
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    padding: 50px 20px;
+    align-items: center;
+    padding: 80px 20px;
 }
 
 .review-container {
     width: 100%;
-    max-width: 700px;
-    background: white;
-    border-radius: 12px;
-    padding: 35px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    max-width: 760px;
+    background: rgba(25, 25, 25, 0.96);
+    border: 2px solid #d4af37;
+    border-radius: 18px;
+    padding: 40px;
+    box-shadow:
+        0 0 15px rgba(212, 175, 55, .25),
+        0 25px 60px rgba(0,0,0,.6);
+    animation: fadeUp .8s ease;
 }
 
 .review-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
 .review-header h2 {
-    margin-bottom: 8px;
-    font-size: 2rem;
+    color: #d4af37;
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
 }
 
 .review-header p {
-    color: #666;
+    color: #d5d5d5;
+    font-size: 1.05rem;
 }
 
 .appointment-summary {
-    background: #fafafa;
-    border: 1px solid #e6e6e6;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 30px;
+    background: #111;
+    border: 1px solid rgba(212,175,55,.35);
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 35px;
+    transition: .35s;
+}
+
+.appointment-summary:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 20px rgba(212,175,55,.25);
 }
 
 .appointment-summary h3 {
+    color: #d4af37;
     margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .summary-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 12px;
+    align-items: center;
+    color: white;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,.08);
 }
 
 .summary-row:last-child {
-    margin-bottom: 0;
+    border-bottom: none;
 }
 
 .summary-row span:first-child {
-    font-weight: bold;
+    color: #d4af37;
+    font-weight: 700;
 }
 
 .review-errors {
-    background: #ffe8e8;
-    color: #c0392b;
+    background: rgba(180,0,0,.2);
+    color: #ff7d7d;
+    border-left: 5px solid crimson;
     padding: 15px;
-    border-radius: 8px;
     margin-bottom: 25px;
+    border-radius: 8px;
 }
 
 .review-form {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 20px;
 }
 
 .review-form label {
-    font-weight: 600;
+    color: #d4af37;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
 .review-form select,
 .review-form textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #d9d9d9;
-    border-radius: 8px;
+    background: #0f0f0f;
+    color: white;
+    border: 2px solid #2b2b2b;
+    border-radius: 10px;
+    padding: 15px;
     font-size: 1rem;
+    transition: .3s;
+}
+
+.review-form select:focus,
+.review-form textarea:focus {
+    outline: none;
+    border-color: #d4af37;
+    box-shadow: 0 0 12px rgba(212,175,55,.45);
 }
 
 .review-form textarea {
     resize: vertical;
+    min-height: 170px;
 }
 
 .review-form button {
-    align-self: flex-end;
-    padding: 12px 30px;
+    align-self: center;
+    background: linear-gradient(
+        135deg,
+        #d4af37,
+        #f4d03f
+    );
+    color: black;
     border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    padding: 15px 45px;
+    border-radius: 40px;
     font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.review-form button:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 0 25px rgba(212,175,55,.6);
+}
+
+.review-form button:active {
+    transform: scale(.97);
+}
+
+.summary-icon{
+    margin-right:10px;
+    color:#d4af37;
+}
+
+.star-rating{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    margin-bottom:20px;
+}
+
+.star{
+    font-size:2.6rem;
+    color:#555;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.star:hover{
+    transform:scale(1.2);
+}
+
+.star.active{
+    color:#d4af37;
+    text-shadow:0 0 12px #d4af37;
+}
+
+.rating-label{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: #d4af37;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
