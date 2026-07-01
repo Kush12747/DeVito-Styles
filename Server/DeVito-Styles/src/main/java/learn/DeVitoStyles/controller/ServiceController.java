@@ -32,7 +32,7 @@ public class ServiceController {
         Result<Service> result = service.findById(id);
 
         if (!result.isSuccess()) {
-            return buildErrorResponse(result);
+            return ErrorResponse.build(result);
         }
         return ResponseEntity.ok(result.getpayload());
     }
@@ -42,7 +42,7 @@ public class ServiceController {
         Result<Service> result = service.create(serviceObj);
 
         if (!result.isSuccess()) {
-            return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
+            return ErrorResponse.build(result);
         }
 
         return new ResponseEntity<>(result.getpayload(), HttpStatus.CREATED);
@@ -58,7 +58,7 @@ public class ServiceController {
         Result<Service> result = service.update(serviceObj);
 
         if (!result.isSuccess()) {
-            return buildErrorResponse(result);
+            return ErrorResponse.build(result);
         }
 
         return new ResponseEntity<>(result.getpayload(), HttpStatus.OK);
@@ -69,17 +69,9 @@ public class ServiceController {
         Result<Void> result = service.deleteById(id);
 
         if (!result.isSuccess()) {
-            return buildErrorResponse(result);
+            return ErrorResponse.build(result);
         }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    private ResponseEntity<Object> buildErrorResponse(Result<?> result) {
-        if (result.getResultType() == ResultType.NOT_FOUND) {
-            return new ResponseEntity<>(result.getMessages(), HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
     }
 }

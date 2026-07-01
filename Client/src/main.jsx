@@ -18,6 +18,7 @@ import InitialPage from './components/pages/InitialPage';
 import Landing from './components/pages/Landing';
 import BookingPage from './components/AppointmentService/BookingPage';
 import AdminUsers from './components/Admin/AdminUsers';
+import ReviewPage from './components/pages/ReviewPage';
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: 'book/:serviceId',
         element: <BookingPage />
+      },
+      {
+        path: "/appointments/:appointmentId/review",
+        element: <ReviewPage />
       }
     ]
   }

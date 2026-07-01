@@ -337,12 +337,12 @@ const enrichAppointments = async (appointments) => {
 
   const upcomingAppointments =
   enrichedAppointments.filter(a =>
-    new Date(a.appointmentDatetime) > now
+    a.status === "BOOKED" || a.status === "CONFIRMED"
   );
 
 const appointmentHistory =
   enrichedAppointments.filter(a =>
-    new Date(a.appointmentDatetime) <= now
+    a.status === "COMPLETED" || a.status === "CANCELLED"
   );
 
 

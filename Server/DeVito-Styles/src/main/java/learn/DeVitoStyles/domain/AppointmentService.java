@@ -1,6 +1,7 @@
 package learn.DeVitoStyles.domain;
 
 import learn.DeVitoStyles.data.AppointmentRepository;
+import learn.DeVitoStyles.data.ReviewRepository;
 import learn.DeVitoStyles.data.UserRepository;
 import learn.DeVitoStyles.models.Appointment;
 import learn.DeVitoStyles.models.User;
@@ -15,12 +16,14 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
+    private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
     private final EmailService emailService;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("MMMM d, yyyy 'at' h:mm a");
 
-    public AppointmentService(AppointmentRepository appointmentRepository, UserRepository userRepository, EmailService emailService) {
+    public AppointmentService(AppointmentRepository appointmentRepository, ReviewRepository reviewRepository, UserRepository userRepository, EmailService emailService) {
         this.appointmentRepository = appointmentRepository;
+        this.reviewRepository = reviewRepository;
         this.userRepository = userRepository;
         this.emailService = emailService;
     }
@@ -29,6 +32,8 @@ public class AppointmentService {
         Result<List<Appointment>> result = new Result<>();
 
         List<Appointment> appointments = appointmentRepository.findAll();
+
+        appointments.forEach(this::populateHasReview);
 
         result.setpayload(appointments);
         return result;
@@ -43,6 +48,8 @@ public class AppointmentService {
         }
 
         Appointment appointment = appointmentRepository.findById(appointmentId);
+
+        populateHasReview(appointment);
 
         if (appointment == null) {
             result.addErrorMessage("Appointment not found", ResultType.NOT_FOUND);
@@ -63,6 +70,8 @@ public class AppointmentService {
 
         List<Appointment> appointments = appointmentRepository.findByUserId(userId);
 
+        appointments.forEach(this::populateHasReview);
+
         result.setpayload(appointments);
         return result;
     }
@@ -81,6 +90,8 @@ public class AppointmentService {
         }
 
         List<Appointment> appointments = appointmentRepository.findByBarberIdAndDate(barberId, date);
+
+        appointments.forEach(this::populateHasReview);
 
         result.setpayload(appointments);
         return result;
@@ -260,6 +271,19 @@ public class AppointmentService {
                     message
             );
         }
+    }
+
+    private void populateHasReview(Appointment appointment) {
+
+        if (appointment == null) {
+            return;
+        }
+
+        appointment.setHasReview(
+                reviewRepository.findByAppointmentId(
+                        appointment.getAppointmentId()
+                ) != null
+        );
     }
 
     private boolean hasConflict(Appointment appointment) {

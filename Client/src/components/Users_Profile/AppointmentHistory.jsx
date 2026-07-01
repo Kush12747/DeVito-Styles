@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function AppointmentHistory({ appointments }) {
     return (
         <div className="appointment-card">
@@ -9,12 +11,31 @@ function AppointmentHistory({ appointments }) {
             ) : (
                 appointments.map(a => (
                     <div className="appointment-item" key={a.appointmentId}>
-                        
+
                         <h4>{a.serviceName}</h4>
 
                         <p>Barber: {a.barberName}</p>
-                    
-                        <p>{new Date(a.appointmentDatetime).toLocaleString()}</p>
+
+                        <p>
+                            {new Date(a.appointmentDatetime).toLocaleString()}
+                        </p>
+
+                        {a.status === "COMPLETED" && !a.hasReview && (
+                            <Link
+                                to={`/appointments/${a.appointmentId}/review`}
+                                state={{ appointment: a }}
+                            >
+                                Leave Review
+                            </Link>
+                        )}
+
+                        {a.status === "COMPLETED" && a.hasReview && (
+
+                            <span className="review-submitted">
+                                ✓ Review Submitted
+                            </span>
+
+                        )}
 
                     </div>
                 ))
