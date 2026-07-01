@@ -5,13 +5,11 @@ DeVito-Styles is a full-stack barber shop management application that allows cus
 # Features
 - User authentication and account management
 - Customer appointment booking system
+- Review and rating system for services and barbers
 - Admin dashboard
-- Database persistence
-- Secure backend API
 - Responsive frontend UI
 - CRUD operations for services and appointments
 - Customer profile customization
-- Barber schedule management
 - Email notifications for appointments
 - AI Customer Service Chat Bot
 
@@ -19,14 +17,14 @@ DeVito-Styles is a full-stack barber shop management application that allows cus
 
 ## Frontend
 - React
-- React Router
-- Booststrap
+- Javascript
+- HTML/CSS
 
 ## Backend
 - Java
 - Spring Boot
 - REST APIs
-- JDBC databse
+- JDBC database
 
 ## Database
 - MySQL
@@ -79,6 +77,18 @@ DeVito-Styles is a full-stack barber shop management application that allows cus
 | `GET`  | `/api/user/{id}`     | Get user by ID          |
 | `PUT`  | `/api/user/{id}`     | Update user information |
 | `GET`  | `/api/user`          | Get all users           |
+
+## Chatbot
+| Method | Endpoint             | Description                |
+| ------ | -------------------- | -------------------------- |
+| `POST` | `/api/chat`          | Interact with the chatbot  |
+
+## Review
+| Method | Endpoint             | Description             |
+| ------ | -------------------- | ----------------------- |
+| `GET`  | `/api/review/{id}`    | Get a review by ID     |
+| `POST` | `/api/review`        | Create a new review     |
+
 
 # User Stories
 User Stories - Barbershop Appointment System (DeVito Styles)
@@ -144,7 +154,6 @@ User Stories - Barbershop Appointment System (DeVito Styles)
 - Adding support for multiple languages
 - Integrating payment processing for online bookings
 - Implementing a loyalty program for customers
-- Adding a review and rating system for services and barbers
 - Adding a calendar view for barbers to manage their schedules more efficiently
 - Integrating with third-party services for marketing and promotions
 
