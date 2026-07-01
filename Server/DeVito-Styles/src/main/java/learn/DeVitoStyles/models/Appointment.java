@@ -10,6 +10,7 @@ public class Appointment {
     private int barberId;
     private LocalDateTime appointmentDatetime;
     private String status;
+    private boolean hasReview;
 
     public Appointment() {
     }
@@ -24,6 +25,14 @@ public class Appointment {
         this.barberId = barberId;
         this.appointmentDatetime = appointmentDatetime;
         this.status = status;
+    }
+
+    public boolean isHasReview() {
+        return hasReview;
+    }
+
+    public void setHasReview(boolean hasReview) {
+        this.hasReview = hasReview;
     }
 
     public int getAppointmentId() {

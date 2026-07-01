@@ -11,8 +11,17 @@ public class Review {
     private int rating;
     private String reviewText;
     private LocalDateTime createdAt;
+    private boolean hasReview;
 
     public Review() {
+    }
+
+    public boolean isHasReview() {
+        return hasReview;
+    }
+
+    public void setHasReview(boolean hasReview) {
+        this.hasReview = hasReview;
     }
 
     public int getReviewId() {

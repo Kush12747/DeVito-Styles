@@ -20,13 +20,21 @@ function AppointmentHistory({ appointments }) {
                             {new Date(a.appointmentDatetime).toLocaleString()}
                         </p>
 
-                        {a.status === "COMPLETED" && (
+                        {a.status === "COMPLETED" && !a.hasReview && (
                             <Link
                                 to={`/appointments/${a.appointmentId}/review`}
                                 state={{ appointment: a }}
                             >
                                 Leave Review
                             </Link>
+                        )}
+
+                        {a.status === "COMPLETED" && a.hasReview && (
+
+                            <span className="review-submitted">
+                                ✓ Review Submitted
+                            </span>
+
                         )}
 
                     </div>

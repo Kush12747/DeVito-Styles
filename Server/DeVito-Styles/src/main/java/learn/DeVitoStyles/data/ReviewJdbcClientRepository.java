@@ -66,4 +66,22 @@ public class ReviewJdbcClientRepository implements ReviewRepository {
                 .optional()
                 .orElse(null);
     }
+
+    @Override
+    public boolean hasReviewForAppointment(int appointmentId) {
+
+        final String sql = """
+                SELECT COUNT(*)
+                FROM review
+                WHERE appointment_id = ?;
+                """;
+
+        Integer count = jdbcClient
+                .sql(sql)
+                .param(appointmentId)
+                .query(Integer.class)
+                .single();
+
+        return count != null && count > 0;
+    }
 }

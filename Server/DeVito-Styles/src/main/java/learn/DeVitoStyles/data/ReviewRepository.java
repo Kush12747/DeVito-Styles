@@ -9,4 +9,6 @@ public interface ReviewRepository {
     Review add(Review review);
 
     Review findByAppointmentId(int appointmentId);
+
+    boolean hasReviewForAppointment(int appointmentId);
 }

@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { addReview } from "../../Services/reviewService";
 import { fetchAppointmentById } from "../../Services/appointmentService";
 import { FaCut } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 import { GiRazor } from "react-icons/gi";
 import { FaCalendarAlt } from "react-icons/fa";
 
@@ -81,7 +82,7 @@ function ReviewPage() {
 
             await addReview(review, token);
 
-            navigate("/appointments");
+            navigate("/profile");
 
         } catch (err) {
 
@@ -101,62 +102,142 @@ function ReviewPage() {
 
         <div className="review-page">
 
-            <div className="review-container">
-                
-                <div className="review-header">
-                    <h2>Leave a Review</h2>
+            <div className="luxury-bg-overlay">
 
-                    <p>Tell us about your expereince with your appointment.</p>
-                </div>
+                <div className="review-container">
 
-                    <div className="appointment-summary">
-                        <h3>Appointment Details</h3>
+                    {/* ================= HERO ================= */}
 
-                        <div className="summary-row">
-                            <span>
-                                <FaCut className="summary-icon" />
-                                Service
-                            </span>
-                            
-                            <span>{appointment.serviceName}</span>
-                        </div>
+                    <div className="review-header">
 
-                        <div className="summary-row">
-                            <span>
-                                <GiRazor className="summary-icon" />
-                                Barber
-                            </span>
-                            
-                            <span>{appointment.barberName}</span>
-                        </div>
+                        <span className="review-tag">
+                            ★ PREMIUM EXPERIENCE
+                        </span>
 
-                        <div className="summary-row">
-                            <span>
-                                <FaCalendarAlt className="summary-icon" />
-                                Date
-                            </span>
+                        <h1>Leave Your Review</h1>
 
-                            <span>
-                                {new Date(appointment.appointmentDatetime).toLocaleString()}
-                            </span>
+                        <p>
+                            Your feedback helps us continue delivering
+                            exceptional grooming experiences.
+                        </p>
+
+                    </div>
+
+                    {/* ================= APPOINTMENT INFO ================= */}
+
+                    <div className="appointment-section">
+
+                        <h2>Appointment Summary</h2>
+
+                        <div className="summary-grid">
+
+                            <div className="summary-card">
+
+                                <div className="summary-card-icon">
+                                    <FaCut />
+                                </div>
+
+                                <div>
+
+                                    <small>Service</small>
+
+                                    <h3>{appointment.serviceName}</h3>
+
+                                </div>
+
+                            </div>
+
+                            <div className="summary-card">
+
+                                <div className="summary-card-icon">
+
+                                    <GiRazor />
+
+                                </div>
+
+                                <div>
+
+                                    <small>Your Barber</small>
+
+                                    <h3>{appointment.barberName}</h3>
+
+                                </div>
+
+                            </div>
+
+                            <div className="summary-card">
+
+                                <div className="summary-card-icon">
+
+                                    <FaCalendarAlt />
+
+                                </div>
+
+                                <div>
+
+                                    <small>Date & Time</small>
+
+                                    <h3>
+
+                                        {new Date(
+                                            appointment.appointmentDatetime
+                                        ).toLocaleString()}
+
+                                    </h3>
+
+                                </div>
+
+                            </div>
+
                         </div>
 
                     </div>
-                    
-                    {errors.length > 0 && (
-                        <div className="review-errors">
-                            {errors.map(error => (
-                                <p key={error}>{error}</p>
-                            ))}
-                        </div>
-                    )}
 
-                    <ReviewForm onSubmit={handleSubmit} />
+                    {/* ================= REVIEW SECTION ================= */}
+
+                    <div className="review-form-section">
+
+                        <div className="section-title">
+
+                            <span></span>
+
+                            <h2>Share Your Experience</h2>
+
+                            <span></span>
+
+                        </div>
+
+                        <p className="section-description">
+
+                            Tell future clients what made your visit memorable.
+
+                        </p>
+
+                        {errors.length > 0 && (
+
+                            <div className="review-errors">
+
+                                {errors.map(error => (
+
+                                    <p key={error}>{error}</p>
+
+                                ))}
+
+                            </div>
+
+                        )}
+
+                        <ReviewForm onSubmit={handleSubmit} />
+
+                    </div>
 
                 </div>
-            </div>
-        );
 
-    }
+            </div>
+
+        </div>
+
+    );
+}
 
 export default ReviewPage;

@@ -1,23 +1,17 @@
 import { useState } from "react";
-import "../../styles/reviewPage.css";
+import StarRating from "./StarRating";
 
 function ReviewForm({ onSubmit }) {
 
     const [rating, setRating] = useState(5);
 
+    const [hover, setHover] = useState(0);
+
     const [reviewText, setReviewText] = useState("");
 
-    const labels = {
-        1:"We're Sorry",
-        2:"Needs Improvement",
-        3:"Good Experience",
-        4:"Great Service",
-        5:"Outstanding!"
-    };
+    function handleSubmit(e){
 
-    function handleSubmit(event) {
-
-        event.preventDefault();
+        e.preventDefault();
 
         onSubmit({
 
@@ -29,50 +23,87 @@ function ReviewForm({ onSubmit }) {
 
     }
 
+    const labels = {
+
+        1:"Needs Improvement",
+
+        2:"Fair Expereince",
+
+        3:"Good Service",
+
+        4:"Excellent",
+
+        5:"Outstanding"
+
+    };
+
     return (
 
-        <form onSubmit={handleSubmit} className="review-form">
+        <form
+            className="review-form"
+            onSubmit={handleSubmit}
+        >
 
-            <label>Rating</label>
+            <label>
 
-            <div className="star-rating">
-                {[1,2,3,4,5].map(star => (
-                    <span
-                        key={star}
+                Rate Your Experience
 
-                        onClick={() => setRating(star)}
+            </label>
 
-                        className={
-                            star <= rating ? "star active" : "star"
-                        }
-                    >
-                        ★
-                    </span>
-                ))}
-            </div>
+            <StarRating
 
-            <p className="rating-label">
+                rating={rating}
 
-                {labels[rating]}
+                setRating={setRating}
 
-            </p>
+                hover={hover}
 
-            <label>Tell us about your experience</label>
+                setHover={setHover}
 
-            <textarea
-                rows="6"
-                placeholder="Share your experience..."
-                value={reviewText}
-                onChange={(e) =>
-                    setReviewText(e.target.value)
-                }
             />
 
-            <button type="submit">
+            <div className="rating-label">
+
+                {labels[hover || rating]}
+
+            </div>
+
+            <label>
+
+                Tell us about your visit
+
+            </label>
+
+            <textarea
+
+                value={reviewText}
+
+                maxLength={500}
+
+                onChange={(e)=>
+
+                    setReviewText(e.target.value)
+
+                }
+
+                placeholder="How was your haircut? How was the service? Would you recommend your barber?"
+
+            />
+
+            <div className="character-count">
+
+                {reviewText.length} / 500
+
+            </div>
+
+            <button>
+
                 Submit Review
+
             </button>
 
         </form>
+
     );
 
 }
