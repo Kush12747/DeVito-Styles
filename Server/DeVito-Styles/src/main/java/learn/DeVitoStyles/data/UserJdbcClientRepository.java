@@ -102,7 +102,7 @@ public class UserJdbcClientRepository implements UserRepository {
                     password = ?,
                     address = ?,
                     phone = ?,
-                    role = ?
+                    role = ?,
                     profile_picture_url = ?
                 WHERE user_id = ?;
                 """;
@@ -116,8 +116,8 @@ public class UserJdbcClientRepository implements UserRepository {
                 .param(user.getAddress())
                 .param(user.getPhone())
                 .param(user.getRole())
-                .param(user.getUserId())
                 .param(user.getProfileUrl())
+                .param(user.getUserId())
                 .update() > 0;
     }
 
