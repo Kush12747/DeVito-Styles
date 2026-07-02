@@ -11,7 +11,8 @@ CREATE TABLE users (
 	password VARCHAR(255) NOT NULL,
 	address VARCHAR(100),
 	phone VARCHAR(15),
-	role VARCHAR(15) NOT NULL
+	role VARCHAR(15) NOT NULL,
+	profile_picture_url VARCHAR(500)
 );
 
 CREATE TABLE service (
@@ -27,7 +28,14 @@ CREATE TABLE barber (
 	first_name VARCHAR(50) NOT NULL,
 	last_name VARCHAR(50) NOT NULL,
 	availability_status VARCHAR(20) NOT NULL,
-	specialization VARCHAR(100) NOT NULL
+	specialization VARCHAR(100) NOT NULL,
+	image_url VARCHAR(500),
+	title VARCHAR(50),
+	bio TEXT,
+	start_year INT,
+	instagram_url VARCHAR(500),
+	display_order INT DEFAULT 0,
+	is_active BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE appointment (
@@ -50,6 +58,10 @@ CREATE TABLE appointment (
 		FOREIGN KEY (service_id)
 		REFERENCES service(service_id)
 );
+
+ALTER TABLE appointment
+ADD CONSTRAINT unique_barber_time
+UNIQUE (barber_id, appointment_datetime);
 
 CREATE TABLE review (
 	review_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -94,13 +106,62 @@ BEGIN
 	ALTER TABLE review AUTO_INCREMENT = 1;
 
 	-- USERS
-	INSERT INTO users (username, first_name, last_name, email, password, address, phone, role)
-	VALUES
-	('admin1','Michael','Stone','admin@devitostyles.com','admin123','101 Main St','3125551000','ADMIN'),
-	('jdoe','John','Doe','johndoe@email.com','password123','22 Oak Ave','3125551001','CUSTOMER'),
-	('asmith','Anna','Smith','annasmith@email.com','password123','45 Pine Rd','3125551002','CUSTOMER'),
-	('mjohnson','Marcus','Johnson','mjohnson@email.com','password123','78 Cedar Ln','3125551003','CUSTOMER');
-
+	INSERT INTO users (
+    username,
+    first_name,
+    last_name,
+    email,
+    password,
+    address,
+    phone,
+    role,
+    profile_picture_url
+)
+VALUES
+(
+    'admin1',
+    'Michael',
+    'Stone',
+    'admin@devitostyles.com',
+    'admin123',
+    '101 Main St',
+    '3125551000',
+    'ADMIN',
+    NULL
+),
+(
+    'jdoe',
+    'John',
+    'Doe',
+    'johndoe@email.com',
+    'password123',
+    '22 Oak Ave',
+    '3125551001',
+    'CUSTOMER',
+    NULL
+),
+(
+    'asmith',
+    'Anna',
+    'Smith',
+    'annasmith@email.com',
+    'password123',
+    '45 Pine Rd',
+    '3125551002',
+    'CUSTOMER',
+    NULL
+),
+(
+    'mjohnson',
+    'Marcus',
+    'Johnson',
+    'mjohnson@email.com',
+    'password123',
+    '78 Cedar Ln',
+    '3125551003',
+    'CUSTOMER',
+    NULL
+);
 	-- SERVICES
 	INSERT INTO service (name, duration_minutes, price, description)
 	VALUES
@@ -110,11 +171,59 @@ BEGIN
 	('Haircut and Beard Combo',60,45.00,'Haircut combined with beard service');
 
 	-- BARBERS
-	INSERT INTO barber (first_name, last_name, availability_status, specialization)
-	VALUES
-	('Antonio','DeVito','AVAILABLE','Fades'),
-	('Chris','Lopez','AVAILABLE','Beard Styling'),
-	('David','Miller','UNAVAILABLE','Classic Cuts');
+	INSERT INTO barber (
+	first_name,
+	last_name,
+	title,
+	availability_status,
+	specialization,
+	start_year,
+	bio,
+	image_url,
+	instagram_url,
+	display_order,
+	is_active
+)
+VALUES
+(
+	'Antonio',
+	'DeVito',
+	'Owner & Master Barber',
+	'AVAILABLE',
+	'Fades, Beard Styling, Razor Shaves',
+	2011,
+	'Antonio is the owner of DeVito Styles and specializes in precision fades and beard grooming.',
+	NULL,
+	NULL,
+	1,
+	TRUE
+),
+(
+	'Chris',
+	'Lopez',
+	'Senior Barber',
+	'AVAILABLE',
+	'Beard Styling, Tapers',
+	2016,
+	'Chris enjoys creating modern hairstyles and detailed beard work.',
+	NULL,
+	NULL,
+	2,
+	TRUE
+),
+(
+	'David',
+	'Miller',
+	'Barber',
+	'UNAVAILABLE',
+	'Classic Cuts',
+	2019,
+	'David specializes in traditional barbering techniques and family haircuts.',
+	NULL,
+	NULL,
+	3,
+	TRUE
+);
 
 	-- APPOINTMENTS
 	INSERT INTO appointment (user_id, barber_id, service_id, appointment_datetime, status)
