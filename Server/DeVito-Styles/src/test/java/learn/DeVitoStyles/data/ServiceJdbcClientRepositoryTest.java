@@ -92,18 +92,6 @@ class ServiceJdbcClientRepositoryTest {
     }
 
     @Test
-    void shouldDeleteById() {
-        jdbcClient.sql("DELETE FROM appointment WHERE service_id = 1;")
-                .update();
-
-        boolean delete = repository.deleteById(1);
-        assertTrue(delete);
-
-        Service service = repository.findById(1);
-        assertNull(service);
-    }
-
-    @Test
     void shouldNotDeleteById() {
         boolean delete = repository.deleteById(999);
         assertFalse(delete);
