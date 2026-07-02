@@ -3,9 +3,11 @@ package learn.DeVitoStyles.domain;
 import learn.DeVitoStyles.data.UserRepository;
 import learn.DeVitoStyles.models.User;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import static org.mockito.Mockito.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 class UserServiceTest {
 
     @Autowired
@@ -22,6 +24,9 @@ class UserServiceTest {
 
     @MockBean
     UserRepository repository;
+
+    @Mock
+    PasswordEncoder passwordEncoder;
 
     @Test
     void authenticateHappyPath() {
@@ -32,9 +37,13 @@ class UserServiceTest {
         User dbUser = new User();
         dbUser.setUserId(1);
         dbUser.setUsername("jdoe");
-        dbUser.setPassword("password123");
+        dbUser.setPassword("$2a$10$yfcaphpV5EtBieqi8XsTD.BEvatjKxttE4mWXJ8Aq8aM.XWYlgov.");
 
-        when(repository.findByUsername("jdoe")).thenReturn(Optional.of(dbUser));
+        when(repository.findByUsername("jdoe"))
+                .thenReturn(Optional.of(dbUser));
+
+        when(passwordEncoder.matches("password123", "$2a$10$yfcaphpV5EtBieqi8XsTD.BEvatjKxttE4mWXJ8Aq8aM.XWYlgov."))
+                .thenReturn(true);
 
         Result<User> result = service.authenticate(loginInput);
 
