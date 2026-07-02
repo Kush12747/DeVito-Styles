@@ -2,17 +2,17 @@ DROP DATABASE IF EXISTS barber_shop;
 CREATE DATABASE barber_shop;
 USE barber_shop;
 
-
 CREATE TABLE users (
 	user_id INT PRIMARY KEY AUTO_INCREMENT,
 	first_name VARCHAR(50) NOT NULL,
 	last_name VARCHAR(50) NOT NULL,
 	email VARCHAR(100) UNIQUE,
-	username VARCHAR(50) UNIQUE NOT NULL,
-	password VARCHAR(255) NOT NULL,
+	username VARCHAR(500) UNIQUE NOT NULL,
+	password VARCHAR(500) NOT NULL,
 	address VARCHAR(100),
 	phone VARCHAR(15),
-	role VARCHAR(15) NOT NULL
+	role VARCHAR(15) NOT NULL,
+	profile_picture_url VARCHAR(500)
 );
 
 CREATE TABLE service (
@@ -28,8 +28,16 @@ CREATE TABLE barber (
 	first_name VARCHAR(50) NOT NULL,
 	last_name VARCHAR(50) NOT NULL,
 	availability_status VARCHAR(20) NOT NULL,
-	specialization VARCHAR(100) NOT NULL
+	specialization VARCHAR(100) NOT NULL,
+	image_url VARCHAR(500),
+	title VARCHAR(50),
+	bio TEXT,
+	start_year INT,
+	instagram_url VARCHAR(500),
+	display_order INT DEFAULT 0,
+	is_active BOOLEAN DEFAULT TRUE
 );
+
 
 CREATE TABLE appointment (
 	appointment_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -55,9 +63,6 @@ CREATE TABLE appointment (
 ALTER TABLE appointment
 ADD CONSTRAINT unique_barber_time
 UNIQUE (barber_id, appointment_datetime);
-
-ALTER TABLE users
-ADD profile_picture_url VARCHAR(500);
 
 
 CREATE TABLE review (
