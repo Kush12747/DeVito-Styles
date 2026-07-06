@@ -15,7 +15,7 @@ INSERT INTO users (
 )
 VALUES
 (
-    '$2a$10$x7elzfxHWqjvKuKjZuGNbOl0FB1zTw5xOn/mQegoCC1sLRsFHDV1S',
+    'mstone1',
     'Michael',
     'Stone',
     'admin@devitostyles.com',
@@ -25,7 +25,7 @@ VALUES
     'ADMIN'
 ),
 (
-	'$2a$10$PGg4/bcA7P2kM3MgYutfeefBlFyPqng0E8ZrwwhwDjJotPvLL1WQu',
+	'Kush12',
 	'Kush',
 	'Gandhi',
 	'kushgandhi2099@gmail.com',
@@ -34,7 +34,7 @@ VALUES
 	'2264534565',
 	'CUSTOMER'),
 (
-    '$2a$10$qetS3gxvTdZ45Dxsm2zoyugPx6C2GOkXlyPXAWJnC0qrR.EGEQMZ2',
+    'jdoe',
     'John',
     'Doe',
     'johndoe@gmail.com',
@@ -44,7 +44,7 @@ VALUES
     'CUSTOMER'
 ),
 (
-    '$2a$10$WBC/De9K4CwN4vC5rm9OK.3yRqs6bjhGtVvjK1EFqveQfp5WvSsXO',
+    'asmith',
     'Anna',
     'Smith',
     'annasmith@gmail.com',
@@ -54,7 +54,7 @@ VALUES
     'CUSTOMER'
 ),
 (
-    '$2a$10$1rVcb4ikPjA6or80oB8INeNeg5XEm.3k2Aa5PQ9coxSM4e2RTotTi',
+    'mjohn',
     'Marcus',
     'Johnson',
     'mjohnson@gmail.com',
@@ -118,7 +118,7 @@ VALUES
     'Fades, Beard Styling, Razor Shaves',
     2005,
     'Antonio is the owner of DeVito Styles with over 15 years of experience. He specializes in modern fades, beard grooming, and precision razor work while delivering a premium client experience.',
-    NULL,
+    'https://res.cloudinary.com/dc0awmexj/image/upload/v1783295366/Antonio_f4qzoa.jpg',
     NULL,
     1,
     TRUE
@@ -131,7 +131,7 @@ VALUES
     'Beard Styling, Tapers, Hair Design',
     2016,
     'Chris is known for clean tapers, beard shaping, and detailed hair designs. He enjoys helping clients find styles that fit their personality.',
-    NULL,
+    'https://res.cloudinary.com/dc0awmexj/image/upload/v1783295366/Chris_txfdzo.jpg',
     NULL,
     2,
     TRUE
@@ -144,7 +144,7 @@ VALUES
     'Classic Cuts, Scissor Cuts, Kids Haircuts',
     2021,
     'David specializes in classic barbering techniques, scissor cuts, and family-friendly services for clients of all ages.',
-    NULL,
+    'https://res.cloudinary.com/dc0awmexj/image/upload/v1783295366/David_uy4kz4.jpg',
     NULL,
     3,
     TRUE
@@ -157,7 +157,7 @@ VALUES
     'Skin Fades, Lineups, Beard Styling',
     2014,
     'Marcus has built a reputation for sharp fades, crisp lineups, and consistent attention to detail.',
-    NULL,
+    'https://res.cloudinary.com/dc0awmexj/image/upload/v1783295366/Marcus_peyqlw.jpg',
     NULL,
     4,
     TRUE
@@ -170,7 +170,7 @@ VALUES
     'Textured Cuts, Modern Styles, Color Enhancements',
     2026,
     'Luis enjoys creating modern hairstyles and helping clients experiment with new looks while maintaining healthy hair.',
-    NULL,
+    'https://res.cloudinary.com/dc0awmexj/image/upload/v1783295366/Luis_ufn8ux.jpg',
     NULL,
     5,
     TRUE

@@ -1,0 +1,216 @@
+.staff-page {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 60px 30px;
+    background-color: black;
+}
+
+.staff-header{
+
+    text-align:center;
+
+    margin-bottom:70px;
+
+}
+
+.staff-header h1{
+
+    font-size:4rem;
+
+    letter-spacing:5px;
+
+    text-transform:uppercase;
+
+}
+
+.staff-header p{
+
+    color:#b0b0b0;
+
+    font-size:1.15rem;
+
+}
+
+.staff-header::after{
+
+    content:"";
+
+    display:block;
+
+    width:120px;
+
+    height:2px;
+
+    background:#C9A227;
+
+    margin:25px auto 0;
+
+}
+
+.staff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+}
+
+.staff-card {
+
+    background:#1a1a1a;
+
+    border:1px solid rgba(201,162,39,.25);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    text-decoration:none;
+
+    color:white;
+
+    transition:.35s ease;
+
+    position:relative;
+
+}
+
+.staff-card:hover{
+
+    transform:translateY(-10px);
+
+    border-color:#C9A227;
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,.45),
+        0 0 30px rgba(201,162,39,.25);
+
+}
+
+.staff-card img {
+    transition: transform .35s ease;
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+}
+
+/* Chris */
+.barber-2 {
+    object-position: center 20%;
+}
+
+/* David */
+.barber-3 {
+    object-position: center top;
+}
+
+.barber-4 {
+    object-position: center 20%;
+}
+
+.staff-card:hover img {
+    transform: scale(1.05);
+}
+
+.staff-info{
+
+    padding:25px;
+
+}
+
+.staff-content {
+    padding: 24px;
+}
+
+.staff-info h2{
+
+    margin:0;
+
+    font-size:1.8rem;
+
+    font-weight:700;
+
+}
+
+.staff-info h4{
+
+    color:#C9A227;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    margin-top:8px;
+
+}
+
+.staff-divider{
+
+    width:70px;
+
+    height:2px;
+
+    background:#C9A227;
+
+    margin:20px 0;
+
+}
+
+.staff-detail{
+
+    display:flex;
+
+    gap:15px;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+}
+
+.staff-detail span{
+
+    color:#C9A227;
+
+    font-size:24px;
+
+}
+
+.staff-detail strong{
+
+    display:block;
+
+}
+
+.staff-detail small{
+
+    color:#999;
+
+}
+
+
+.staff-info button{
+
+    width:100%;
+
+    margin-top:20px;
+
+    background:#C9A227;
+
+    color:white;
+
+    border:none;
+
+    padding:14px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.staff-info button:hover{
+
+    background:#d7b74d;
+
+}
