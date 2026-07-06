@@ -17,6 +17,13 @@ public class BarberMapper implements RowMapper<Barber> {
         barber.setLastName(rs.getString("last_name"));
         barber.setAvailabilityStatus(rs.getString("availability_status"));
         barber.setSpecialization(rs.getString("specialization"));
+        barber.setImageUrl(rs.getString("image_url"));
+        barber.setTitle(rs.getString("title"));
+        barber.setBio(rs.getString("bio"));
+        barber.setStartYear(rs.getInt("start_year"));
+        barber.setInstagramUrl(rs.getString("instagram_url"));
+        barber.setDisplayOrder(rs.getInt("display_order"));
+        barber.setActive(rs.getBoolean("is_active"));
 
         return barber;
     }

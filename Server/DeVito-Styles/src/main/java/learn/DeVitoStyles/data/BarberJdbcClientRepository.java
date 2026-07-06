@@ -13,17 +13,37 @@ import java.util.List;
 public class BarberJdbcClientRepository implements BarberRepository {
     private final JdbcClient jdbcClient;
 
+    private static final String BASE_SELECT = """
+            SELECT barber_id, first_name, last_name, availability_status,
+                       specialization, image_url, title, bio, start_year,
+                       instagram_url, display_order, is_active
+                FROM barber
+            """;
+
     public BarberJdbcClientRepository(JdbcClient jdbcClient) {
         this.jdbcClient = jdbcClient;
+    }
+
+    private Object[] toParams(Barber barber) {
+        return new Object[] {
+            barber.getFirstName(),
+            barber.getLastName(),
+            barber.getAvailabilityStatus(),
+            barber.getSpecialization(),
+            barber.getImageUrl(),
+            barber.getTitle(),
+            barber.getBio(),
+            barber.getStartYear(),
+            barber.getInstagramUrl(),
+            barber.getDisplayOrder(),
+            barber.isActive(),
+        };
     }
 
 
     @Override
     public List<Barber> findAll() {
-        final String sql = """
-                SELECT barber_id, first_name, last_name, availability_status, specialization
-                FROM barber;
-                """;
+        final String sql = BASE_SELECT;
 
         return jdbcClient.sql(sql)
                 .query(new BarberMapper())
@@ -32,9 +52,7 @@ public class BarberJdbcClientRepository implements BarberRepository {
 
     @Override
     public Barber findById(int barberId) {
-        final String sql = """
-                SELECT * FROM barber WHERE barber_id = ?;
-                """;
+        final String sql = BASE_SELECT + " WHERE barber_id = ?;";
 
         return jdbcClient.sql(sql)
                 .param(barberId)
@@ -46,17 +64,18 @@ public class BarberJdbcClientRepository implements BarberRepository {
     @Override
     public Barber add(Barber barber) {
         final String sql = """
-                INSERT INTO barber (first_name, last_name, availability_status, specialization)
-                VALUES (?, ?, ?, ?);
+                INSERT INTO barber (
+                    first_name, last_name, availability_status,
+                    specialization, image_url, title, bio,
+                    start_year, instagram_url, display_order, is_active
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                 """;
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         int rowsAffected = jdbcClient.sql(sql)
-                .param(barber.getFirstName())
-                .param(barber.getLastName())
-                .param(barber.getAvailabilityStatus())
-                .param(barber.getSpecialization())
+                .params(toParams(barber))
                 .update(keyHolder, "barber_id");
 
         if (rowsAffected == 0) {
@@ -71,19 +90,23 @@ public class BarberJdbcClientRepository implements BarberRepository {
     @Override
     public boolean update(Barber barber) {
         final String sql = """
-                UPDATE barber SET
-                    first_name = ?,
+                UPDATE barber
+                SET first_name = ?,
                     last_name = ?,
                     availability_status = ?,
-                    specialization = ?
-                WHERE barber_id = ?;
+                    specialization = ?,
+                    image_url = ?,
+                    title = ?,
+                    bio = ?,
+                    start_year = ?,
+                    instagram_url = ?,
+                    display_order = ?,
+                    is_active = ?
+                WHERE barber_id = ?
                 """;
 
         return jdbcClient.sql(sql)
-                .param(barber.getFirstName())
-                .param(barber.getLastName())
-                .param(barber.getAvailabilityStatus())
-                .param(barber.getSpecialization())
+                .params(toParams(barber))
                 .param(barber.getBarberId())
                 .update() > 0;
     }
