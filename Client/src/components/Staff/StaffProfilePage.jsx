@@ -38,7 +38,7 @@ function StaffProfilePage() {
         : [];
 
     return (
-        <div className="profile-page">
+        <div className="barber-profile-page">
 
             {/* HERO */}
             <section className="hero">
@@ -47,7 +47,7 @@ function StaffProfilePage() {
                     <img
                         src={barber.imageUrl}
                         alt={`${barber.firstName} ${barber.lastName}`}
-                        className="profile-image"
+                        className="barber-profile-image"
                     />
                 </div>
 

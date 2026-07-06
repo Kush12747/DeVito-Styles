@@ -2,7 +2,7 @@
    STAFF PROFILE PAGE
 =========================== */
 
-.profile-page {
+.barber-profile-page {
     background: #0a0a0a;
     color: #f5f5f5;
     min-height: 100vh;
@@ -39,7 +39,7 @@
     justify-content: center;
 }
 
-.profile-image {
+.barber-profile-image {
     width: 100%;
     max-width: 420px;
     height: 550px;
