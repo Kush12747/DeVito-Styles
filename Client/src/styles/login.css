@@ -219,6 +219,32 @@
 }
 
 /* =========================
+   FOOTER
+========================= */
+
+.register-footer {
+    text-align: center;
+
+    margin-top: 2rem;
+
+    color: #9a9a9a;
+
+    font-size: .9rem;
+}
+
+.register-footer a {
+    color: #d4af37;
+
+    text-decoration: none;
+
+    font-weight: 600;
+}
+
+.register-footer a:hover {
+    color: #f1c94a;
+}
+
+/* =========================
    ANIMATION
 ========================= */
 

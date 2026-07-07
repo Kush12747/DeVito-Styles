@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate, useOutletContext } from "react-router-dom"
+import { useNavigate, useOutletContext, Link } from "react-router-dom"
 import "../../styles/login.css";
 import logo from "../../images/logo.png";
 
@@ -132,6 +132,10 @@ function Login() {
                             </button>
 
                         </form>
+                        <p className='register-footer'>
+                            Don't have an account, Click here to make one.{" "}
+                            <Link to="/register">Create an account</Link>
+                        </p>
                     </div>
 
                 </div>
