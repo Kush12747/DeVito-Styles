@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import "../../styles/register.css";
+import logo from "../../images/logo.png";
 
 function Register() {
     const navigate = useNavigate();
@@ -49,9 +50,21 @@ function Register() {
 
                 <div className="register-card">
 
-                    <h2 className="register-title">
-                        Create Account
-                    </h2>
+                    <div className="register-header">
+                        <img
+                            src={logo}
+                            alt="Devito Styles Logo"
+                            className="register-logo"
+                        />
+
+                        <h1 className="register-title">
+                            Devito Styles
+                        </h1>
+
+                        <p className="register-subtitle">
+                            Create your customer account
+                        </p>
+                    </div>
 
                     <div className="register-form-box">
 
@@ -66,83 +79,107 @@ function Register() {
                         <form onSubmit={handleSubmit}>
 
                             <div className="form-control">
-                                <label>Username</label>
+                                <label htmlFor='username'>Username</label>
                                 <input
+                                    id="username"
                                     type="text"
                                     name="username"
+                                    placeholder='Enter Your Username'
+                                    autoComplete='username'
+                                    autoFocus
                                     value={user.username}
                                     onChange={handleChange}
                                 />
                             </div>
 
                             <div className="form-control">
-                                <label>Password</label>
+                                <label htmlFor='password'>Password</label>
                                 <input
+                                    id="password"
                                     type="password"
                                     name="password"
+                                    autoComplete='password'
+                                    placeholder='Create a Password'
                                     value={user.password}
                                     onChange={handleChange}
                                 />
                             </div>
 
                             <div className="form-control">
-                                <label>First Name</label>
+                                <label htmlFor='firstName'>First Name</label>
                                 <input
+                                    id="firstName"
                                     type="text"
                                     name="firstName"
+                                    placeholder='John'
+                                    autoComplete='firstname'
                                     value={user.firstName}
                                     onChange={handleChange}
                                 />
                             </div>
 
                             <div className="form-control">
-                                <label>Last Name</label>
+                                <label htmlFor='lastName'>Last Name</label>
                                 <input
+                                    id="lastName"
                                     type="text"
                                     name="lastName"
+                                    autoComplete='lastname'
+                                    placeholder='Doe'
                                     value={user.lastName}
                                     onChange={handleChange}
                                 />
                             </div>
 
                             <div className="form-control">
-                                <label>Email</label>
+                                <label htmlFor='email'>Email</label>
                                 <input
+                                    id="email"
                                     type="email"
                                     name="email"
+                                    placeholder='john@gmail.com'
+                                    autoComplete='email'
                                     value={user.email}
                                     onChange={handleChange}
                                 />
                             </div>
 
-                            <div className="form-control">
-                                <label>Address</label>
+                            <div className="form-control full width">
+                                <label htmlFor='address'>Address</label>
                                 <input
+                                    id="address"
                                     type="text"
                                     name="address"
+                                    placeholder='Enter your street address'
+                                    autoComplete='address'
                                     value={user.address}
                                     onChange={handleChange}
                                 />
                             </div>
 
                             <div className="form-control">
-                                <label>Phone</label>
+                                <label htmlFor='phone'>Phone</label>
                                 <input
+                                    id="phone"
                                     type="text"
                                     name="phone"
+                                    autoComplete='phone'
+                                    placeholder='555-555-5555'
                                     value={user.phone}
                                     onChange={handleChange}
                                 />
                             </div>
 
-                            <button
-                                className="register-btn"
-                                type="submit"
-                            >
-                                Register
+                            <button className="register-btn" type="submit">
+                                Create Account
                             </button>
 
                         </form>
+
+                        <p className='register-footer'>
+                            Already have an account?{" "}
+                            <Link to="/login">Sign in</Link>
+                        </p>
                     </div>
                 </div>
             </div>
