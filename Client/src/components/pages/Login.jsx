@@ -1,9 +1,11 @@
 import { useState } from "react"
-import { useNavigate, useOutletContext } from "react-router-dom"
+import { useNavigate, useOutletContext, Link } from "react-router-dom"
 import "../../styles/login.css";
+import logo from "../../images/logo.png";
 
 function Login() {
     const navigate = useNavigate()
+    const [showPassword, setShowPassword] = useState(false);
     const { setLoggedInUser } = useOutletContext()
 
     const [credentials, setCredentials] = useState({
@@ -60,11 +62,26 @@ function Login() {
         <div className="bg">
             <div className="login-page">
                 <div className="login-card">
-                    <h2 className="login-title">Login</h2>
-                
+
+                    <div className="login-header">
+                        <img
+                            src={logo}
+                            alt="Devito Styles Logo"
+                            className="login-logo"
+                        />
+
+                        <h1 className="login-title">
+                            Devito Styles
+                        </h1>
+
+                        <p className="login-subtitle">
+                            Sign in to your account
+                        </p>
+                    </div>
 
                     <div className="login-form-box">
                         <form onSubmit={handleSubmit}>
+
                             {errors.length > 0 && (
                                 <ul className="error-list">
                                     {errors.map((e) => (
@@ -74,32 +91,57 @@ function Login() {
                             )}
 
                             <div className="form-control">
-                                <label>Username:</label>
+                                <label htmlFor="username">Username</label>
+
                                 <input
+                                    id="username"
                                     name="username"
+                                    type="text"
+                                    placeholder="Enter your username"
                                     value={credentials.username}
                                     onChange={handleChange}
-                                    type="text"
                                 />
                             </div>
 
                             <div className="form-control">
-                                <label>Password:</label>
-                                <input
-                                    name="password"
-                                    value={credentials.password}
-                                    onChange={handleChange}
-                                    type="password"
-                                />
+                                <label htmlFor="password">Password</label>
+
+                                <div className="password-wrapper">
+
+                                    <input
+                                        id="password"
+                                        name="password"
+                                        type={showPassword ? "text" : "password"}
+                                        placeholder="Enter your password"
+                                        value={credentials.password}
+                                        onChange={handleChange}
+                                    />
+
+                                    <button
+                                        type="button"
+                                        className="show-password-btn"
+                                        onClick={() => setShowPassedword(!showPassword)}
+                                    >
+                                        {showPassword ? "Hide" : "Show"}
+                                    </button>
+                                </div>
                             </div>
 
-                            <button className="login-btn" type="submit">Submit</button>
+                            <button className="login-btn" type="submit">
+                                Sign In
+                            </button>
+
                         </form>
+                        <p className='register-footer'>
+                            Don't have an account, Click here to make one.{" "}
+                            <Link to="/register">Create an account</Link>
+                        </p>
                     </div>
+
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default Login
