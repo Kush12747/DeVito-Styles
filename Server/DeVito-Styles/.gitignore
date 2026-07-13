@@ -38,3 +38,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/src/main/resources/google-credentials.json
