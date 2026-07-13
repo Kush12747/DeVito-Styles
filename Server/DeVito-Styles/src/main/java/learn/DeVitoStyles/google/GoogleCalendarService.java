@@ -6,6 +6,7 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -21,28 +22,29 @@ public class GoogleCalendarService {
     }
 
 
-    public void createAppointment(String customerName, String serviceName) throws Exception {
+    public String createAppointment(String customerName,
+                                    String customerEmail,
+                                    String barberName,
+                                    String serviceName,
+                                    LocalDateTime appointmentTime,
+                                    int durationMinutes) throws Exception {
+
+        if (appointmentTime == null) {
+            throw new IllegalArgumentException("Appointment time cannot be null");
+        }
 
         Event event = new Event();
 
-        event.setSummary(serviceName);
+        event.setSummary(serviceName + " - " + customerName);
 
-        event.setDescription("Customer: " + customerName);
+        event.setDescription(
+                "Customer: " + customerName + "\n" +
+                "Barber: " + barberName + "\n" +
+                "Service: " + serviceName + "\n" +
+                "Email: " + customerEmail
+        );
 
-        // Appointment time in Chicago timezone
-        LocalDateTime appointmentTime =
-                LocalDateTime.of(
-                        2026,
-                        7,
-                        20,
-                        10,
-                        0
-                );
-
-
-        LocalDateTime endTime =
-                appointmentTime.plusHours(1);
-
+        LocalDateTime endTime = appointmentTime.plusMinutes(durationMinutes);
 
         DateTime startDateTime =
                 new DateTime(
@@ -85,7 +87,15 @@ public class GoogleCalendarService {
                         .execute();
 
 
-        System.out.println(createdEvent);
+        return createdEvent.getId();
+    }
 
+    public void deleteAppointment(String googleEventId) throws IOException {
+
+        if (googleEventId == null || googleEventId.isBlank()) {
+            return;
+        }
+
+        calendar.events().delete(CALENDAR_ID, googleEventId).execute();
     }
 }

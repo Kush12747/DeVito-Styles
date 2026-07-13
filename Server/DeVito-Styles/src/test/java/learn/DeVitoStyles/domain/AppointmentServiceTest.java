@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -115,7 +116,7 @@ class AppointmentServiceTest {
     }
 
     @Test
-    void shouldCancelAppointment() {
+    void shouldCancelAppointment() throws IOException {
         Appointment appointment = makeAppointment();
         User user = makeUser();
 
