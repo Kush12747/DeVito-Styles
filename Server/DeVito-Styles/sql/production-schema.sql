@@ -64,6 +64,8 @@ ALTER TABLE appointment
 ADD CONSTRAINT unique_barber_time
 UNIQUE (barber_id, appointment_datetime);
 
+ALTER TABLE appointment
+ADD COLUMN google_event_id VARCHAR(255);
 
 CREATE TABLE review (
 	review_id INT PRIMARY KEY AUTO_INCREMENT,

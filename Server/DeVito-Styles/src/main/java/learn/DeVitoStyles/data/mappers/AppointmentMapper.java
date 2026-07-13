@@ -18,6 +18,7 @@ public class AppointmentMapper implements RowMapper<Appointment> {
         appointment.setServiceId(rs.getInt("service_id"));
         appointment.setAppointmentDatetime(rs.getTimestamp("appointment_datetime").toLocalDateTime());
         appointment.setStatus(rs.getString("status"));
+        appointment.setGoogleEventId(rs.getString("google_event_id"));
 
         return appointment;
     }
