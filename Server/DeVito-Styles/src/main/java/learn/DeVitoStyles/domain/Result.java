@@ -3,6 +3,7 @@ package learn.DeVitoStyles.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class Result <T> {
     private final ArrayList<String> messages = new ArrayList<>();

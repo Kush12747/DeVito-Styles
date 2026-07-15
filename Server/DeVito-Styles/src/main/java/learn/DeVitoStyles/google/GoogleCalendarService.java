@@ -4,6 +4,7 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
+import learn.DeVitoStyles.dto.GoogleCalendarResponse;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -22,12 +23,12 @@ public class GoogleCalendarService {
     }
 
 
-    public String createAppointment(String customerName,
-                                    String customerEmail,
-                                    String barberName,
-                                    String serviceName,
-                                    LocalDateTime appointmentTime,
-                                    int durationMinutes) throws Exception {
+    public GoogleCalendarResponse createAppointment(String customerName,
+                                                    String customerEmail,
+                                                    String barberName,
+                                                    String serviceName,
+                                                    LocalDateTime appointmentTime,
+                                                    int durationMinutes) throws Exception {
 
         if (appointmentTime == null) {
             throw new IllegalArgumentException("Appointment time cannot be null");
@@ -86,8 +87,11 @@ public class GoogleCalendarService {
                         .insert(CALENDAR_ID, event)
                         .execute();
 
+        GoogleCalendarResponse response = new GoogleCalendarResponse();
+        response.setEventId(createdEvent.getId());
+        response.setEventUrl(createdEvent.getHtmlLink());
 
-        return createdEvent.getId();
+        return response;
     }
 
     public void deleteAppointment(String googleEventId) throws IOException {

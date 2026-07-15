@@ -1,11 +1,13 @@
 package learn.DeVitoStyles.domain;
 
 import learn.DeVitoStyles.data.*;
+import learn.DeVitoStyles.dto.AppointmentResponse;
 import learn.DeVitoStyles.models.Appointment;
 import learn.DeVitoStyles.models.Barber;
 import learn.DeVitoStyles.models.User;
 import org.springframework.stereotype.Service;
 import learn.DeVitoStyles.google.GoogleCalendarService;
+import learn.DeVitoStyles.dto.GoogleCalendarResponse;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -104,10 +106,13 @@ public class AppointmentService {
         return result;
     }
 
-    public Result<Appointment> add(Appointment appointment) throws Exception {
-        Result<Appointment> result = validateAppointment(appointment);
+    public Result<AppointmentResponse> add(Appointment appointment) throws Exception {
 
-        if (!result.isSuccess()) {
+        Result<Appointment> validation = validateAppointment(appointment);
+
+        Result<AppointmentResponse> result = new Result<>();
+
+        if (!validation.isSuccess()) {
             return result;
         }
 
@@ -128,32 +133,43 @@ public class AppointmentService {
 
         User user = userRepository.findById(appointment.getUserId()).orElse(null);
 
-        learn.DeVitoStyles.models.Service service = serviceRepository.findById(appointment.getServiceId());
+        learn.DeVitoStyles.models.Service service =
+                serviceRepository.findById(appointment.getServiceId());
 
-        Barber barber = barberRepository.findById(appointment.getBarberId());
+        Barber barber =
+                barberRepository.findById(appointment.getBarberId());
 
         if (user == null || service == null || barber == null) {
             result.addErrorMessage("Unable to load appointment details", ResultType.INVALID);
             return result;
         }
 
-        String customerName = user.getFirstName() + " " + user.getLastName();
-        String barberName = barber.getFirstName() + " " + barber.getLastName();
+        String customerName =
+                user.getFirstName() + " " + user.getLastName();
 
+        String barberName =
+                barber.getFirstName() + " " + barber.getLastName();
+
+        GoogleCalendarResponse calendarResponse;
         try {
 
-            String googleEventId = googleCalendarService.createAppointment(
+            calendarResponse = googleCalendarService.createAppointment(
                     customerName,
                     user.getEmail(),
                     barberName,
                     service.getName(),
                     appointment.getAppointmentDatetime(),
-                    service.getDurationMinutes());
+                    service.getDurationMinutes()
+            );
 
-            appointment.setGoogleEventId(googleEventId);
+            appointment.setGoogleEventId(calendarResponse.getEventId());
 
         } catch (Exception e) {
-            result.addErrorMessage("Google Calendar event creation failed", ResultType.INVALID);
+
+            result.addErrorMessage(
+                    "Google Calendar event creation failed",
+                    ResultType.INVALID);
+
             return result;
         }
 
@@ -164,10 +180,33 @@ public class AppointmentService {
             return result;
         }
 
-        // Get user email from DB
         sendEmail(created.getUserId(), "CONFIRM", created);
 
-        result.setpayload(created);
+        AppointmentResponse response = new AppointmentResponse();
+
+        response.setAppointmentId(created.getAppointmentId());
+
+        response.setCustomerName(customerName);
+
+        response.setCustomerEmail(user.getEmail());
+
+        response.setBarberName(barberName);
+
+        response.setServiceName(service.getName());
+
+        response.setDurationMinutes(service.getDurationMinutes());
+
+        response.setAppointmentDatetime(created.getAppointmentDatetime());
+
+        response.setStatus(created.getStatus());
+
+        response.setGoogleCalendarUrl(
+                calendarResponse.getEventUrl()
+        );
+        System.out.println("GOOGLE URL: " + response.getGoogleCalendarUrl());
+
+        result.setpayload(response);
+
         return result;
     }
 

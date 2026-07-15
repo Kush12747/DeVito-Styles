@@ -2,6 +2,7 @@ package learn.DeVitoStyles.controller;
 
 import learn.DeVitoStyles.domain.AppointmentService;
 import learn.DeVitoStyles.domain.Result;
+import learn.DeVitoStyles.dto.AppointmentResponse;
 import learn.DeVitoStyles.models.Appointment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,7 +73,7 @@ public class AppointmentController {
 
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody Appointment appointment) throws Exception {
-        Result<Appointment> result = service.add(appointment);
+        Result<AppointmentResponse> result = service.add(appointment);
 
         if (!result.isSuccess()) {
             return ErrorResponse.build(result);

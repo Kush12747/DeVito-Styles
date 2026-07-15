@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "../../styles/service.css";
 
 const SERVICE_URL = "http://localhost:8080/api/service";
@@ -8,6 +8,8 @@ const BARBER_URL = "http://localhost:8080/api/barber";
 
 function BookingPage() {
     const { serviceId } = useParams();
+    const navigate = useNavigate();
+    const [appointment, setAppointment] = useState(null);
 
     const [service, setService] = useState({});
     const [barbers, setBarbers] = useState([]);
@@ -91,13 +93,18 @@ function BookingPage() {
             })
         });
 
+        const data = await res.json();
+
         if (!res.ok) {
-            const msg = await res.text();
-            alert(msg);
+            alert("Failed to create appointment");
             return;
         }
 
-        alert("Appointment created")
+        navigate("/confirmation", {
+            state: {
+                appointment: data
+            }
+        });
     };
 
 
