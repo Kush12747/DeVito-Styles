@@ -1,4 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
+import {
+    FaCheckCircle,
+    FaCut,
+    FaUser,
+    FaCalendarAlt,
+    FaClock,
+    FaHourglassHalf,
+    FaUserTie
+} from "react-icons/fa";
+
 import "../../styles/Confirmation.css";
 
 function ConfirmationPage() {
@@ -30,7 +40,7 @@ function ConfirmationPage() {
                 <section className="confirmation-header">
                     
                     <div className="success-icon">
-                        ✓
+                        <FaCheckCircle />
                     </div>
 
                     <h1>Appointment Confirmed</h1>
@@ -47,22 +57,35 @@ function ConfirmationPage() {
                     <h2>Appointment Detailes</h2>
 
                     <div className="detail-row">
-                        <span className="label">💈Service</span>
+                        <span className="label">
+                            <FaCut className="icon" />
+                                Service
+                        </span>
                         <span className="value">{appointment.serviceName}</span>
                     </div>
 
                     <div className="detail-row">
-                        <span className="label">👤 Barber</span>
+                        <span className="label">
+                            <FaUserTie className="icon" />
+                                Barber
+                        </span>
                         <span className="value">{appointment.barberName}</span>
                     </div>
 
                     <div className="detail-row">
-                        <span className="label">🙍 Customer</span>
+                        <span className="label">
+                            <FaUser className="icon" />
+                                Customer
+                        </span>
                         <span className="value">{appointment.customerName}</span>
                     </div>
 
                     <div className="detail-row">
-                        <span className="label">📅 Date</span>
+                        <span className="label">
+                            <FaCalendarAlt className="icon" />
+                                Date
+                        </span>
+                        
                         <span className="value">
                             {new Date(appointment.appointmentDatetime)
                                 .toLocaleDateString()}
@@ -70,7 +93,11 @@ function ConfirmationPage() {
                     </div>
 
                     <div className="detail-row">
-                        <span className="label">🕙 Time</span>
+                        <span className="label">
+                            <FaClock className="icon" />
+                                Time
+                        </span>
+                        
                         <span className="value">{new Date(appointment.appointmentDatetime).toLocaleTimeString([], {
                             hour: "numeric",
                             minute: "2-digit"
@@ -79,7 +106,11 @@ function ConfirmationPage() {
                     </div>
 
                     <div className="detail-row">
-                        <span className="label">⏱ Duration</span>
+                        <span className="label">
+                            <FaHourglassHalf className="icon" />
+                            Duration
+                        </span>
+                        
                         <span className="value">
                             {appointment.durationMinutes} minutes
                         </span>
@@ -106,6 +137,11 @@ function ConfirmationPage() {
                         )
                     }
                 </section>
+
+                <div className="confirmation-actions">
+                    <Link className="secondary-btn" to="/services">Book Another</Link>
+                    <Link className="primary-btn" to="/">Return Home</Link>
+                </div>
 
             </div> 
         </div>
