@@ -2,11 +2,13 @@ package learn.DeVitoStyles.controller;
 
 import learn.DeVitoStyles.domain.AppointmentService;
 import learn.DeVitoStyles.domain.Result;
+import learn.DeVitoStyles.dto.AppointmentResponse;
 import learn.DeVitoStyles.models.Appointment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -70,8 +72,8 @@ public class AppointmentController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> add(@RequestBody Appointment appointment) {
-        Result<Appointment> result = service.add(appointment);
+    public ResponseEntity<Object> add(@RequestBody Appointment appointment) throws Exception {
+        Result<AppointmentResponse> result = service.add(appointment);
 
         if (!result.isSuccess()) {
             return ErrorResponse.build(result);
@@ -96,7 +98,7 @@ public class AppointmentController {
     }
 
     @PutMapping("/cancel/{appointmentId}")
-    public ResponseEntity<Object> cancel(@PathVariable int appointmentId) {
+    public ResponseEntity<Object> cancel(@PathVariable int appointmentId) throws IOException {
         Result<Void> result = service.cancel(appointmentId);
 
         if (!result.isSuccess()) {

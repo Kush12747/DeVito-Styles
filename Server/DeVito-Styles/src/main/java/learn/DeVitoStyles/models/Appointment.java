@@ -11,6 +11,7 @@ public class Appointment {
     private LocalDateTime appointmentDatetime;
     private String status;
     private boolean hasReview;
+    private String googleEventId;
 
     public Appointment() {
     }
@@ -25,6 +26,14 @@ public class Appointment {
         this.barberId = barberId;
         this.appointmentDatetime = appointmentDatetime;
         this.status = status;
+    }
+
+    public String getGoogleEventId() {
+        return googleEventId;
+    }
+
+    public void setGoogleEventId(String googleEventId) {
+        this.googleEventId = googleEventId;
     }
 
     public boolean isHasReview() {

@@ -1,12 +1,15 @@
 package learn.DeVitoStyles.domain;
 
-import learn.DeVitoStyles.data.AppointmentRepository;
-import learn.DeVitoStyles.data.ReviewRepository;
-import learn.DeVitoStyles.data.UserRepository;
+import learn.DeVitoStyles.data.*;
+import learn.DeVitoStyles.dto.AppointmentResponse;
 import learn.DeVitoStyles.models.Appointment;
+import learn.DeVitoStyles.models.Barber;
 import learn.DeVitoStyles.models.User;
 import org.springframework.stereotype.Service;
+import learn.DeVitoStyles.google.GoogleCalendarService;
+import learn.DeVitoStyles.dto.GoogleCalendarResponse;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,14 +21,20 @@ public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
+    private final ServiceRepository serviceRepository;
+    private final GoogleCalendarService googleCalendarService;
+    private final BarberRepository barberRepository;
     private final EmailService emailService;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("MMMM d, yyyy 'at' h:mm a");
 
-    public AppointmentService(AppointmentRepository appointmentRepository, ReviewRepository reviewRepository, UserRepository userRepository, EmailService emailService) {
+    public AppointmentService(AppointmentRepository appointmentRepository, ReviewRepository reviewRepository, UserRepository userRepository, ServiceRepository serviceRepository, EmailService emailService, GoogleCalendarService googleCalendarService, BarberRepository barberRepository) {
         this.appointmentRepository = appointmentRepository;
         this.reviewRepository = reviewRepository;
         this.userRepository = userRepository;
+        this.serviceRepository = serviceRepository;
         this.emailService = emailService;
+        this.googleCalendarService = googleCalendarService;
+        this.barberRepository = barberRepository;
     }
 
     public Result<List<Appointment>> getAll() {
@@ -97,10 +106,13 @@ public class AppointmentService {
         return result;
     }
 
-    public Result<Appointment> add(Appointment appointment) {
-        Result<Appointment> result = validateAppointment(appointment);
+    public Result<AppointmentResponse> add(Appointment appointment) throws Exception {
 
-        if (!result.isSuccess()) {
+        Result<Appointment> validation = validateAppointment(appointment);
+
+        Result<AppointmentResponse> result = new Result<>();
+
+        if (!validation.isSuccess()) {
             return result;
         }
 
@@ -109,11 +121,6 @@ public class AppointmentService {
             return result;
         }
 
-        // Prevent Double booking
-//        if (hasConflict(appointment)) {
-//            result.addErrorMessage("Time slot already booked", ResultType.INVALID);
-//            return result;
-//        }
         if (appointmentRepository.existsByBarberIdAndAppointmentDatetime(
                 appointment.getBarberId(),
                 appointment.getAppointmentDatetime())) {
@@ -123,6 +130,49 @@ public class AppointmentService {
         }
 
         appointment.setStatus("BOOKED");
+
+        User user = userRepository.findById(appointment.getUserId()).orElse(null);
+
+        learn.DeVitoStyles.models.Service service =
+                serviceRepository.findById(appointment.getServiceId());
+
+        Barber barber =
+                barberRepository.findById(appointment.getBarberId());
+
+        if (user == null || service == null || barber == null) {
+            result.addErrorMessage("Unable to load appointment details", ResultType.INVALID);
+            return result;
+        }
+
+        String customerName =
+                user.getFirstName() + " " + user.getLastName();
+
+        String barberName =
+                barber.getFirstName() + " " + barber.getLastName();
+
+        GoogleCalendarResponse calendarResponse;
+        try {
+
+            calendarResponse = googleCalendarService.createAppointment(
+                    customerName,
+                    user.getEmail(),
+                    barberName,
+                    service.getName(),
+                    appointment.getAppointmentDatetime(),
+                    service.getDurationMinutes()
+            );
+
+            appointment.setGoogleEventId(calendarResponse.getEventId());
+
+        } catch (Exception e) {
+
+            result.addErrorMessage(
+                    "Google Calendar event creation failed",
+                    ResultType.INVALID);
+
+            return result;
+        }
+
         Appointment created = appointmentRepository.add(appointment);
 
         if (created == null) {
@@ -130,15 +180,37 @@ public class AppointmentService {
             return result;
         }
 
-
-        // Get user email from DB
         sendEmail(created.getUserId(), "CONFIRM", created);
 
-        result.setpayload(created);
+        AppointmentResponse response = new AppointmentResponse();
+
+        response.setAppointmentId(created.getAppointmentId());
+
+        response.setCustomerName(customerName);
+
+        response.setCustomerEmail(user.getEmail());
+
+        response.setBarberName(barberName);
+
+        response.setServiceName(service.getName());
+
+        response.setDurationMinutes(service.getDurationMinutes());
+
+        response.setAppointmentDatetime(created.getAppointmentDatetime());
+
+        response.setStatus(created.getStatus());
+
+        response.setGoogleCalendarUrl(
+                calendarResponse.getEventUrl()
+        );
+        System.out.println("GOOGLE URL: " + response.getGoogleCalendarUrl());
+
+        result.setpayload(response);
+
         return result;
     }
 
-    public Result<Void> cancel(int appointmentId) {
+    public Result<Void> cancel(int appointmentId) throws IOException {
         Result<Void> result = new Result<>();
 
         Appointment existing = appointmentRepository.findById(appointmentId);
@@ -149,6 +221,8 @@ public class AppointmentService {
         }
 
         existing.setStatus("CANCELLED");
+
+        googleCalendarService.deleteAppointment(existing.getGoogleEventId());
 
         boolean success = appointmentRepository.update(existing);
 

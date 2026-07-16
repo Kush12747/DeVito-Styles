@@ -21,7 +21,8 @@ public class AppointJdbcClientRepository implements AppointmentRepository {
            barber_id,
            service_id,
            appointment_datetime,
-           status
+           status,
+           google_event_id
     FROM appointment
     """;
 
@@ -96,8 +97,8 @@ public class AppointJdbcClientRepository implements AppointmentRepository {
     public Appointment add(Appointment appointment) {
         final String sql = """
                 INSERT INTO appointment
-                (user_id, barber_id, service_id, appointment_datetime, status)
-                VALUES (?, ?, ?, ?, ?);
+                (user_id, barber_id, service_id, appointment_datetime, status, google_event_id)
+                VALUES (?, ?, ?, ?, ?, ?);
                 """;
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -107,6 +108,7 @@ public class AppointJdbcClientRepository implements AppointmentRepository {
                 .param(appointment.getServiceId())
                 .param(appointment.getAppointmentDatetime())
                 .param(appointment.getStatus())
+                .param(appointment.getGoogleEventId())
                 .update(keyHolder, "appointment_id");
 
         if (rowsAffected == 0) {
@@ -126,7 +128,8 @@ public class AppointJdbcClientRepository implements AppointmentRepository {
                     barber_id = ?,
                     service_id = ?,
                     appointment_datetime = ?,
-                    status = ?
+                    status = ?,
+                    google_event_id = ?
                 WHERE appointment_id = ?;
                 """;
 
@@ -136,6 +139,7 @@ public class AppointJdbcClientRepository implements AppointmentRepository {
                 .param(appointment.getServiceId())
                 .param(appointment.getAppointmentDatetime())
                 .param(appointment.getStatus())
+                .param(appointment.getGoogleEventId())
                 .param(appointment.getAppointmentId())
                 .update() > 0;
     }

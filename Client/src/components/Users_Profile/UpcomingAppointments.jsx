@@ -1,4 +1,4 @@
-function UpcommingAppointments({ appointments, onEdit, onComplete, onCancel }) {
+function UpcommingAppointments({ appointments, onEdit, onComplete, onCancel, onViewConfirmation }) {
     return (
         <div className="appointment-card">
 
@@ -22,6 +22,7 @@ function UpcommingAppointments({ appointments, onEdit, onComplete, onCancel }) {
                                 <button className="reschedule-btn" onClick={() => onEdit(a)}>Reschedule</button>
                                 <button className="complete-btn" onClick={() => onComplete(a)}>Complete</button>
                                 <button className="cancel-btn" onClick={() => onCancel(a)}>Cancel</button>
+                                <button className="confirmation-btn" onClick={() => onViewConfirmation(a)}>View Confirmation</button>
                             </div>
                         )}
                     </div>

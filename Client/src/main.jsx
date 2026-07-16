@@ -21,6 +21,7 @@ import AdminUsers from './components/Admin/AdminUsers';
 import ReviewPage from './components/pages/ReviewPage';
 import StaffPage from './components/Staff/StaffPage';
 import StaffProfilePage from './components/Staff/StaffProfilePage';
+import ConfirmationPage from './components/AppointmentService/ConfirmationPage';
 
 const router = createBrowserRouter([
   {
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
       {
         path: 'staff/:barberId',
         element: <StaffProfilePage />
+      },
+      {
+        path: 'confirmation',
+        element: <ConfirmationPage />
       }
     ]
   }
