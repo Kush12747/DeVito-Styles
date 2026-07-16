@@ -1,5 +1,6 @@
 import "../../styles/profile.css";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import ProfileCard from "./ProfileCard";
 import EditProfileForm from "./EditProfileForm";
@@ -32,9 +33,20 @@ function Profile() {
   const [enrichedAppointments, setEnrichedAppointments] = useState([]);
 
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const barberCache = {};
   const serviceCache = {};
+
+  const handleViewConfirmation = (appointment) => {
+        console.log("Sending appointment:", appointment);
+
+    navigate("/confirmation", {
+      state: {
+        appointment
+      }
+    });
+  };
 
 
   const handleEditAppointment = (appointment) => {
@@ -357,7 +369,7 @@ const appointmentHistory =
 
             <div className="appointments-wrapper">
 
-                <UpcomingAppointments appointments={upcomingAppointments} onEdit={handleEditAppointment} onComplete={handleCompleteAppointment} onCancel={handleCancelAppointment} />
+                <UpcomingAppointments appointments={upcomingAppointments} onEdit={handleEditAppointment} onComplete={handleCompleteAppointment} onCancel={handleCancelAppointment} onViewConfirmation={handleViewConfirmation}/>
                 
                 {editingAppointment && (
                 <RescheduleAppointmentForm
