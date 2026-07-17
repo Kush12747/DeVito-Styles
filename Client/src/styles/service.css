@@ -305,21 +305,102 @@ body {
     border: 1px solid rgba(200,169,107,0.12);
 }
 
-.service-bottom-image {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    transition: 0.4s ease;
-}
-
 .service-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    
 
-    min-height: 460px;
+    min-height: 390px;
+
+    background:
+        linear-gradient(
+            160deg,
+            rgba(28,28,28,.96),
+            rgba(12,12,12,.98)
+        );
+
+    box-shadow:
+        inset 0 1px rgba(255,255,255,.04),
+        0 14px 30px rgba(0,0,0,.55);
+}
+
+.service-image-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 16px;
+    margin-bottom: 20px;
+}
+
+.service-image-wrapper::after{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(0,0,0,.35)
+        );
+}
+
+.service-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .35s ease, filter .35s ease;
+}
+
+.services-grid{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(340px,1fr));
+
+    gap:42px;
+
+    padding:120px 60px;
+}
+
+.description{
+    color:#B7B7B7;
+    line-height:1.8;
+    font-size:.96rem;
+
+    flex-grow:1;
+}
+
+.service-content{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.service-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding-top:18px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.service-meta span:first-child{
+    color:#8d8d8d;
+    font-size:.9rem;
+    text-transform:uppercase;
+    letter-spacing:2px;
+}
+
+.price{
+    color:#f5d48a;
+    font-size:1.8rem;
+    font-weight:700;
 }
 
 .service-card:hover {
@@ -332,14 +413,34 @@ body {
         0 0 35px rgba(200,169,107,0.12);
 }
 
-.service-card:hover::after {
-    opacity: 1;
+.service-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:-60px;
+    right:-60px;
+
+    width:180px;
+    height:180px;
+
+    background:
+        radial-gradient(
+            rgba(200,169,107,.12),
+            transparent 70%
+        );
+
+    pointer-events:none;
 }
 
-.service-card:hover .service-bottom-image {
-    transform: scale(1.08);
+.service-card:hover .service-image {
+    transform: scale(1.03);
+    filter: brightness(1.04);
+}
 
-    filter: brightness(1.08);
+.service-card:hover::after {
+    opacity: 1;
 }
 
 .booking-form input[type="date"]::-webkit-calendar-picker-indicator {

@@ -20,35 +20,48 @@ function ServiceCard({ service }) {
     const image = serviceImages[service.name] || classic;
 
     return (
-        <div className="service-card" onClick={() => navigate(`/book/${service.serviceId}`)}>
-            <h3>{service.name}</h3>
-            <p>{service.description}</p>
-            <p className="duration">{service.durationMinutes} min</p>
-            <p className="price">${service.price}</p>
-
-            <div className="service-image-wrapper">
-    {service.name?.toLowerCase().replace(/\s/g, "") === "devitostyle" ? (
-        <a
-            href="https://www.youtube.com/watch?v=QDia3e12czc"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
+        <div
+    className="service-card"
+    onClick={() => navigate(`/book/${service.serviceId}`)}
+>
+    <div className="service-image-wrapper">
+        {service.name?.toLowerCase().replace(/\s/g, "") === "devitostyle" ? (
+            <a
+                href="https://www.youtube.com/watch?v=QDia3e12czc"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+            >
+                <img
+                    src={image}
+                    alt={service.name}
+                    className="service-image"
+                />
+            </a>
+        ) : (
             <img
                 src={image}
                 alt={service.name}
-                className="service-bottom-image"
-                style={{ cursor: "pointer" }}
+                className="service-image"
             />
-        </a>
-    ) : (
-        <img
-            src={image}
-            alt={service.name}
-            className="service-bottom-image"
-        />
-    )}
-</div>
+        )}
+    </div>
+
+    <div className="service-content">
+        <h3>{service.name}</h3>
+
+        <p className="description">
+            {service.description}
+        </p>
+
+        <div className="service-meta">
+            <span>{service.durationMinutes} min</span>
+            <span className="price">
+                ${service.price}
+            </span>
         </div>
+    </div>
+</div>
     );
 }
 
