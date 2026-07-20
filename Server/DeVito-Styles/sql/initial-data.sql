@@ -175,3 +175,51 @@ VALUES
     5,
     TRUE
 );
+
+
+INSERT INTO categories (name, description)
+VALUES
+('Pomades','Hair styling products'),
+('Hair Care','Shampoo and conditioner'),
+('Beard Care','Beard oils and balms'),
+('Accessories','Combs, brushes, razors');
+
+
+INSERT INTO products
+(
+    category_id,
+    name,
+    description,
+    price,
+    stock_quantity,
+    image_url,
+    is_featured
+)
+VALUES
+(
+    1,
+    'Matte Pomade',
+    'Medium hold with matte finish.',
+    19.99,
+    20,
+    'https://your-cloudinary-url.com/pomade.jpg',
+    TRUE
+),
+(
+    2,
+    'Daily Shampoo',
+    'Hydrating shampoo for everyday use.',
+    14.99,
+    35,
+    'https://your-cloudinary-url.com/shampoo.jpg',
+    FALSE
+),
+(
+    3,
+    'Beard Oil',
+    'Nourishes and softens beard hair.',
+    17.99,
+    18,
+    'https://your-cloudinary-url.com/beardoil.jpg',
+    TRUE
+);
