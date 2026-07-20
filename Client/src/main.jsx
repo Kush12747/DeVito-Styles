@@ -22,6 +22,7 @@ import ReviewPage from './components/pages/ReviewPage';
 import StaffPage from './components/Staff/StaffPage';
 import StaffProfilePage from './components/Staff/StaffProfilePage';
 import ConfirmationPage from './components/AppointmentService/ConfirmationPage';
+import ProductsPage from './components/Products/ProductsPage';
 
 const router = createBrowserRouter([
   {
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
       {
         path: 'confirmation',
         element: <ConfirmationPage />
+      },
+      {
+        path: 'products',
+        element: <ProductsPage />
       }
     ]
   }

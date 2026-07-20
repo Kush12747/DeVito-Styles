@@ -23,6 +23,7 @@ function Navbar({ loggedInUser }) {
                         <NavLink to="/services" className={({ isActive }) => isActive ? "active-link" : ""}>Services</NavLink>
                         <NavLink to="/about" className={({ isActive }) => isActive ? "active-link" : ""}>About</NavLink>
                         <NavLink to="/staff" className={({ isActive }) => isActive ? "active-link" : ""}>Meet The Team</NavLink>
+                        <NavLink to="/products" className={({ isActive }) => isActive ? "active-link" : ""}>Products</NavLink>
                     </>
                 )}
             </div>
