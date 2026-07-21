@@ -1,5 +1,6 @@
-package learn.DeVitoStyles.data;
+package learn.DeVitoStyles.data.repositories;
 
+import learn.DeVitoStyles.data.interfaces.BarberRepository;
 import learn.DeVitoStyles.data.mappers.BarberMapper;
 import learn.DeVitoStyles.models.Barber;
 import org.springframework.jdbc.core.simple.JdbcClient;

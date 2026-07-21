@@ -1,5 +1,6 @@
-package learn.DeVitoStyles.data;
+package learn.DeVitoStyles.data.repositories;
 
+import learn.DeVitoStyles.data.interfaces.AppointmentRepository;
 import learn.DeVitoStyles.data.mappers.AppointmentMapper;
 import learn.DeVitoStyles.models.Appointment;
 import org.springframework.jdbc.core.simple.JdbcClient;

@@ -1,6 +1,6 @@
 package learn.DeVitoStyles.domain;
 
-import learn.DeVitoStyles.data.ServiceRepository;
+import learn.DeVitoStyles.data.interfaces.ServiceRepository;
 import learn.DeVitoStyles.models.Service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

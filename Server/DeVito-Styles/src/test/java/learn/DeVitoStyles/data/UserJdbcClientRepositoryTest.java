@@ -1,5 +1,6 @@
 package learn.DeVitoStyles.data;
 
+import learn.DeVitoStyles.data.repositories.UserJdbcClientRepository;
 import learn.DeVitoStyles.models.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package learn.DeVitoStyles.domain;
 
-import learn.DeVitoStyles.data.BarberRepository;
+import learn.DeVitoStyles.data.interfaces.BarberRepository;
 import learn.DeVitoStyles.models.Barber;
 import org.springframework.stereotype.Service;
 

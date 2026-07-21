@@ -1,6 +1,6 @@
 package learn.DeVitoStyles.domain;
 
-import learn.DeVitoStyles.data.ServiceRepository;
+import learn.DeVitoStyles.data.interfaces.ServiceRepository;
 import learn.DeVitoStyles.models.Service;
 
 import java.math.BigDecimal;

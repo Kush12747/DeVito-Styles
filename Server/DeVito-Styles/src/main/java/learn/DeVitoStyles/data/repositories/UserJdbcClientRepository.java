@@ -1,5 +1,6 @@
-package learn.DeVitoStyles.data;
+package learn.DeVitoStyles.data.repositories;
 
+import learn.DeVitoStyles.data.interfaces.UserRepository;
 import learn.DeVitoStyles.data.mappers.UserMapper;
 import learn.DeVitoStyles.models.User;
 import org.springframework.dao.DataAccessException;

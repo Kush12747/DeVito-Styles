@@ -1,5 +1,6 @@
-package learn.DeVitoStyles.data;
+package learn.DeVitoStyles.data.repositories;
 
+import learn.DeVitoStyles.data.interfaces.ServiceRepository;
 import learn.DeVitoStyles.data.mappers.ServiceMapper;
 import learn.DeVitoStyles.models.Service;
 import org.springframework.jdbc.core.simple.JdbcClient;

@@ -1,6 +1,6 @@
 package learn.DeVitoStyles.domain;
 
-import learn.DeVitoStyles.data.*;
+import learn.DeVitoStyles.data.interfaces.*;
 import learn.DeVitoStyles.dto.AppointmentResponse;
 import learn.DeVitoStyles.models.Appointment;
 import learn.DeVitoStyles.models.Barber;

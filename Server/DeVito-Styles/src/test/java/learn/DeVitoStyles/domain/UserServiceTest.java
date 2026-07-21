@@ -1,6 +1,6 @@
 package learn.DeVitoStyles.domain;
 
-import learn.DeVitoStyles.data.UserRepository;
+import learn.DeVitoStyles.data.interfaces.UserRepository;
 import learn.DeVitoStyles.models.User;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
