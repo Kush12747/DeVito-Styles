@@ -1,7 +1,7 @@
 package learn.DeVitoStyles.domain;
 
-import learn.DeVitoStyles.data.AppointmentRepository;
-import learn.DeVitoStyles.data.ReviewRepository;
+import learn.DeVitoStyles.data.interfaces.AppointmentRepository;
+import learn.DeVitoStyles.data.interfaces.ReviewRepository;
 import learn.DeVitoStyles.models.Appointment;
 import learn.DeVitoStyles.models.Review;
 import org.springframework.stereotype.Service;

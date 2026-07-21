@@ -1,6 +1,6 @@
 package learn.DeVitoStyles.domain;
 
-import learn.DeVitoStyles.data.UserRepository;
+import learn.DeVitoStyles.data.interfaces.UserRepository;
 import learn.DeVitoStyles.models.User;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;

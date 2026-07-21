@@ -91,3 +91,34 @@ CREATE TABLE review (
 		FOREIGN KEY (appointment_id)
 		REFERENCES appointment(appointment_id)
 );
+
+CREATE TABLE categories (
+	category_id INT PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(255) NOT NULL UNIQUE,
+	description VARCHAR(255)
+);
+
+CREATE TABLE products (
+	product_id INT PRIMARY KEY AUTO_INCREMENT,
+	category_id INT NOT NULL,
+	
+	name VARCHAR(255) NOT NULL,
+	description TEXT,
+	price DECIMAL(10,2) NOT NULL,
+	stock_quantity INT NOT NULL DEFAULT 0,
+	
+	image_url VARCHAR(255),
+	
+	is_featured BOOLEAN NOT NULL DEFAULT FALSE,
+	is_active BOOLEAN NOT NULL DEFAULT TRUE,
+	
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_product_category
+        FOREIGN KEY(category_id)
+        REFERENCES categories(category_id)
+);
+
+

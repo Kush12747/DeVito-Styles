@@ -1,4 +1,4 @@
-package learn.DeVitoStyles.data;
+package learn.DeVitoStyles.data.repositories;
 
 import learn.DeVitoStyles.models.Review;
 import org.junit.jupiter.api.BeforeEach;

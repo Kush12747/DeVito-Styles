@@ -1,5 +1,6 @@
-package learn.DeVitoStyles.data;
+package learn.DeVitoStyles.data.repositories;
 
+import learn.DeVitoStyles.data.interfaces.ReviewRepository;
 import learn.DeVitoStyles.data.mappers.ReviewMapper;
 import learn.DeVitoStyles.models.Review;
 import org.springframework.jdbc.core.simple.JdbcClient;

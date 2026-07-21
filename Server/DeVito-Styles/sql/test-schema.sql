@@ -2,6 +2,36 @@ DROP DATABASE IF EXISTS barber_shop_test;
 CREATE DATABASE barber_shop_test;
 USE barber_shop_test;
 
+CREATE TABLE categories (
+	category_id INT PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(255) NOT NULL UNIQUE,
+	description VARCHAR(255)
+);
+
+CREATE TABLE products (
+	product_id INT PRIMARY KEY AUTO_INCREMENT,
+	category_id INT NOT NULL,
+	
+	name VARCHAR(255) NOT NULL,
+	description TEXT,
+	price DECIMAL(10,2) NOT NULL,
+	stock_quantity INT NOT NULL DEFAULT 0,
+	
+	image_url VARCHAR(255),
+	
+	is_featured BOOLEAN NOT NULL DEFAULT FALSE,
+	is_active BOOLEAN NOT NULL DEFAULT TRUE,
+	
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_product_category
+        FOREIGN KEY(category_id)
+        REFERENCES categories(category_id)
+);
+
+
 CREATE TABLE users (
 	user_id INT PRIMARY KEY AUTO_INCREMENT,
 	first_name VARCHAR(50) NOT NULL,
@@ -45,6 +75,7 @@ CREATE TABLE appointment (
 	service_id INT NOT NULL,
 	appointment_datetime DATETIME NOT NULL,
 	status VARCHAR(50) NOT NULL,
+	google_event_id VARCHAR(255),
 
 	CONSTRAINT fk_user_id
 		FOREIGN KEY (user_id)
@@ -95,10 +126,15 @@ BEGIN
 
 	DELETE FROM review;
 	DELETE FROM appointment;
-    DELETE FROM service;
-    DELETE FROM barber;
-    DELETE FROM users;
-
+	DELETE FROM products;
+	
+	DELETE FROM service;
+	DELETE FROM barber;
+	DELETE FROM users;
+	DELETE FROM categories;
+	
+	ALTER TABLE categories AUTO_INCREMENT = 1;
+	ALTER TABLE products AUTO_INCREMENT = 1;
 	ALTER TABLE users AUTO_INCREMENT = 1;
 	ALTER TABLE service AUTO_INCREMENT = 1;
 	ALTER TABLE barber AUTO_INCREMENT = 1;
@@ -239,6 +275,54 @@ VALUES
 	(2,1,1,5,'Excellent haircut. Will definitely come back.'),
 	(3,2,2,4,'Great service and very professional.'),
 	(4,1,3,5,'Best fade I have ever had.');
+	
+	-- categoires
+	INSERT INTO categories (name, description)
+	VALUES
+	('Pomades','Hair styling products'),
+	('Hair Care','Shampoo and conditioner'),
+	('Beard Care','Beard oils and balms'),
+	('Accessories','Combs, brushes, razors');
+	
+	-- products
+	INSERT INTO products
+	(
+	    category_id,
+	    name,
+	    description,
+	    price,
+	    stock_quantity,
+	    image_url,
+	    is_featured
+	)
+	VALUES
+	(
+	    1,
+	    'Matte Pomade',
+	    'Medium hold with matte finish.',
+	    19.99,
+	    20,
+	    'https://your-cloudinary-url.com/pomade.jpg',
+	    TRUE
+	),
+	(
+	    2,
+	    'Daily Shampoo',
+	    'Hydrating shampoo for everyday use.',
+	    14.99,
+	    35,
+	    'https://your-cloudinary-url.com/shampoo.jpg',
+	    FALSE
+	),
+	(
+	    3,
+	    'Beard Oil',
+	    'Nourishes and softens beard hair.',
+	    17.99,
+	    18,
+	    'https://your-cloudinary-url.com/beardoil.jpg',
+	    TRUE
+	);
 
 END //
 

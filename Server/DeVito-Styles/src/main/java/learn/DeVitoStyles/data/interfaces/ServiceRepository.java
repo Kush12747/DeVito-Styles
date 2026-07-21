@@ -1,4 +1,4 @@
-package learn.DeVitoStyles.data;
+package learn.DeVitoStyles.data.interfaces;
 
 import learn.DeVitoStyles.models.Service;
 
