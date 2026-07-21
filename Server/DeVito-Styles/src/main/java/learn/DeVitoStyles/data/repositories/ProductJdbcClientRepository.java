@@ -6,6 +6,7 @@ import learn.DeVitoStyles.models.Product;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -38,12 +39,16 @@ public class ProductJdbcClientRepository implements ProductRepository {
         StringBuilder sql = new StringBuilder(BASE_SELECT);
         sql.append(" WHERE is_active = true");
 
+        List<Object> params = new ArrayList<>();
+
         if (keyword != null && !keyword.isBlank()) {
             sql.append(" AND LOWER(name) LIKE LOWER(?)");
+            params.add("%" + keyword + "%");
         }
 
         if (categoryId != null) {
             sql.append(" AND category_id = ?");
+            params.add(categoryId);
         }
 
         if (Boolean.TRUE.equals(featured)) {
@@ -59,6 +64,10 @@ public class ProductJdbcClientRepository implements ProductRepository {
         }
 
         JdbcClient.StatementSpec statement = jdbcClient.sql(sql.toString());
+
+        for (int i = 0; i < params.size(); i++) {
+            statement = statement.param(i + 1, params.get(i));
+        }
 
         return statement
                 .query(mapper)

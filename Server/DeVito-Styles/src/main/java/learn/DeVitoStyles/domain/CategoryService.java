@@ -15,11 +15,35 @@ public class CategoryService {
         this.repository = repository;
     }
 
-    public List<Category> findAll() {
-        return repository.findAll();
+    public Result<List<Category>> findAll() {
+
+        Result<List<Category>> result = new Result<>();
+
+        List<Category> categories = repository.findAll();
+
+        result.setpayload(categories);
+
+        return result;
     }
 
-    public Category findById(int categoryId) {
-        return repository.findById(categoryId);
+
+    public Result<Category> findById(int categoryId) {
+
+        Result<Category> result = new Result<>();
+
+        Category category = repository.findById(categoryId);
+
+        if (category == null) {
+            result.addErrorMessage(
+                    "Category with id %s was not found.",
+                    ResultType.NOT_FOUND,
+                    categoryId
+            );
+            return result;
+        }
+
+        result.setpayload(category);
+
+        return result;
     }
 }

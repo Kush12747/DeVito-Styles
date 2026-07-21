@@ -2,6 +2,7 @@ package learn.DeVitoStyles.domain;
 
 import learn.DeVitoStyles.data.interfaces.AppointmentRepository;
 import learn.DeVitoStyles.data.interfaces.UserRepository;
+import learn.DeVitoStyles.dto.AppointmentResponse;
 import learn.DeVitoStyles.models.Appointment;
 import learn.DeVitoStyles.models.User;
 import org.junit.jupiter.api.Test;
@@ -100,7 +101,7 @@ class AppointmentServiceTest {
     }
 
     @Test
-    void shouldAddAppointment() {
+    void shouldAddAppointment() throws Exception {
         Appointment appointment = makeAppointment();
         User user = makeUser();
 
@@ -108,7 +109,7 @@ class AppointmentServiceTest {
         when(repository.add(any())).thenReturn(appointment);
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
 
-        Result<Appointment> result = service.add(appointment);
+        Result<AppointmentResponse> result = service.add(appointment);
 
         assertTrue(result.isSuccess());
 

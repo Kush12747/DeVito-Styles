@@ -1,6 +1,7 @@
 package learn.DeVitoStyles.controller;
 
 import learn.DeVitoStyles.domain.CategoryService;
+import learn.DeVitoStyles.domain.Result;
 import learn.DeVitoStyles.models.Category;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,20 +19,29 @@ public class CategoryController {
         this.service = service;
     }
 
+
     @GetMapping
-    public List<Category> findAll() {
-        return service.findAll();
+    public ResponseEntity<List<Category>> findAll() {
+
+        Result<List<Category>> result = service.findAll();
+
+        if (!result.isSuccess()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(result.getpayload());
     }
+
 
     @GetMapping("/{categoryId}")
     public ResponseEntity<Category> findById(@PathVariable int categoryId) {
 
-        Category category = service.findById(categoryId);
+        Result<Category> result = service.findById(categoryId);
 
-        if (category == null) {
+        if (!result.isSuccess()) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(category);
+        return ResponseEntity.ok(result.getpayload());
     }
 }

@@ -1,6 +1,5 @@
-package learn.DeVitoStyles.data;
+package learn.DeVitoStyles.data.repositories;
 
-import learn.DeVitoStyles.data.repositories.BarberJdbcClientRepository;
 import learn.DeVitoStyles.models.Barber;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

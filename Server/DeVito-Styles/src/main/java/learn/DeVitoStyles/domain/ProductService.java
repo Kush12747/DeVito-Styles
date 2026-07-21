@@ -15,11 +15,46 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product findById(int productId) {
-        return productRepository.findById(productId);
+
+    public Result<Product> findById(int productId) {
+
+        Result<Product> result = new Result<>();
+
+        Product product = productRepository.findById(productId);
+
+        if (product == null) {
+            result.addErrorMessage(
+                    "Product with id %s was not found.",
+                    ResultType.NOT_FOUND,
+                    productId
+            );
+            return result;
+        }
+
+        result.setpayload(product);
+
+        return result;
     }
 
-    public List<Product> find(String keyword, Integer categoryId, Boolean featured, String sort) {
-        return productRepository.find(keyword, categoryId, featured, sort);
+
+    public Result<List<Product>> find(
+            String keyword,
+            Integer categoryId,
+            Boolean featured,
+            String sort
+    ) {
+
+        Result<List<Product>> result = new Result<>();
+
+        List<Product> products = productRepository.find(
+                keyword,
+                categoryId,
+                featured,
+                sort
+        );
+
+        result.setpayload(products);
+
+        return result;
     }
 }

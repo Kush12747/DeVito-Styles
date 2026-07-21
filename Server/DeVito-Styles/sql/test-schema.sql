@@ -75,6 +75,7 @@ CREATE TABLE appointment (
 	service_id INT NOT NULL,
 	appointment_datetime DATETIME NOT NULL,
 	status VARCHAR(50) NOT NULL,
+	google_event_id VARCHAR(255),
 
 	CONSTRAINT fk_user_id
 		FOREIGN KEY (user_id)
@@ -123,13 +124,14 @@ DELIMITER //
 CREATE PROCEDURE set_known_good_state()
 BEGIN
 
-	DELETE FROM categories;
-	DELETE FROM products;
 	DELETE FROM review;
 	DELETE FROM appointment;
-    DELETE FROM service;
-    DELETE FROM barber;
-    DELETE FROM users;
+	DELETE FROM products;
+	
+	DELETE FROM service;
+	DELETE FROM barber;
+	DELETE FROM users;
+	DELETE FROM categories;
 	
 	ALTER TABLE categories AUTO_INCREMENT = 1;
 	ALTER TABLE products AUTO_INCREMENT = 1;
