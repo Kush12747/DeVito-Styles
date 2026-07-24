@@ -8,3 +8,24 @@
     border-radius: 10px;
     padding: 1rem;
 }
+
+.products-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.products-header {
+    margin-bottom: 2rem;
+}
+
+.products-toolbar {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.products-content {
+    width: 100%;
+}

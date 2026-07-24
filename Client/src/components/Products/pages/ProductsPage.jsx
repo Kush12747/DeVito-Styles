@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import "../Style/ProductsPage.css";
 import { fetchProducts } from '../../../Services/productService';
+import { fetchCategories } from "../../../Services/categoryService";
 import ProductGrid from '../ProductGrid';
 import ProductCard from '../ProductCard';
 import ProductSearch from '../ProductSearch';
@@ -20,12 +21,27 @@ function ProductsPage() {
 
     useEffect(() => {
         loadProducts();
-    }, []);
+        loadCategories();
+    }, [search, categoryId, sort]);
 
     const loadProducts = async () => {
         try {
-            const data = await fetchProducts(token);
+            const data = await fetchProducts({
+                token,
+                keyword: search,
+                categoryId,
+                sort
+        });
             setProducts(data);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    const loadCategories = async () => {
+        try {
+            const data = await fetchCategories(token);
+            setCategories(data);
         } catch (err) {
             console.error(err);
         }
@@ -65,9 +81,6 @@ function ProductsPage() {
             <section className="products-content">
                 <ProductGrid products={products} />
             </section>
-            
-            <ProductSearch search={search} setSearch={setSearch} />
-
         
         </div>
     );
