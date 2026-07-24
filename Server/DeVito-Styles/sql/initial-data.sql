@@ -202,7 +202,7 @@ VALUES
     'Medium hold with matte finish.',
     19.99,
     20,
-    'https://your-cloudinary-url.com/pomade.jpg',
+    'https://res.cloudinary.com/dc0awmexj/image/upload/v1784913960/MattePomade_ltb5cp.jpg',
     TRUE
 ),
 (
@@ -211,7 +211,7 @@ VALUES
     'Hydrating shampoo for everyday use.',
     14.99,
     35,
-    'https://your-cloudinary-url.com/shampoo.jpg',
+    'https://res.cloudinary.com/dc0awmexj/image/upload/v1784913965/DilyShampoo_yhzb3g.jpg',
     FALSE
 ),
 (
@@ -220,6 +220,6 @@ VALUES
     'Nourishes and softens beard hair.',
     17.99,
     18,
-    'https://your-cloudinary-url.com/beardoil.jpg',
+    'https://res.cloudinary.com/dc0awmexj/image/upload/v1784913976/BeardOil_nkkytn.jpg',
     TRUE
 );

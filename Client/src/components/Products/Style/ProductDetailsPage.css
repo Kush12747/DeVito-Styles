@@ -1,0 +1,29 @@
+.product-details-page{
+    max-width:1200px;
+    margin:auto;
+    padding:2rem;
+}
+
+.product-details{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:4rem;
+    align-items:start;
+}
+
+.product-image{
+    width:85%;
+    border-radius:16px;
+    object-fit:cover;
+}
+
+.product-info{
+    display:flex;
+    flex-direction:column;
+    gap:1.25rem;
+}
+
+.price{
+    font-size:2rem;
+    font-weight:bold;
+}

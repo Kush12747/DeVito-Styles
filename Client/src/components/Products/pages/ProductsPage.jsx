@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
-import "../Style/ProductsPage.css";
+import { Link } from "react-router-dom";
 import { fetchProducts } from '../../../Services/productService';
 import { fetchCategories } from "../../../Services/categoryService";
+
+import "../Style/ProductsPage.css";
+
 import ProductGrid from '../ProductGrid';
 import ProductCard from '../ProductCard';
 import ProductSearch from '../ProductSearch';

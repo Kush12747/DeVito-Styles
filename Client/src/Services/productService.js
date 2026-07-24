@@ -29,3 +29,17 @@ export async function fetchProducts({token, keyword="", categoryId = "", sort="n
 
         return response.json();
 }
+
+export async function fetchProductById(productId, token) {
+    const response = await fetch(`${PRODUCT_BASE_URL}/${productId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to load product");
+    }
+
+    return response.json();
+}
