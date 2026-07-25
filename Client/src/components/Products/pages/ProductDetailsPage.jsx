@@ -67,21 +67,30 @@ function ProductDetailsPage() {
 
                 <div className="product-meta">
 
-                    <p>
-                        <strong>Category:</strong> {product.categoryName}
-                    </p>
+                    <div className="meta-card">
+                        <span className="meta-label">🚚 Shipping</span>
+                        <span className="meta-value">2 - 3 business days</span>
+                    </div>
 
-                    <p>
-                        <strong>Status:</strong>
+                    <div className="meta-card">
+                        <span className="meta-label">Status</span>
+                        <span
+                            className={
+                                product.stockQuantity > 0
+                                    ? "meta-value in-stock"
+                                    : "meta-value out-of-stock"
+                            }
+                        >
+                            {product.stockQuantity > 0 ? "In Stock" : "Out of Stock"}
+                        </span>
+                    </div>
 
-                        {product.stockQuantity > 0
-                            ? " In Stock"
-                            : " Out of Stock"}
-                    </p>
-
-                    <p>
-                        <strong>Available:</strong> {product.stockQuantity}
-                    </p>
+                    <div className="meta-card">
+                        <span className="meta-label">📦 Stock</span>
+                        <span className="meta-value">
+                            {product.stockQuantity} Left
+                        </span>
+                    </div>
 
                 </div>
 
