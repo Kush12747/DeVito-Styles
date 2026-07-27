@@ -169,6 +169,9 @@ CREATE TABLE product_ingredients (
 		ON DELETE CASCADE
 );
 
+ALTER TABLE product_ingredients
+RENAME COLUMN ingrediant_id TO ingredient_id;
+
 CREATE TABLE product_usage_steps (
 
     step_id INT PRIMARY KEY AUTO_INCREMENT,

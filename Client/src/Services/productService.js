@@ -38,8 +38,16 @@ export async function fetchProductById(productId, token) {
     });
 
     if (!response.ok) {
-        throw new Error("Failed to load product");
+        let message = "Failed to load product";
+
+        try {
+            const error = await response.json();
+            message = error.message || message;
+        } catch {
+
+        }
+        throw new Error(message);
     }
 
-    return response.json();
+    return await response.json();
 }
