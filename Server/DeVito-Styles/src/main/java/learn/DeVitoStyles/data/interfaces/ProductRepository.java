@@ -1,6 +1,6 @@
 package learn.DeVitoStyles.data.interfaces;
 
-import learn.DeVitoStyles.models.Product;
+import learn.DeVitoStyles.models.Products.Product;
 
 import java.util.List;
 

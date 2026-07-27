@@ -456,27 +456,27 @@ VALUES
 	(3,'Tea Tree Oil',4);
 	
 	INSERT INTO product_usage_steps
-(product_id, step_number, instruction)
-VALUES
-
--- Matte Pomade
-(1,1,'Scoop a small amount onto your fingertips.'),
-(1,2,'Rub between your palms until evenly distributed.'),
-(1,3,'Apply to dry or slightly damp hair.'),
-(1,4,'Style with your hands or a comb.'),
-
--- Daily Shampoo
-(2,1,'Wet hair thoroughly with warm water.'),
-(2,2,'Apply a quarter-sized amount of shampoo.'),
-(2,3,'Massage gently into scalp and hair.'),
-(2,4,'Rinse thoroughly with water.'),
-(2,5,'Repeat if desired.'),
-
--- Beard Oil
-(3,1,'Dispense 2–3 drops into your palm.'),
-(3,2,'Rub hands together evenly.'),
-(3,3,'Massage into beard and skin.'),
-(3,4,'Comb through evenly.');
+	(product_id, step_number, instruction)
+	VALUES
+	
+	-- Matte Pomade
+	(1,1,'Scoop a small amount onto your fingertips.'),
+	(1,2,'Rub between your palms until evenly distributed.'),
+	(1,3,'Apply to dry or slightly damp hair.'),
+	(1,4,'Style with your hands or a comb.'),
+	
+	-- Daily Shampoo
+	(2,1,'Wet hair thoroughly with warm water.'),
+	(2,2,'Apply a quarter-sized amount of shampoo.'),
+	(2,3,'Massage gently into scalp and hair.'),
+	(2,4,'Rinse thoroughly with water.'),
+	(2,5,'Repeat if desired.'),
+	
+	-- Beard Oil
+	(3,1,'Dispense 2–3 drops into your palm.'),
+	(3,2,'Rub hands together evenly.'),
+	(3,3,'Massage into beard and skin.'),
+	(3,4,'Comb through evenly.');
 
 END //
 

@@ -1,7 +1,7 @@
 package learn.DeVitoStyles.domain;
 
 import learn.DeVitoStyles.data.interfaces.ProductRepository;
-import learn.DeVitoStyles.models.Product;
+import learn.DeVitoStyles.models.Products.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

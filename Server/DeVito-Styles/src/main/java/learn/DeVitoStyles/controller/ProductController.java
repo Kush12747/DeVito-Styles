@@ -2,7 +2,7 @@ package learn.DeVitoStyles.controller;
 
 import learn.DeVitoStyles.domain.ProductService;
 import learn.DeVitoStyles.domain.Result;
-import learn.DeVitoStyles.models.Product;
+import learn.DeVitoStyles.models.Products.Product;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,7 +1,7 @@
 package learn.DeVitoStyles.domain;
 
 import learn.DeVitoStyles.data.interfaces.ProductRepository;
-import learn.DeVitoStyles.models.Product;
+import learn.DeVitoStyles.models.Products.Product;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

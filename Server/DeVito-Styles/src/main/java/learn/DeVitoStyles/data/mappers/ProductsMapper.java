@@ -1,6 +1,6 @@
 package learn.DeVitoStyles.data.mappers;
 
-import learn.DeVitoStyles.models.Product;
+import learn.DeVitoStyles.models.Products.Product;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
