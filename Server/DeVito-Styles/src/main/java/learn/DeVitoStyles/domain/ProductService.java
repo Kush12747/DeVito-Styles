@@ -1,7 +1,7 @@
 package learn.DeVitoStyles.domain;
 
-import learn.DeVitoStyles.data.interfaces.ProductRepository;
-import learn.DeVitoStyles.models.Product;
+import learn.DeVitoStyles.data.interfaces.*;
+import learn.DeVitoStyles.models.Products.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +10,17 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductBenefitRepository benefitRepository;
+    private final ProductIngredientRepository ingredientRepository;
+    private final ProductSpecificationRepository specificationRepository;
+    private final ProductUsageStepRepository usageStepRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, ProductBenefitRepository benefitRepository, ProductIngredientRepository ingredientRepository, ProductSpecificationRepository specificationRepository, ProductUsageStepRepository usageStepRepository) {
         this.productRepository = productRepository;
+        this.benefitRepository = benefitRepository;
+        this.ingredientRepository = ingredientRepository;
+        this.specificationRepository = specificationRepository;
+        this.usageStepRepository = usageStepRepository;
     }
 
 
@@ -23,13 +31,14 @@ public class ProductService {
         Product product = productRepository.findById(productId);
 
         if (product == null) {
-            result.addErrorMessage(
-                    "Product with id %s was not found.",
-                    ResultType.NOT_FOUND,
-                    productId
-            );
+            result.addErrorMessage("Product with id %s was not found.", ResultType.NOT_FOUND, productId);
             return result;
         }
+
+        product.setSpecification(specificationRepository.findByProductId(productId));
+        product.setBenefits(benefitRepository.findByProductId(productId));
+        product.setIngredients(ingredientRepository.findByProductId(productId));
+        product.setUsageSteps(usageStepRepository.findByProductId(productId));
 
         result.setpayload(product);
 

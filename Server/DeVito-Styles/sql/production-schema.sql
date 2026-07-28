@@ -121,4 +121,70 @@ CREATE TABLE products (
         REFERENCES categories(category_id)
 );
 
+CREATE TABLE product_specifications (
+	product_id INT PRIMARY KEY,
+	
+	size VARCHAR(50) NOT NULL,
+	scent VARCHAR(100),
+	hair_type VARCHAR(100),
+	hold_strength VARCHAR(50),
+	finish VARCHAR(50),
+	country_of_origin VARCHAR(100),
+	weight VARCHAR(50),
+	sku VARCHAR(50) UNIQUE,
+	
+	CONSTRAINT fk_product_specifications_product
+		FOREIGN KEY (product_id)
+		REFERENCES products(product_id)
+		ON DELETE CASCADE
+);
+
+CREATE TABLE product_benefits (
+	benefit_id INT PRIMARY KEY AUTO_INCREMENT,
+	
+	product_id INT NOT NULL,
+	
+	benefit VARCHAR(150) NOT NULL,
+	
+	display_order INT DEFAULT 1,
+	
+	CONSTRAINT fk_product_benefits_product
+		FOREIGN KEY (product_id)
+		REFERENCES products(product_id)
+		ON DELETE CASCADE
+);
+
+CREATE TABLE product_ingredients (
+	ingrediant_id INT PRIMARY KEY AUTO_INCREMENT,
+	
+	product_id INT NOT NULL,
+	
+	ingredient VARCHAR(100) NOT NULL,
+	
+	display_order INT DEFAULT 1,
+	
+	CONSTRAINT fk_product_ingredients_product
+		FOREIGN KEY (product_id)
+		REFERENCES products(product_id)
+		ON DELETE CASCADE
+);
+
+ALTER TABLE product_ingredients
+RENAME COLUMN ingrediant_id TO ingredient_id;
+
+CREATE TABLE product_usage_steps (
+
+    step_id INT PRIMARY KEY AUTO_INCREMENT,
+
+    product_id INT NOT NULL,
+
+    step_number INT NOT NULL,
+
+    instruction VARCHAR(255) NOT NULL,
+
+    CONSTRAINT fk_product_usage_steps_product
+        FOREIGN KEY (product_id)
+        REFERENCES products(product_id)
+        ON DELETE CASCADE
+);
 

@@ -202,7 +202,7 @@ VALUES
     'Medium hold with matte finish.',
     19.99,
     20,
-    'https://your-cloudinary-url.com/pomade.jpg',
+    'https://res.cloudinary.com/dc0awmexj/image/upload/v1784913960/MattePomade_ltb5cp.jpg',
     TRUE
 ),
 (
@@ -211,7 +211,7 @@ VALUES
     'Hydrating shampoo for everyday use.',
     14.99,
     35,
-    'https://your-cloudinary-url.com/shampoo.jpg',
+    'https://res.cloudinary.com/dc0awmexj/image/upload/v1784913965/DilyShampoo_yhzb3g.jpg',
     FALSE
 ),
 (
@@ -220,6 +220,132 @@ VALUES
     'Nourishes and softens beard hair.',
     17.99,
     18,
-    'https://your-cloudinary-url.com/beardoil.jpg',
+    'https://res.cloudinary.com/dc0awmexj/image/upload/v1784913976/BeardOil_nkkytn.jpg',
     TRUE
 );
+
+-- Beard Oil
+INSERT INTO product_specifications
+(product_id, size, scent, hair_type, hold_strength, finish, country_of_origin, weight, sku)
+VALUES
+(1,
+ '2 oz',
+ 'Sandalwood',
+ 'All Beard Types',
+ 'N/A',
+ 'Natural',
+ 'USA',
+ '57 g',
+ 'BO-001');
+
+INSERT INTO product_benefits
+(product_id, benefit, display_order)
+VALUES
+(1,'Hydrates Dry Beard',1),
+(1,'Softens Hair',2),
+(1,'Adds Natural Shine',3),
+(1,'Reduces Itching',4),
+(1,'Made With Natural Oils',5);
+
+INSERT INTO product_ingredients
+(product_id, ingredient, display_order)
+VALUES
+(1,'Argan Oil',1),
+(1,'Jojoba Oil',2),
+(1,'Vitamin E',3),
+(1,'Tea Tree Oil',4);
+
+INSERT INTO product_usage_steps
+(product_id, step_number, instruction)
+VALUES
+(1,1,'Dispense 2–3 drops into your palm.'),
+(1,2,'Rub hands together evenly.'),
+(1,3,'Massage into beard and skin.'),
+(1,4,'Comb through for even distribution.');
+
+
+-- Shampoo
+INSERT INTO product_specifications
+(product_id, size, scent, hair_type, hold_strength, finish, country_of_origin, weight, sku)
+VALUES
+(
+    2,
+    '12 fl oz',
+    'Fresh Citrus',
+    'All Hair Types',
+    'N/A',
+    'N/A',
+    'USA',
+    '355 g',
+    'DS-001'
+);
+
+INSERT INTO product_benefits
+(product_id, benefit, display_order)
+VALUES
+(2, 'Hydrates Dry Hair', 1),
+(2, 'Safe for Daily Use', 2),
+(2, 'Removes Dirt & Oil', 3),
+(2, 'Sulfate Free Formula', 4),
+(2, 'Leaves Hair Soft & Healthy', 5);
+
+INSERT INTO product_ingredients
+(product_id, ingredient, display_order)
+VALUES
+(2, 'Aloe Vera', 1),
+(2, 'Argan Oil', 2),
+(2, 'Vitamin E', 3),
+(2, 'Tea Tree Extract', 4),
+(2, 'Coconut Oil', 5);
+
+INSERT INTO product_usage_steps
+(product_id, step_number, instruction)
+VALUES
+(2, 1, 'Wet hair thoroughly with warm water.'),
+(2, 2, 'Apply a quarter-sized amount of shampoo.'),
+(2, 3, 'Massage gently into the scalp and hair.'),
+(2, 4, 'Rinse thoroughly with water.'),
+(2, 5, 'Repeat if necessary for a deeper clean.');
+
+
+-- Matte Pomade
+INSERT INTO product_specifications
+(product_id, size, scent, hair_type, hold_strength, finish, country_of_origin, weight, sku)
+VALUES
+(
+    3,
+    '4 oz',
+    'Classic Barber',
+    'Short to Medium Hair',
+    'Medium Hold',
+    'Matte',
+    'USA',
+    '113 g',
+    'MP-001'
+);
+
+INSERT INTO product_benefits
+(product_id, benefit, display_order)
+VALUES
+(3, 'Provides Medium Hold', 1),
+(3, 'Natural Matte Finish', 2),
+(3, 'Easy to Restyle Throughout the Day', 3),
+(3, 'Water-Based Formula', 4),
+(3, 'Washes Out Easily', 5);
+
+INSERT INTO product_ingredients
+(product_id, ingredient, display_order)
+VALUES
+(3, 'Beeswax', 1),
+(3, 'Kaolin Clay', 2),
+(3, 'Castor Oil', 3),
+(3, 'Shea Butter', 4),
+(3, 'Vitamin E', 5);
+
+INSERT INTO product_usage_steps
+(product_id, step_number, instruction)
+VALUES
+(3, 1, 'Scoop a small amount onto your fingertips.'),
+(3, 2, 'Rub between your palms until evenly distributed.'),
+(3, 3, 'Apply to dry or slightly damp hair.'),
+(3, 4, 'Style using your hands or a comb for your desired look.');

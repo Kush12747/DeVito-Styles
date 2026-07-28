@@ -32,6 +32,70 @@ CREATE TABLE products (
 );
 
 
+CREATE TABLE product_specifications (
+    product_id INT PRIMARY KEY,
+
+    size VARCHAR(50) NOT NULL,
+    scent VARCHAR(100),
+    hair_type VARCHAR(100),
+    hold_strength VARCHAR(50),
+    finish VARCHAR(50),
+    country_of_origin VARCHAR(100),
+    weight VARCHAR(50),
+    sku VARCHAR(50) UNIQUE,
+
+    CONSTRAINT fk_product_specifications_product
+        FOREIGN KEY (product_id)
+        REFERENCES products(product_id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE product_benefits (
+    benefit_id INT PRIMARY KEY AUTO_INCREMENT,
+
+    product_id INT NOT NULL,
+
+    benefit VARCHAR(150) NOT NULL,
+
+    display_order INT DEFAULT 1,
+
+    CONSTRAINT fk_product_benefits_product
+        FOREIGN KEY (product_id)
+        REFERENCES products(product_id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE product_ingredients (
+    ingredient_id INT PRIMARY KEY AUTO_INCREMENT,
+
+    product_id INT NOT NULL,
+
+    ingredient VARCHAR(100) NOT NULL,
+
+    display_order INT DEFAULT 1,
+
+    CONSTRAINT fk_product_ingredients_product
+        FOREIGN KEY (product_id)
+        REFERENCES products(product_id)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE product_usage_steps (
+    step_id INT PRIMARY KEY AUTO_INCREMENT,
+
+    product_id INT NOT NULL,
+
+    step_number INT NOT NULL,
+
+    instruction VARCHAR(255) NOT NULL,
+
+    CONSTRAINT fk_product_usage_steps_product
+        FOREIGN KEY (product_id)
+        REFERENCES products(product_id)
+        ON DELETE CASCADE
+);
+
+
 CREATE TABLE users (
 	user_id INT PRIMARY KEY AUTO_INCREMENT,
 	first_name VARCHAR(50) NOT NULL,
@@ -126,6 +190,12 @@ BEGIN
 
 	DELETE FROM review;
 	DELETE FROM appointment;
+	
+	DELETE FROM product_usage_steps;
+	DELETE FROM product_ingredients;
+	DELETE FROM product_benefits;
+	DELETE FROM product_specifications;
+	
 	DELETE FROM products;
 	
 	DELETE FROM service;
@@ -135,6 +205,11 @@ BEGIN
 	
 	ALTER TABLE categories AUTO_INCREMENT = 1;
 	ALTER TABLE products AUTO_INCREMENT = 1;
+	
+	ALTER TABLE product_benefits AUTO_INCREMENT = 1;
+	ALTER TABLE product_ingredients AUTO_INCREMENT = 1;
+	ALTER TABLE product_usage_steps AUTO_INCREMENT = 1;
+	
 	ALTER TABLE users AUTO_INCREMENT = 1;
 	ALTER TABLE service AUTO_INCREMENT = 1;
 	ALTER TABLE barber AUTO_INCREMENT = 1;
@@ -323,6 +398,85 @@ VALUES
 	    'https://your-cloudinary-url.com/beardoil.jpg',
 	    TRUE
 	);
+	
+	INSERT INTO product_specifications
+	(product_id, size, scent, hair_type, hold_strength, finish, country_of_origin, weight, sku)
+	VALUES
+	(1,'4 oz','Classic Barber','Short to Medium Hair','Medium Hold','Matte','USA','113 g','MP-001'),
+	(2,'12 fl oz','Fresh Citrus','All Hair Types','N/A','N/A','USA','355 g','DS-001'),
+	(3,'2 oz','Sandalwood','All Beard Types','N/A','Natural','USA','57 g','BO-001');
+	
+	INSERT INTO product_benefits
+	(product_id, benefit, display_order)
+	VALUES
+	
+	-- Matte Pomade
+	(1,'Provides Medium Hold',1),
+	(1,'Natural Matte Finish',2),
+	(1,'Easy to Restyle Throughout the Day',3),
+	(1,'Water-Based Formula',4),
+	(1,'Washes Out Easily',5),
+	
+	-- Daily Shampoo
+	(2,'Hydrates Dry Hair',1),
+	(2,'Safe for Daily Use',2),
+	(2,'Removes Dirt & Oil',3),
+	(2,'Sulfate Free Formula',4),
+	(2,'Leaves Hair Soft &Healthy',5),
+	
+	-- Beard Oil
+	(3,'Hydrates Dry Beard',1),
+	(3,'Softens Hair',2),
+	(3,'Adds Natural Shine',3),
+	(3,'Reduces Itching',4),
+	(3,'Made With Natural Oils',5);
+	
+	INSERT INTO product_ingredients
+	(product_id, ingredient, display_order)
+	VALUES
+	
+	-- Matte Pomade
+	(1,'Beeswax',1),
+	(1,'Kaolin Clay',2),
+	(1,'Castor Oil',3),
+	(1,'Shea Butter',4),
+	(1,'Vitamin E',5),
+	
+	-- Daily Shampoo
+	(2,'Aloe Vera',1),
+	(2,'Argan Oil',2),
+	(2,'Vitamin E',3),
+	(2,'Tea Tree Extract',4),
+	(2,'Coconut Oil',5),
+	
+	-- Beard Oil
+	(3,'Argan Oil',1),
+	(3,'Jojoba Oil',2),
+	(3,'Vitamin E',3),
+	(3,'Tea Tree Oil',4);
+	
+	INSERT INTO product_usage_steps
+	(product_id, step_number, instruction)
+	VALUES
+	
+	-- Matte Pomade
+	(1,1,'Scoop a small amount onto your fingertips.'),
+	(1,2,'Rub between your palms until evenly distributed.'),
+	(1,3,'Apply to dry or slightly damp hair.'),
+	(1,4,'Style with your hands or a comb.'),
+	
+	-- Daily Shampoo
+	(2,1,'Wet hair thoroughly with warm water.'),
+	(2,2,'Apply a quarter-sized amount of shampoo.'),
+	(2,3,'Massage gently into scalp and hair.'),
+	(2,4,'Rinse thoroughly with water.'),
+	(2,5,'Repeat if desired.'),
+	
+	-- Beard Oil
+	(3,1,'Dispense 2–3 drops into your palm.'),
+	(3,2,'Rub hands together evenly.'),
+	(3,3,'Massage into beard and skin.'),
+	(3,4,'Comb through evenly.');
 
 END //
 

@@ -2,7 +2,7 @@ package learn.DeVitoStyles.data.repositories;
 
 import learn.DeVitoStyles.data.interfaces.ProductRepository;
 import learn.DeVitoStyles.data.mappers.ProductsMapper;
-import learn.DeVitoStyles.models.Product;
+import learn.DeVitoStyles.models.Products.Product;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 

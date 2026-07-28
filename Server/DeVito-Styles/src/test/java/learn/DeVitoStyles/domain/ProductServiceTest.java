@@ -1,7 +1,7 @@
 package learn.DeVitoStyles.domain;
 
-import learn.DeVitoStyles.data.interfaces.ProductRepository;
-import learn.DeVitoStyles.models.Product;
+import learn.DeVitoStyles.data.interfaces.*;
+import learn.DeVitoStyles.models.Products.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +22,17 @@ class ProductServiceTest {
     @MockBean
     ProductRepository repository;
 
+    @MockBean
+    ProductSpecificationRepository specificationRepository;
+
+    @MockBean
+    ProductBenefitRepository benefitRepository;
+
+    @MockBean
+    ProductIngredientRepository ingredientRepository;
+
+    @MockBean
+    ProductUsageStepRepository usageStepRepository;
 
     @Test
     void shouldFindById() {
@@ -31,15 +42,58 @@ class ProductServiceTest {
         product.setName("Hair Gel");
         product.setPrice(new BigDecimal("12.99"));
 
+        ProductSpecification specification = new ProductSpecification();
+        specification.setProductId(1);
+        specification.setSize("4 oz");
+
+        ProductBenefit benefit = new ProductBenefit();
+        benefit.setBenefit("Strong Hold");
+
+        ProductIngredient ingredient = new ProductIngredient();
+        ingredient.setIngredient("Beeswax");
+
+        ProductUsageStep step = new ProductUsageStep();
+        step.setStepNumber(1);
+        step.setInstruction("Apply to dry hair.");
+
         when(repository.findById(1)).thenReturn(product);
+
+        when(specificationRepository.findByProductId(1))
+                .thenReturn(specification);
+
+        when(benefitRepository.findByProductId(1))
+                .thenReturn(List.of(benefit));
+
+        when(ingredientRepository.findByProductId(1))
+                .thenReturn(List.of(ingredient));
+
+        when(usageStepRepository.findByProductId(1))
+                .thenReturn(List.of(step));
 
         Result<Product> result = service.findById(1);
 
         assertTrue(result.isSuccess());
-        assertEquals("Hair Gel", result.getpayload().getName());
-        assertEquals(1, result.getpayload().getProductId());
-    }
 
+        Product payload = result.getpayload();
+
+        assertEquals("Hair Gel", payload.getName());
+        assertEquals(1, payload.getProductId());
+
+        assertNotNull(payload.getSpecification());
+        assertEquals("4 oz", payload.getSpecification().getSize());
+
+        assertEquals(1, payload.getBenefits().size());
+        assertEquals("Strong Hold", payload.getBenefits().get(0).getBenefit());
+
+        assertEquals(1, payload.getIngredients().size());
+        assertEquals("Beeswax", payload.getIngredients().get(0).getIngredient());
+
+        assertEquals(1, payload.getUsageSteps().size());
+        assertEquals(
+                "Apply to dry hair.",
+                payload.getUsageSteps().get(0).getInstruction()
+        );
+    }
 
     @Test
     void shouldNotFindById() {
@@ -132,5 +186,37 @@ class ProductServiceTest {
         assertTrue(result.isSuccess());
         assertEquals(1, result.getpayload().size());
         assertEquals("Premium Shampoo", result.getpayload().get(0).getName());
+    }
+
+    @Test
+    void shouldPopulateProductDetails() {
+
+        Product product = new Product();
+        product.setProductId(1);
+
+        when(repository.findById(1)).thenReturn(product);
+
+        when(specificationRepository.findByProductId(1))
+                .thenReturn(new ProductSpecification());
+
+        when(benefitRepository.findByProductId(1))
+                .thenReturn(List.of(new ProductBenefit()));
+
+        when(ingredientRepository.findByProductId(1))
+                .thenReturn(List.of(new ProductIngredient()));
+
+        when(usageStepRepository.findByProductId(1))
+                .thenReturn(List.of(new ProductUsageStep()));
+
+        Result<Product> result = service.findById(1);
+
+        assertTrue(result.isSuccess());
+
+        Product payload = result.getpayload();
+
+        assertNotNull(payload.getSpecification());
+        assertFalse(payload.getBenefits().isEmpty());
+        assertFalse(payload.getIngredients().isEmpty());
+        assertFalse(payload.getUsageSteps().isEmpty());
     }
 }
