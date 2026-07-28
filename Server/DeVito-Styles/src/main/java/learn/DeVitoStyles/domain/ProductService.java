@@ -2,6 +2,7 @@ package learn.DeVitoStyles.domain;
 
 import learn.DeVitoStyles.data.interfaces.*;
 import learn.DeVitoStyles.models.Products.Product;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,5 +66,9 @@ public class ProductService {
         result.setpayload(products);
 
         return result;
+    }
+
+    public List<Product> findRelatedProducts(int productId) {
+        return productRepository.findRelatedProducts(productId);
     }
 }

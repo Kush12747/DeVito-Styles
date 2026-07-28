@@ -49,4 +49,9 @@ public class ProductController {
 
         return ResponseEntity.ok(result.getpayload());
     }
+
+    @GetMapping("/{productId}/related")
+    public List<Product> findRelatedProducts(@PathVariable int productId) {
+        return productService.findRelatedProducts(productId);
+    }
 }

@@ -51,3 +51,26 @@ export async function fetchProductById(productId, token) {
 
     return await response.json();
 }
+
+export async function fetchRelatedProducts(productId, token) {
+    const response = await fetch(`${PRODUCT_BASE_URL}/${productId}/related`,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+       if (!response.ok) {
+        let message = "Failed to load product";
+
+        try {
+            const error = await response.json();
+            message = error.message || message;
+        } catch {
+
+        }
+        throw new Error(message);
+    }
+
+    return await response.json(); 
+}

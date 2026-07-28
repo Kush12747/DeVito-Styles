@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchProductById } from "../../../Services/productService";
+import { fetchProductById, fetchRelatedProducts } from "../../../Services/productService";
 
 import "../Style/ProductDetailsPage.css";
 
@@ -8,11 +8,20 @@ function ProductDetailsPage() {
 
     const { productId } = useParams();
     const [product, setProduct] = useState(null);
+    const [relatedProducts, setRelatedProducts] = useState([]);
     const navigate = useNavigate();
 
     const token = localStorage.getItem("token");
 
     useEffect(() => {
+        async function loadProduct() {
+            const product = await fetchProductById(productId, token);
+            setProduct(product);
+
+            const related = await fetchRelatedProducts(productId, token);
+            setRelatedProducts(related);
+        }
+        
         loadProduct();
     }, [productId]);
 
@@ -205,9 +214,24 @@ function ProductDetailsPage() {
 
                 <h2>You May Also Like</h2>
 
-                <div className="related-placeholder">
-                    Related products will appear here.
+                <div className="related-gird">
+                    {relatedProducts.map(product => (
+                        <div
+                            key={product.productId}
+                            className="related-card"
+                            onClick={() => navigate(`/product/${product.productId}`)}
+                        >
+                            <img 
+                                src={product.productId}
+                                className="related-card"
+                            />
+
+                            <h3>{product.name}</h3>
+                            <p>${product.price.toFixed(2)}</p>
+                        </div>
+                    ))}
                 </div>
+                
 
             </section>
 

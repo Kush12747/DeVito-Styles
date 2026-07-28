@@ -73,4 +73,33 @@ public class ProductJdbcClientRepository implements ProductRepository {
                 .query(mapper)
                 .list();
     }
+
+    @Override
+    public List<Product> findRelatedProducts(int productId) {
+
+        final String sql = """
+                SELECT p2.product_id,
+                       p2.category_id,
+                       p2.name,
+                       p2.description,
+                       p2.price,
+                       p2.stock_quantity,
+                       p2.image_url,
+                       p2.is_featured,
+                       p2.is_active,
+                       p2.created_at,
+                       p2.updated_at
+                FROM products p1
+                JOIN products p2
+                    ON p1.category_id = p2.category_id
+                WHERE p1.product_id = ?
+                  AND p2.product_id <> p1.product_id
+                  AND p2.is_active = true
+                LIMIT 4;
+                """;
+        return jdbcClient.sql(sql)
+                .param(productId)
+                .query(mapper)
+                .list();
+    }
 }
