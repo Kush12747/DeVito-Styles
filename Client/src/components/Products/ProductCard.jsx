@@ -4,6 +4,7 @@ function ProductCard({ product }) {
 
     return (
         <div className="product-card">
+            
 
             {product.featured && (
                 <span className="featured-badge">

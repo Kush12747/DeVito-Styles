@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { fetchProductById } from "../../../Services/productService";
 
 import "../Style/ProductDetailsPage.css";
@@ -8,6 +8,7 @@ function ProductDetailsPage() {
 
     const { productId } = useParams();
     const [product, setProduct] = useState(null);
+    const navigate = useNavigate();
 
     const token = localStorage.getItem("token");
 
@@ -31,7 +32,7 @@ function ProductDetailsPage() {
     return (
         <div className="product-details-page">
 
-            <button className="back-button">
+            <button className="back-button" onClick={() => navigate("/products")}>
                 ← Back to Products
             </button>
 
