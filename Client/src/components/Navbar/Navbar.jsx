@@ -43,6 +43,8 @@ function Navbar({ loggedInUser }) {
                             </NavLink>
                         )}
 
+                        <NavLink to="/cart">View Cart</NavLink>
+
                         <NavLink to="/profile">Profile</NavLink>
                         <button className="logout-btn" onClick={handleLogout}>Logout</button>
                     </>

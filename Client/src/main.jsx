@@ -24,6 +24,7 @@ import StaffProfilePage from './components/Staff/StaffProfilePage';
 import ConfirmationPage from './components/AppointmentService/ConfirmationPage';
 import ProductsPage from './components/Products/pages/ProductsPage';
 import ProductDetailsPage from './components/Products/pages/ProductDetailsPage';
+import CartPage from './components/Checkout/pages/CartPage';
 
 const router = createBrowserRouter([
   {
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
       {
         path: '/products/:productId',
         element: <ProductDetailsPage />
+      },
+      {
+        path: '/cart',
+        element: <CartPage />
       }
     ]
   }
