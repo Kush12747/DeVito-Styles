@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Outlet } from "react-router-dom";
 import Navbar from './components/Navbar/Navbar';
 import ChatBot from './components/Chatbot/ChatBot';
+import ScrollToTop from './components/ScrollToTop';
+
 import './App.css'
 
 function App() {
@@ -13,6 +15,7 @@ function App() {
 
     return (
     <div>
+        <ScrollToTop />
         <Navbar loggedInUser={loggedInUser} />
         <Outlet context={{ loggedInUser, setLoggedInUser }} />
         <ChatBot />
@@ -20,4 +23,4 @@ function App() {
     )
 }
 
-export default App
+export default App;
