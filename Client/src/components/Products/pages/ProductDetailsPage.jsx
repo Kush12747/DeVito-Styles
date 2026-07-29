@@ -214,15 +214,16 @@ function ProductDetailsPage() {
 
                 <h2>You May Also Like</h2>
 
-                <div className="related-gird">
+                <div className="related-grid">
                     {relatedProducts.map(product => (
                         <div
                             key={product.productId}
                             className="related-card"
-                            onClick={() => navigate(`/product/${product.productId}`)}
+                            onClick={() => navigate(`/products/${product.productId}`)}
                         >
                             <img 
-                                src={product.productId}
+                                src={product.imageUrl}
+                                alt={product.name}
                                 className="related-card"
                             />
 
