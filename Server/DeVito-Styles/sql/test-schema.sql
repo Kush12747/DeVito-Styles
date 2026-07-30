@@ -183,6 +183,33 @@ CREATE TABLE review (
 		REFERENCES appointment(appointment_id)
 );
 
+CREATE TABLE carts (
+    cart_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_cart_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(user_id)
+);
+
+CREATE TABLE cart_items (
+    cart_item_id INT PRIMARY KEY AUTO_INCREMENT,
+    cart_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 1,
+
+    CONSTRAINT fk_cartitem_cart
+        FOREIGN KEY (cart_id)
+        REFERENCES carts(cart_id),
+
+    CONSTRAINT fk_cartitem_product
+        FOREIGN KEY (product_id)
+        REFERENCES products(product_id)
+);
+
 DELIMITER //
 
 CREATE PROCEDURE set_known_good_state()
