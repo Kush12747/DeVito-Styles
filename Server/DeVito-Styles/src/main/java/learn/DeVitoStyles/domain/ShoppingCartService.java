@@ -86,14 +86,14 @@ public class ShoppingCartService {
             result.addErrorMessage("Invalid ids", ResultType.INVALID);
             return result;
         }
-        
+
         boolean item = cartItemRepository.deleteById(productId);
-        
+
         if (!item) {
             result.addErrorMessage("Item count not be removed", ResultType.NOT_FOUND);
             return result;
         }
-        
+
         return result;
     }
 
