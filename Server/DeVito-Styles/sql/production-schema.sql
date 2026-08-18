@@ -199,6 +199,7 @@ CREATE TABLE carts (
         FOREIGN KEY (user_id)
         REFERENCES users(user_id)
 );
+
 CREATE TABLE cart_items (
     cart_item_id INT PRIMARY KEY AUTO_INCREMENT,
     cart_id INT NOT NULL,
