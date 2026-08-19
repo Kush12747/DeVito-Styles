@@ -75,8 +75,59 @@ public class ShoppingCartService {
     }
 
     public Result<CartItem> updateQuantity(int userId, int productId, int quantity) {
+        Result<CartItem> result = new Result<>();
 
-        return null;
+        if (userId <= 0 || productId <= 0 || quantity <= 0) {
+            result.addErrorMessage("Invalid input", ResultType.INVALID);
+            return result;
+        }
+
+        // find the customer cart
+        Cart cart = cartRepository.findByUserId(userId);
+
+        if (cart == null) {
+            result.addErrorMessage("cart not foud", ResultType.NOT_FOUND);
+            return result;
+        }
+
+        CartItem cartItem = cartItemRepository.findByCartIdAndProductId(cart.getCartId(), productId);
+
+        if (cartItem == null) {
+            result.addErrorMessage("Item not found in cart.", ResultType.NOT_FOUND);
+            return result;
+        }
+
+        // Find the product
+        Product product = productRepository.findById(productId);
+
+        if (product == null) {
+            result.addErrorMessage("product not found", ResultType.NOT_FOUND);
+            return result;
+        }
+
+        // make sure the product is still active
+        if (!product.isActive()) {
+            result.addErrorMessage("Product is inactive", ResultType.INVALID);
+            return result;
+        }
+
+        // check available stock
+        if (quantity > product.getStockQuantity()) {
+            result.addErrorMessage("Quantity exceeds available stock", ResultType.INVALID);
+            return result;
+        }
+
+        // update quantity
+        cartItem.setQuantity(quantity);
+
+        // save the new changes
+        if (!cartItemRepository.update(cartItem)) {
+            result.addErrorMessage("Unable to update cart item.", ResultType.INVALID);
+            return result;
+        }
+
+        result.setpayload(cartItem);
+        return result;
     }
 
     public Result<Void> removeFromCart(int userId, int productId) {
@@ -87,10 +138,22 @@ public class ShoppingCartService {
             return result;
         }
 
-        boolean item = cartItemRepository.deleteById(productId);
+        Cart cart = cartRepository.findByUserId(userId);
 
-        if (!item) {
-            result.addErrorMessage("Item count not be removed", ResultType.NOT_FOUND);
+        if (cart == null) {
+            result.addErrorMessage("Cart not found", ResultType.NOT_FOUND);
+            return result;
+        }
+
+        CartItem item = cartItemRepository.findByCartIdAndProductId(cart.getCartId(), productId);
+
+        if (item == null) {
+            result.addErrorMessage("Item not found", ResultType.NOT_FOUND);
+            return result;
+        }
+
+        if (!cartItemRepository.deleteById(item.getCartItemId())) {
+            result.addErrorMessage("Unable to remove item", ResultType.INVALID);
             return result;
         }
 
