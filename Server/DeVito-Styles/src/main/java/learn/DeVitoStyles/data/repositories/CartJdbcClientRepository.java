@@ -50,10 +50,10 @@ public class CartJdbcClientRepository implements CartRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         int rowsAffected = jdbcClient.sql(sql)
-                .param(cart.getCartId())
-                .update(keyHolder, "user_id");
+                .param("user_id", cart.getUserId())
+                .update(keyHolder, "cart_id");
 
-        if (rowsAffected == 0) {
+        if (rowsAffected <= 0) {
             return null;
         }
 

@@ -214,6 +214,9 @@ DELIMITER //
 
 CREATE PROCEDURE set_known_good_state()
 BEGIN
+	
+	DELETE FROM cart_items;
+	DELETE FROM carts;
 
 	DELETE FROM review;
 	DELETE FROM appointment;
@@ -222,22 +225,22 @@ BEGIN
 	DELETE FROM product_ingredients;
 	DELETE FROM product_benefits;
 	DELETE FROM product_specifications;
-	
 	DELETE FROM products;
 	
 	DELETE FROM service;
 	DELETE FROM barber;
+	
 	DELETE FROM users;
 	DELETE FROM categories;
 	
+	ALTER TABLE carts AUTO_INCREMENT = 1;
+	ALTER TABLE cart_items AUTO_INCREMENT = 1;
+	ALTER TABLE users AUTO_INCREMENT = 1;
 	ALTER TABLE categories AUTO_INCREMENT = 1;
 	ALTER TABLE products AUTO_INCREMENT = 1;
-	
 	ALTER TABLE product_benefits AUTO_INCREMENT = 1;
 	ALTER TABLE product_ingredients AUTO_INCREMENT = 1;
 	ALTER TABLE product_usage_steps AUTO_INCREMENT = 1;
-	
-	ALTER TABLE users AUTO_INCREMENT = 1;
 	ALTER TABLE service AUTO_INCREMENT = 1;
 	ALTER TABLE barber AUTO_INCREMENT = 1;
 	ALTER TABLE appointment AUTO_INCREMENT = 1;
@@ -504,6 +507,25 @@ VALUES
 	(3,2,'Rub hands together evenly.'),
 	(3,3,'Massage into beard and skin.'),
 	(3,4,'Comb through evenly.');
+	
+	-- CARTS
+
+	INSERT INTO carts (
+	    user_id
+	)
+	VALUES
+	(2),
+	(3),
+	(4);
+	
+	INSERT INTO cart_items (
+    cart_id,
+    product_id,
+    quantity
+	)
+	VALUES
+	(1, 1, 2),
+	(1, 2, 1);
 
 END //
 
