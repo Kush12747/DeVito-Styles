@@ -33,7 +33,7 @@ public class CartItemJdbcClientRepository implements CartItemRepository {
             
             FROM cart_items ci
             JOIN products p
-                ON ci.product_id = p.product_id;
+                ON ci.product_id = p.product_id
             """;
 
     public CartItemJdbcClientRepository(JdbcClient jdbcClient) {
@@ -78,9 +78,9 @@ public class CartItemJdbcClientRepository implements CartItemRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         int rowsAffected = jdbcClient.sql(sql)
-                .param(":cart_id", item.getCartId())
-                .param(":product_id", item.getProduct().getProductId())
-                .param(":quantity", item.getQuantity())
+                .param("cart_id", item.getCartId())
+                .param("product_id", item.getProduct().getProductId())
+                .param("quantity", item.getQuantity())
                 .update(keyHolder, "cart_item_id");
 
         if (rowsAffected == 0) {

@@ -810,3 +810,8 @@ VALUES
 (15,1,'Place cape around customer.'),
 (15,2,'Adjust neck closure.'),
 (15,3,'Shake off loose hair after use.');
+
+INSERT INTO cart_items
+(cart_id, product_id, quantity)
+VALUES
+(1, 5, 2);

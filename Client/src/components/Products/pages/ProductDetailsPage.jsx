@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchProductById, fetchRelatedProducts } from "../../../Services/productService";
+import { addToCart } from "../../../Services/cartService";
 
 import "../Style/ProductDetailsPage.css";
 
@@ -9,9 +10,40 @@ function ProductDetailsPage() {
     const { productId } = useParams();
     const [product, setProduct] = useState(null);
     const [relatedProducts, setRelatedProducts] = useState([]);
+    const [quantity, setQuantity] = useState(1);
     const navigate = useNavigate();
 
     const token = localStorage.getItem("token");
+
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    const userId = user?.userId;
+
+    function increaseQuantity() {
+        if (quantity >= product.stockQuantity) {
+            return;
+        }
+
+        setQuantity(quantity + 1);
+    }
+
+    function decreaseQuantity() {
+        if (quantity <= 1) {
+            return;
+        }
+
+        setQuantity(quantity - 1);
+    }
+
+    // add products to cart function
+    async function handleAddToCart() {
+        try {
+            await addToCart(userId, token, product.productId, quantity);
+
+            alert("Added to cart");
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     useEffect(() => {
         async function loadProduct() {
@@ -106,15 +138,19 @@ function ProductDetailsPage() {
 
                     <div className="quantity-container">
 
-                        <button>-</button>
+                        <button onClick={decreaseQuantity}>
+                            -
+                        </button>
 
-                        <span>1</span>
+                        <span>{quantity}</span>
 
-                        <button>+</button>
+                        <button onClick={increaseQuantity}>
+                            +
+                        </button>
 
                     </div>
 
-                    <button className="cart-button">
+                    <button className="cart-button" onClick={handleAddToCart}>
                         Add to Cart
                     </button>
                 </div>

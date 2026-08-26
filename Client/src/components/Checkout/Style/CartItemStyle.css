@@ -1,0 +1,245 @@
+.cartItem {
+
+    color: #f5f5f5;
+        background: #242424;
+
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    padding: 20px;
+
+    margin-bottom: 15px;
+
+
+    border-radius: 14px;
+
+    border: 1px solid #e8e8e8;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+
+}
+
+
+/* Product Image */
+
+.productImage img {
+
+    width: 120px;
+
+    height: 120px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+}
+
+
+/* Product Details */
+
+.productInfo {
+
+    flex: 1;
+
+}
+
+
+.productInfo h3 {
+
+    margin: 0 0 8px;
+
+    font-size: 19px;
+
+    font-weight: 600;
+
+    color:#ffffff;
+
+
+}
+
+
+.productInfo p {
+
+    margin: 6px 0;
+
+    color:#b3b3b3;
+
+    font-size: 14px;
+
+}
+
+
+.productInfo p:last-child {
+
+    font-weight: 600;
+
+   color:#c9a227;
+
+    font-size: 16px;
+
+}
+
+
+/* Quantity */
+
+.quanitySelection {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    border: 1px solid #ddd;
+
+    padding: 6px 10px;
+
+    border-radius: 10px;
+
+}
+
+
+.quanitySelection button {
+
+    width: 32px;
+
+    height: 32px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    background:#333;
+
+    color:white;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+}
+
+
+.quanitySelection button:hover {
+
+    background:#c9a227;
+
+    color:#111;
+
+}
+
+
+.quanitySelection span {
+
+    min-width: 20px;
+
+    text-align: center;
+
+    font-weight: 600;
+
+}
+
+
+/* Item subtotal */
+
+.subtotal p {
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    color: #222;
+
+}
+
+
+/* Remove button */
+
+.removeButton {
+
+    border: none;
+
+    background: transparent;
+
+   color:#ef4444;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    padding: 8px 12px;
+
+}
+
+
+.removeButton:hover {
+
+    text-decoration: underline;
+
+}
+
+
+/* Responsive */
+
+@media(max-width: 900px) {
+
+
+    .cartItem {
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .productInfo {
+
+        min-width: 200px;
+
+    }
+
+
+}
+
+
+@media(max-width: 600px) {
+
+
+    .cartItem {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+    .productImage img {
+
+        width:100px;
+
+        height:100px;
+
+    }
+
+
+    .quanitySelection {
+
+        margin-top:10px;
+
+    }
+
+
+    .subtotal {
+
+        margin-top:10px;
+
+    }
+
+
+}
