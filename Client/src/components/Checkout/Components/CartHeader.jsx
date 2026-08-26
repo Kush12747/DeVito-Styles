@@ -1,8 +1,12 @@
+import "../Style/CartHeaderStyle.css";
+
 function CartHeader({ itemCount }) {
     return (
-        <>
-            <h2>{itemCount} Items</h2>
-        </>
+        <div className="cartHeader">
+            <h2>
+                {itemCount} {itemCount === 1 ? "Item" : "Items"}
+            </h2>
+        </div>
     );
 }
 

@@ -43,7 +43,7 @@ function CartItem({ item, onQuantityUpdate, onRemoveItem }) {
 
             </div>
 
-            <div className="quanitySelection">
+            <div className="quantitySelection">
                 <button onClick={decreaseQuantity}>
                     -
                 </button>

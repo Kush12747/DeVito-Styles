@@ -19,7 +19,7 @@ function OrderSummary({ subtotal, shipping, total, tax }) {
 
             <div className="summaryRow">
                 <span>Tax</span>
-                <span>{tax.toFixed(2)}</span>
+                <span>${tax.toFixed(2)}</span>
             </div>
 
             <div className="summaryRow">
@@ -33,7 +33,7 @@ function OrderSummary({ subtotal, shipping, total, tax }) {
 
             <div className="summaryRow">
                 <span>Total</span>
-                <span>{total.toFixed(2)}</span>
+                <span>${total.toFixed(2)}</span>
             </div>
             
             <button>

@@ -131,3 +131,27 @@ function CartPage() {
 }
 
 export default CartPage;
+
+/**
+ * export function calculateCartTotals(items){
+
+    const subtotal = items.reduce(
+        (sum,item)=> sum + item.product.price * item.quantity,
+        0
+    );
+
+    const tax = subtotal * 0.08;
+
+    const shipping = 0;
+
+    const total = subtotal + tax + shipping;
+
+
+    return {
+        subtotal,
+        tax,
+        shipping,
+        total
+    };
+}
+ */
