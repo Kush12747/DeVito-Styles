@@ -64,7 +64,7 @@ function CartPage() {
 
     async function handleRemoveItem(productId) {
         try {
-            await removeCartItem(userId, token. productId);
+            await removeCartItem(userId, token, productId);
 
             await fetchCart();
         } catch (error) {

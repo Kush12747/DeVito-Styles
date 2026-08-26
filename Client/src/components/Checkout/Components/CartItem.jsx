@@ -62,7 +62,7 @@ function CartItem({ item, onQuantityUpdate, onRemoveItem }) {
 
             <button 
                 className="removeButton"
-                onClick={() => onRemoveItem(item.cartItemId)}
+                onClick={() => onRemoveItem(product.productId)}
             >
                 Remove
             </button>

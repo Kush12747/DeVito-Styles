@@ -44,5 +44,22 @@ export async function removeCartItem(userId, token, productId) {
         throw new Error("Failed to remove cart item");
     }
 
+    return;
+}
+
+export async function addToCart(userId, token, productId, quantity) {
+    const response = await fetch(`${BASE_URL}/${userId}/items`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ productId, quantity })
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to add item to cart");
+    }
+
     return response.json();
 }
