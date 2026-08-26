@@ -28,7 +28,10 @@ function CartPage() {
         try {
             const cartData = await getCart(userId, token);
 
-            const subtotal = cartData.items.reduce((sum, item) => (sum + (item.product.price * item.quantity), 0));
+            const subtotal = cartData.items.reduce(
+                (sum, item) => sum + item.product.price * item.quantity,
+                0
+            );
 
             const tax = subtotal * 0.08;
 
