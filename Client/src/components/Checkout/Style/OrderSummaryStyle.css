@@ -1,18 +1,16 @@
 .orderSummary {
 
-    background: #ffffff;
+    background:#242424;
 
-    border: 1px solid #e5e7eb;
+    border:1px solid #3a3a3a;
 
-    border-radius: 16px;
+    border-radius:16px;
 
-    padding: 28px;
+    padding:28px;
 
-    box-shadow:
-        0 8px 20px rgba(0,0,0,0.08);
+    color:#f5f5f5;
 
 }
-
 
 .orderSummary h2 {
 
@@ -22,7 +20,7 @@
 
     font-weight: 700;
 
-    color: #1f2937;
+    color:white;
 
 }
 
@@ -39,7 +37,7 @@
 
     margin: 15px 0;
 
-    color: #555;
+    color:#b3b3b3;
 
     font-size: 15px;
 
@@ -50,7 +48,7 @@
 
     font-weight: 600;
 
-    color: #222;
+    color:white;
 
 }
 
@@ -59,7 +57,7 @@
 
 .summaryRow:last-of-type {
 
-    border-top: 1px solid #e5e7eb;
+    border-top:1px solid #3a3a3a;
 
     padding-top: 20px;
 
@@ -76,7 +74,7 @@
 
     font-weight: 700;
 
-    color: #111827;
+    color:#c9a227;
 
 }
 
@@ -95,9 +93,9 @@
 
     border-radius: 12px;
 
-    background: #111827;
+    background:#c9a227;
 
-    color: white;
+    color:#111;
 
     font-size: 16px;
 
@@ -112,7 +110,7 @@
 
 .orderSummary button:hover {
 
-    background: #000000;
+   background:#e1bd45;
 
     transform: translateY(-1px);
 

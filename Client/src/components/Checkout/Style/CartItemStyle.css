@@ -1,5 +1,9 @@
 .cartItem {
 
+    color: #f5f5f5;
+        background: #242424;
+
+
     display: flex;
 
     align-items: center;
@@ -10,7 +14,6 @@
 
     margin-bottom: 15px;
 
-    background: #ffffff;
 
     border-radius: 14px;
 
@@ -53,7 +56,8 @@
 
     font-weight: 600;
 
-    color: #222;
+    color:#ffffff;
+
 
 }
 
@@ -62,7 +66,7 @@
 
     margin: 6px 0;
 
-    color: #666;
+    color:#b3b3b3;
 
     font-size: 14px;
 
@@ -73,7 +77,7 @@
 
     font-weight: 600;
 
-    color: #111;
+   color:#c9a227;
 
     font-size: 16px;
 
@@ -109,7 +113,9 @@
 
     border: none;
 
-    background: #f3f4f6;
+    background:#333;
+
+    color:white;
 
     cursor: pointer;
 
@@ -122,7 +128,9 @@
 
 .quanitySelection button:hover {
 
-    background: #e5e7eb;
+    background:#c9a227;
+
+    color:#111;
 
 }
 
@@ -159,7 +167,7 @@
 
     background: transparent;
 
-    color: #dc2626;
+   color:#ef4444;
 
     font-weight: 600;
 
