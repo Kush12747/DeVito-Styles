@@ -33,7 +33,7 @@ public class CartItemJdbcClientRepository implements CartItemRepository {
             
             FROM cart_items ci
             JOIN products p
-                ON ci.product_id = p.product_id;
+                ON ci.product_id = p.product_id
             """;
 
     public CartItemJdbcClientRepository(JdbcClient jdbcClient) {
