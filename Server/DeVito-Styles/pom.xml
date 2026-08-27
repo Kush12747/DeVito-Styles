@@ -22,6 +22,12 @@
     </parent>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.stripe</groupId>
+            <artifactId>stripe-java</artifactId>
+            <version>26.5.1</version>
+        </dependency>
         <!-- Google Calendar API -->
         <dependency>
             <groupId>com.google.apis</groupId>
