@@ -811,7 +811,78 @@ VALUES
 (15,2,'Adjust neck closure.'),
 (15,3,'Shake off loose hair after use.');
 
-INSERT INTO cart_items
-(cart_id, product_id, quantity)
+
+-- ORDERS
+	
+	INSERT INTO orders
+	(
+	    order_number,
+	    user_id,
+	    status,
+	    subtotal,
+	    tax_amount,
+	    shipping_cost,
+	    discount_amount,
+	    total_amount
+	)
+	
+	VALUES
+	(
+	    'DEV-TEST-1001',
+	    2,
+	    'Pending',
+	    54.97,
+	    5.50,
+	    0.00,
+	    0.00,
+	    60.47
+	);
+	
+	INSERT INTO order_items
+(
+    order_id,
+    product_id,
+    product_name,
+    quantity,
+    unit_price,
+    line_total
+)
+
 VALUES
-(1, 5, 2);
+
+(
+    1,
+    1,
+    'Matte Pomade',
+    2,
+    19.99,
+    39.98
+),
+
+(
+    1,
+    2,
+    'Daily Shampoo',
+    1,
+    14.99,
+    14.99
+);
+
+INSERT INTO payments
+(
+    order_id,
+    payment_provider,
+    payment_status,
+    amount,
+    currency
+)
+
+VALUES
+
+(
+    1,
+    'Stripe',
+    'Pending',
+    60.47,
+    'USD'
+);

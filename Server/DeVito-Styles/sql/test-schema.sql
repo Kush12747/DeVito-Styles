@@ -210,10 +210,125 @@ CREATE TABLE cart_items (
         REFERENCES products(product_id)
 );
 
+CREATE TABLE orders (
+
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+
+    order_number VARCHAR(50) NOT NULL UNIQUE,
+
+    user_id INT NOT NULL,
+
+    status ENUM(
+        'Pending',
+        'Paid',
+        'Processing',
+        'Completed',
+        'Cancelled',
+        'Refunded'
+    ) DEFAULT 'Pending',
+
+    subtotal DECIMAL(10,2) NOT NULL,
+
+    tax_amount DECIMAL(10,2) DEFAULT 0.00,
+
+    shipping_cost DECIMAL(10,2) DEFAULT 0.00,
+
+    discount_amount DECIMAL(10,2) DEFAULT 0.00,
+
+    total_amount DECIMAL(10,2) NOT NULL,
+
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_order_user
+
+        FOREIGN KEY(user_id)
+
+        REFERENCES users(user_id)
+
+);
+
+CREATE TABLE order_items (
+
+    order_item_id INT PRIMARY KEY AUTO_INCREMENT,
+
+    order_id INT NOT NULL,
+
+    product_id INT NOT NULL,
+
+    product_name VARCHAR(255) NOT NULL,
+
+    quantity INT NOT NULL,
+
+    unit_price DECIMAL(10,2) NOT NULL,
+
+    line_total DECIMAL(10,2) NOT NULL,
+
+
+    CONSTRAINT fk_orderitems_order
+
+        FOREIGN KEY(order_id)
+
+        REFERENCES orders(order_id),
+
+
+    CONSTRAINT fk_orderitems_product
+
+        FOREIGN KEY(product_id)
+
+        REFERENCES products(product_id)
+
+);
+
+CREATE TABLE payments (
+
+    payment_id INT PRIMARY KEY AUTO_INCREMENT,
+
+    order_id INT NOT NULL,
+
+    payment_provider VARCHAR(50) DEFAULT 'Stripe',
+
+    payment_intent_id VARCHAR(255),
+
+    stripe_charge_id VARCHAR(255),
+
+    payment_status ENUM(
+        'Pending',
+        'Succeeded',
+        'Failed',
+        'Refunded'
+    ) DEFAULT 'Pending',
+
+    amount DECIMAL(10,2) NOT NULL,
+
+    currency CHAR(3) DEFAULT 'USD',
+
+    paid_at DATETIME,
+
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+
+    CONSTRAINT fk_payment_order
+
+        FOREIGN KEY(order_id)
+
+        REFERENCES orders(order_id)
+
+);
+CREATE INDEX idx_payment_intent_id
+ON payments(payment_intent_id);
+
+
 DELIMITER //
 
 CREATE PROCEDURE set_known_good_state()
 BEGIN
+	
+	DELETE FROM payments;
+	DELETE FROM order_items;
+	DELETE FROM orders;
 	
 	DELETE FROM cart_items;
 	DELETE FROM carts;
@@ -233,6 +348,9 @@ BEGIN
 	DELETE FROM users;
 	DELETE FROM categories;
 	
+	ALTER TABLE orders AUTO_INCREMENT = 1;
+	ALTER TABLE order_items AUTO_INCREMENT = 1;
+	ALTER TABLE payments AUTO_INCREMENT = 1;
 	ALTER TABLE carts AUTO_INCREMENT = 1;
 	ALTER TABLE cart_items AUTO_INCREMENT = 1;
 	ALTER TABLE users AUTO_INCREMENT = 1;
@@ -526,6 +644,81 @@ VALUES
 	VALUES
 	(1, 1, 2),
 	(1, 2, 1);
+	
+	-- ORDERS
+	
+	INSERT INTO orders
+	(
+	    order_number,
+	    user_id,
+	    status,
+	    subtotal,
+	    tax_amount,
+	    shipping_cost,
+	    discount_amount,
+	    total_amount
+	)
+	
+	VALUES
+	(
+	    'DEV-TEST-1001',
+	    2,
+	    'Pending',
+	    54.97,
+	    5.50,
+	    0.00,
+	    0.00,
+	    60.47
+	);
+	
+	INSERT INTO order_items
+(
+    order_id,
+    product_id,
+    product_name,
+    quantity,
+    unit_price,
+    line_total
+)
+
+VALUES
+
+(
+    1,
+    1,
+    'Matte Pomade',
+    2,
+    19.99,
+    39.98
+),
+
+(
+    1,
+    2,
+    'Daily Shampoo',
+    1,
+    14.99,
+    14.99
+);
+
+INSERT INTO payments
+(
+    order_id,
+    payment_provider,
+    payment_status,
+    amount,
+    currency
+)
+
+VALUES
+
+(
+    1,
+    'Stripe',
+    'Pending',
+    60.47,
+    'USD'
+);
 
 END //
 
