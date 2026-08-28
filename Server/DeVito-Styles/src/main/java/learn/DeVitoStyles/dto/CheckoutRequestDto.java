@@ -2,6 +2,7 @@ package learn.DeVitoStyles.dto;
 
 import lombok.Data;
 
+@Data
 public class CheckoutRequestDto {
-    private Long cartId;
+    private Integer cartId;
 }
