@@ -1,6 +1,7 @@
-package learn.DeVitoStyles.data.mappers.PaymentMappers;
+package learn.DeVitoStyles.data.mappers.orders;
 
 import learn.DeVitoStyles.models.Checkout.Order;
+import learn.DeVitoStyles.models.Checkout.OrderStatus;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -16,7 +17,9 @@ public class OrderMapper implements RowMapper<Order> {
         order.setOrderId(rs.getInt("order_id"));
         order.setOrderNumber(rs.getString("order_number"));
         order.setUserId(rs.getInt("user_id"));
-        order.setStatus(rs.getString("status"));
+        order.setStatus(
+                OrderStatus.valueOf(rs.getString("status"))
+        );
         order.setSubtotal(rs.getBigDecimal("subtotal"));
         order.setTaxAmount(rs.getBigDecimal("tax_amount"));
         order.setShippingCost(rs.getBigDecimal("shipping_cost"));

@@ -1,4 +1,4 @@
-package learn.DeVitoStyles.data.repositories.Payment;
+package learn.DeVitoStyles.data.repositories.orders;
 
 public class PaymentRepositoryJdbcClientRepository {
 }

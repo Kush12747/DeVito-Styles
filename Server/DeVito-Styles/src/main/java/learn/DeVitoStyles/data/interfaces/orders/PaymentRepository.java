@@ -1,4 +1,4 @@
-package learn.DeVitoStyles.data.interfaces.PaymentInterfaces;
+package learn.DeVitoStyles.data.interfaces.orders;
 
 import learn.DeVitoStyles.models.Checkout.Payment;
 

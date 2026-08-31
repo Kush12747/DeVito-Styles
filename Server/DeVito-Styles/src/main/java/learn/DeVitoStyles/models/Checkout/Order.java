@@ -13,7 +13,7 @@ public class Order {
 
     private int userId;
 
-    private String status;
+    private OrderStatus status;
 
     private BigDecimal subtotal;
 
@@ -31,7 +31,7 @@ public class Order {
 
     private List<OrderItem> items = new ArrayList<>();
 
-    public Order(int orderId, String orderNumber, int userId, String status, BigDecimal subtotal, BigDecimal taxAmount,
+    public Order(int orderId, String orderNumber, int userId, OrderStatus status, BigDecimal subtotal, BigDecimal taxAmount,
                  BigDecimal shippingDiscount, BigDecimal discountAmount, BigDecimal totalAmount,
                  LocalDateTime createdAt, LocalDateTime updatedAt, List<OrderItem> items) {
         this.orderId = orderId;
@@ -76,11 +76,11 @@ public class Order {
         this.userId = userId;
     }
 
-    public String getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
