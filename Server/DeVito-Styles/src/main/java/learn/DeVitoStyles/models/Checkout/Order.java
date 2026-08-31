@@ -19,7 +19,7 @@ public class Order {
 
     private BigDecimal TaxAmount;
 
-    private BigDecimal shippingDiscount;
+    private BigDecimal shippingCost;
 
     private BigDecimal discountAmount;
 
@@ -40,12 +40,16 @@ public class Order {
         this.status = status;
         this.subtotal = subtotal;
         TaxAmount = taxAmount;
-        this.shippingDiscount = shippingDiscount;
+        this.shippingCost = shippingDiscount;
         this.discountAmount = discountAmount;
         this.totalAmount = totalAmount;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.items = items;
+    }
+
+    public Order() {
+
     }
 
     public int getOrderId() {
@@ -96,12 +100,12 @@ public class Order {
         TaxAmount = taxAmount;
     }
 
-    public BigDecimal getShippingDiscount() {
-        return shippingDiscount;
+    public BigDecimal getShippingCost() {
+        return shippingCost;
     }
 
-    public void setShippingDiscount(BigDecimal shippingDiscount) {
-        this.shippingDiscount = shippingDiscount;
+    public void setShippingCost(BigDecimal shippingCost) {
+        this.shippingCost = shippingCost;
     }
 
     public BigDecimal getDiscountAmount() {
