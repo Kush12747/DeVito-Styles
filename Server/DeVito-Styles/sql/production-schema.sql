@@ -215,3 +215,99 @@ CREATE TABLE cart_items (
         REFERENCES products(product_id)
 );
 
+CREATE TABLE orders (
+
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+
+    order_number VARCHAR(50) NOT NULL UNIQUE,
+
+    user_id INT NOT NULL,
+
+    status ENUM(
+        'Pending',
+        'Paid',
+        'Processing',
+        'Completed',
+        'Cancelled',
+        'Refunded'
+    ) DEFAULT 'Pending',
+
+    subtotal DECIMAL(10,2) NOT NULL,
+
+    tax_amount DECIMAL(10,2) DEFAULT 0.00,
+
+    shipping_cost DECIMAL(10,2) DEFAULT 0.00,
+
+    discount_amount DECIMAL(10,2) DEFAULT 0.00,
+
+    total_amount DECIMAL(10,2) NOT NULL,
+
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_order_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(user_id)
+);
+
+CREATE INDEX idx_orders_user_id
+ON orders(user_id);
+
+CREATE TABLE order_items (
+	order_item_id INT PRIMARY KEY AUTO_INCREMENT,
+	
+	order_id INT NOT NULL,
+	
+	product_id INT NOT NULL,
+	
+	product_name VARCHAR(255) NOT NULL,
+	
+	quantity INT NOT NULL,
+	
+	unit_price DECIMAL(10,2) NOT NULL,
+	
+	line_total DECIMAL(10,2) NOT NULL,
+	
+	CONSTRAINT fk_orderitems_order
+        FOREIGN KEY (order_id)
+        REFERENCES orders(order_id),
+
+    CONSTRAINT fk_orderitems_product
+        FOREIGN KEY (product_id)
+        REFERENCES products(product_id)
+);
+
+CREATE TABLE payments (
+
+    payment_id INT PRIMARY KEY AUTO_INCREMENT,
+
+    order_id INT NOT NULL,
+
+    payment_provider VARCHAR(50),
+
+    payment_intent_id VARCHAR(255),
+    
+    stripe_charge_id VARCHAR(255),
+
+    payment_status ENUM(
+        'Pending',
+        'Succeeded',
+        'Failed',
+        'Refunded'
+    ) DEFAULT 'Pending',
+
+    amount DECIMAL(10,2) NOT NULL,
+
+    currency CHAR(3) DEFAULT 'USD',
+
+    paid_at DATETIME,
+
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY(order_id)
+        REFERENCES orders(order_id)
+);
+CREATE INDEX idx_payment_intent_id
+ON payments(payment_intent_id);

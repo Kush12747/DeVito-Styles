@@ -22,6 +22,19 @@
     </parent>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.46</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.stripe</groupId>
+            <artifactId>stripe-java</artifactId>
+            <version>26.5.1</version>
+        </dependency>
         <!-- Google Calendar API -->
         <dependency>
             <groupId>com.google.apis</groupId>
