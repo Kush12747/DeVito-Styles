@@ -9,4 +9,6 @@ public interface OrderItemRepository {
     OrderItem add(OrderItem orderItem);
 
     List<OrderItem> findByOrderId(int orderId);
+
+    boolean addAll(List<OrderItem> orderItems);
 }
