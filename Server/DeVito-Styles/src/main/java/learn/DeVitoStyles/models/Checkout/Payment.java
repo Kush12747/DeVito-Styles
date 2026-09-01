@@ -13,7 +13,7 @@ public class Payment {
 
     private String paymentIntentId;
 
-    private String paymentStatus;
+    private PaymentStatus status;
 
     private BigDecimal amount;
 
@@ -26,13 +26,13 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(int paymentId, int orderId, String paymentProvider, String paymentIntentId, String paymentStatus,
+    public Payment(int paymentId, int orderId, String paymentProvider, String paymentIntentId, PaymentStatus status,
                    BigDecimal amount, String currency, LocalDateTime paidAt, LocalDateTime createdAt) {
         this.paymentId = paymentId;
         this.orderId = orderId;
         this.paymentProvider = paymentProvider;
         this.paymentIntentId = paymentIntentId;
-        this.paymentStatus = paymentStatus;
+        this.status = status;
         this.amount = amount;
         this.currency = currency;
         this.paidAt = paidAt;
@@ -71,12 +71,12 @@ public class Payment {
         this.paymentIntentId = paymentIntentId;
     }
 
-    public String getPaymentStatus() {
-        return paymentStatus;
+    public PaymentStatus getStatus() {
+        return status;
     }
 
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
+    public void setStatus(PaymentStatus status) {
+        this.status = status;
     }
 
     public BigDecimal getAmount() {

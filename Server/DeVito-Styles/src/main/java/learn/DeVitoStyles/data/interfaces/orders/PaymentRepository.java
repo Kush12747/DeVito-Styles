@@ -1,6 +1,7 @@
 package learn.DeVitoStyles.data.interfaces.orders;
 
 import learn.DeVitoStyles.models.Checkout.Payment;
+import learn.DeVitoStyles.models.Checkout.PaymentStatus;
 
 public interface PaymentRepository {
 
@@ -10,5 +11,5 @@ public interface PaymentRepository {
 
     Payment findByPaymentIntentId(String paymentIntentId);
 
-    boolean updateStatus(int payment, String paymentStatus);
+    boolean updateStatus(int paymentId, PaymentStatus paymentStatus);
 }
