@@ -1,5 +1,6 @@
 package learn.DeVitoStyles.domain.checkout;
 
+import com.stripe.exception.StripeException;
 import learn.DeVitoStyles.data.interfaces.CartRepository;
 import learn.DeVitoStyles.data.interfaces.ProductRepository;
 import learn.DeVitoStyles.data.interfaces.orders.OrderItemRepository;
@@ -98,7 +99,7 @@ public class CheckoutService {
      * Stripe's payment confirmation/webhook flow.
      */
     @Transactional
-    public Result<CheckoutResponseDTO> checkout(CheckoutRequestDto requestDto) {
+    public Result<CheckoutResponseDTO> checkout(CheckoutRequestDto requestDto) throws StripeException {
 
         Result<CheckoutResponseDTO> result = new Result<>();
 

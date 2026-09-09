@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class CheckoutResponseDTO {
 
-    private String clientSecret;
+    private String checkoutUrl;
 
     private Integer orderId;
 

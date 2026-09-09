@@ -36,6 +36,13 @@ public class PaymentRepositoryJdbcClientRepository implements PaymentRepository 
             WHERE payment_id = ?;
             """;
 
+    private static final String UPDATE_PAYMENT_INTENT = """
+            UPDATE payments
+            SET
+                payment_intent_id = ?
+            WHERE payment_id = ?;
+            """;
+
     public PaymentRepositoryJdbcClientRepository(JdbcClient jdbcClient) {
         this.jdbcClient = jdbcClient;
     }
@@ -109,6 +116,17 @@ public class PaymentRepositoryJdbcClientRepository implements PaymentRepository 
 
         int rowsAffected = jdbcClient.sql(UPDATE_STATUS)
                 .param(paymentStatus.name())
+                .param(paymentId)
+                .update();
+
+        return rowsAffected > 0;
+    }
+
+    @Override
+    public boolean updatePaymentIntent(int paymentId, String paymentIntentId) {
+
+        int rowsAffected = jdbcClient.sql(UPDATE_PAYMENT_INTENT)
+                .param(paymentIntentId)
                 .param(paymentId)
                 .update();
 

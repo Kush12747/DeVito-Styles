@@ -36,6 +36,11 @@ public class CartItemJdbcClientRepository implements CartItemRepository {
                 ON ci.product_id = p.product_id
             """;
 
+    private final String CLEAR_CART = """
+            DELETE FROM cart_items
+            WHERE cart_id = ?;
+            """;
+
     public CartItemJdbcClientRepository(JdbcClient jdbcClient) {
         this.jdbcClient = jdbcClient;
     }
@@ -128,5 +133,15 @@ public class CartItemJdbcClientRepository implements CartItemRepository {
         return jdbcClient.sql(sql)
                 .param("cart_id", cartId)
                 .update() > 0;
+    }
+
+    @Override
+    public boolean clearCart(int cartId) {
+
+        jdbcClient.sql(CLEAR_CART)
+                .param(cartId)
+                .update();
+
+        return true;
     }
 }
