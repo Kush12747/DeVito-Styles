@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "../../styles/admin.css";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function AdminUsers() {
     const [users, setUsers] = useState([]);
@@ -11,7 +12,7 @@ function AdminUsers() {
 
     async function loadUsers() {
         try {
-            const res = await fetch("http://localhost:8080/api/user");
+            const res = await fetch(`${API_URL}/api/user`);
 
             if (res.ok) {
                 const data = await res.json();

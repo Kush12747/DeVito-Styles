@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import "../../styles/register.css";
 import logo from "../../images/logo.png";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Register() {
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ function Register() {
     async function handleSubmit(event) {
         event.preventDefault();
 
-        const response = await fetch("http://localhost:8080/api/user/register", {
+        const response = await fetch(`${API_URL}/api/user/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

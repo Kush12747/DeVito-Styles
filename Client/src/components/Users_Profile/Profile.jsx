@@ -7,6 +7,7 @@ import EditProfileForm from "./EditProfileForm";
 import UpcomingAppointments from "./UpcomingAppointments";
 import AppointmentHistory from "./AppointmentHistory";
 import RescheduleAppointmentForm from "./RescheduleAppointmentForm";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Profile() {
 
@@ -65,7 +66,7 @@ function Profile() {
 
   const handleCompleteAppointment = async (appointment) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/appointment/${appointment.appointmentId}`,
+      const response = await fetch(`${API_URL}/api/appointment/${appointment.appointmentId}`,
         {
           method: "PUT",
           headers: {
@@ -92,7 +93,7 @@ function Profile() {
 /* CANCEL APPOOINTMENT BTN */
 const handleCancelAppointment = async (appointment) => {
   try {
-    const response = await fetch(`http://localhost:8080/api/appointment/${appointment.appointmentId}`,
+    const response = await fetch(`${API_URL}/api/appointment/${appointment.appointmentId}`,
       {
         method: "PUT",
         headers: {
@@ -121,7 +122,7 @@ const handleCancelAppointment = async (appointment) => {
     const updatedDatetime = `${appointmentForm.date}T${appointmentForm.time}:00`;
 
     try {
-      const response = await fetch(`http://localhost:8080/api/appointment/${editingAppointment.appointmentId}`,
+      const response = await fetch(`${API_URL}/api/appointment/${editingAppointment.appointmentId}`,
       {
         method: "PUT",
         headers: {
@@ -154,7 +155,7 @@ const enrichAppointments = async (appointments) => {
       // BARBER (cached)
       if (!barberCache[a.barberId]) {
         const res = await fetch(
-          `http://localhost:8080/api/barber/${a.barberId}`,
+          `${API_URL}/api/barber/${a.barberId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -167,7 +168,7 @@ const enrichAppointments = async (appointments) => {
       // SERVICE (cached)
       if (!serviceCache[a.serviceId]) {
         const res = await fetch(
-          `http://localhost:8080/api/service/${a.serviceId}`,
+          `${API_URL}/api/service/${a.serviceId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -203,7 +204,7 @@ const enrichAppointments = async (appointments) => {
       formData.append("file", file);
 
       const response = await fetch(
-        `http://localhost:8080/api/user/${user.userId}/profile-picture`,
+        `${API_URL}/api/user/${user.userId}/profile-picture`,
         {
           method: "POST",
           headers: {
@@ -245,7 +246,7 @@ const enrichAppointments = async (appointments) => {
     try {
 
       const response =
-        await fetch(`http://localhost:8080/api/user/${id}`,
+        await fetch(`${API_URL}/api/user/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -275,7 +276,7 @@ const enrichAppointments = async (appointments) => {
     try {
 
       const response = await fetch(
-        `http://localhost:8080/api/appointment/user/${userId}`,
+        `${API_URL}/api/appointment/user/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -311,7 +312,7 @@ const enrichAppointments = async (appointments) => {
     try {
 
       const response = await fetch(
-        `http://localhost:8080/api/user/${user.userId}`,
+        `${API_URL}/api/user/${user.userId}`,
         {
           method: "PUT",
           headers: {

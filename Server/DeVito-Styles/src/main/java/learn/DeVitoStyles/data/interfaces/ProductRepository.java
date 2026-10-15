@@ -12,4 +12,8 @@ public interface ProductRepository {
     List<Product> find(String keyword, Integer categoryId, Boolean featured, String sort);
 
     List<Product> findRelatedProducts(int productId);
+
+    boolean decreaseInventory(int productId, int quantity);
+
+    void increaseInventory(int productId, int quantity);
 }

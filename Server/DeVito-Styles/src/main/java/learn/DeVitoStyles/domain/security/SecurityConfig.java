@@ -25,7 +25,8 @@ public class SecurityConfig {
                         SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth.requestMatchers(
                         "/api/user/login",
-                        "/api/user/register")
+                        "/api/user/register",
+                        "/api/stripe/webhook") // Stripe calls this without a JWT; it is verified by signature instead
                         .permitAll()
                         .anyRequest()
                         .authenticated()

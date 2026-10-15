@@ -5,7 +5,12 @@ import OrderSummary from "../Components/OrderSummary";
 import EmptyCart from "../Components/EmptyCart";
 
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getCart, updateCartItem, removeCartItem } from "../../../Services/cartService";
+import { startCheckout } from "../../../Services/checkoutService";
+
+// Must match the tax rate in CheckoutService on the backend
+const TAX_RATE = 0.0625;
 
 function CartPage() {
 
@@ -13,7 +18,9 @@ function CartPage() {
     const userId = user?.userId;
     const token = localStorage.getItem("token");
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(Boolean(userId && token));
+    const [checkingOut, setCheckingOut] = useState(false);
+    const [checkoutError, setCheckoutError] = useState("");
 
     const [cart, setCart] = useState({
         cartId: null,
@@ -33,7 +40,7 @@ function CartPage() {
                 0
             );
 
-            const tax = subtotal * 0.08;
+            const tax = Math.round(subtotal * TAX_RATE * 100) / 100;
 
             const shipping = 0;
 
@@ -75,6 +82,21 @@ function CartPage() {
         }
     }
 
+    async function handleCheckout() {
+        setCheckingOut(true);
+        setCheckoutError("");
+
+        try {
+            const { checkoutUrl } = await startCheckout(cart.cartId, token);
+
+            // Hand off to Stripe's hosted checkout page
+            window.location.assign(checkoutUrl);
+        } catch (error) {
+            setCheckoutError(error.message);
+            setCheckingOut(false);
+        }
+    }
+
     useEffect(() => {
 
         if (!userId || !token) {
@@ -83,6 +105,19 @@ function CartPage() {
 
         fetchCart();
     }, [userId, token]);
+
+    if (!userId || !token) {
+        return (
+            <div className="cartPage">
+                <div className="cartTitle">
+                    <h1>Shopping Cart</h1>
+                </div>
+                <p className="cartMessage">
+                    Please <Link to="/login">log in</Link> to view your cart.
+                </p>
+            </div>
+        );
+    }
 
     if (loading) {
         return <h2>Loading</h2>
@@ -118,7 +153,10 @@ function CartPage() {
                                 subtotal={cart.subtotal}
                                 shipping={cart.shipping}
                                 total={cart.total}
-                                tax={cart.tax}    
+                                tax={cart.tax}
+                                onCheckout={handleCheckout}
+                                checkingOut={checkingOut}
+                                error={checkoutError}
                             />
                         </div>
 

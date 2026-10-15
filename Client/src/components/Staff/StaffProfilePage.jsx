@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { FaStar, FaInstagram } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "../Staff/Staff-profile.css";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function StaffProfilePage() {
     const token = localStorage.getItem("token");
@@ -14,7 +15,7 @@ function StaffProfilePage() {
     const currentYear = new Date().getFullYear();
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/barber/${barberId}`, {
+        fetch(`${API_URL}/api/barber/${barberId}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

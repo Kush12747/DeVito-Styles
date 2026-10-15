@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../../styles/ChatBot.css";
 import ChatMessage from "./ChatMessage";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function ChatWindow({ onClose }) {
 
@@ -80,7 +81,7 @@ function ChatWindow({ onClose }) {
              * Ollama
              */
             const response = await fetch(
-                "http://localhost:8080/api/chat",
+                `${API_URL}/api/chat`,
                 {
                     method: "POST",
                     headers: {

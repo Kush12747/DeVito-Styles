@@ -18,4 +18,5 @@ public interface CartItemRepository {
 
     boolean deleteByCartId(int cartId);
 
+    boolean clearCart(int cartId);
 }

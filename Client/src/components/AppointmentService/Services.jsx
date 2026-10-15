@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import ServiceCard from "./ServiceCard";
 import "../../styles/service.css";
+const API_URL = import.meta.env.VITE_API_URL;
 
-const BASE_URL = "http://localhost:8080/api/service";
+const BASE_URL = `${API_URL}/api/service`;
 
 function Services() {
     const [services, setServices] = useState([]);

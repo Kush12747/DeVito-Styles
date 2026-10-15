@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../../styles/service.css";
+const API_URL = import.meta.env.VITE_API_URL;
 
-const SERVICE_URL = "http://localhost:8080/api/service";
-const APPOINTMENT_URL = "http://localhost:8080/api/appointment";
-const BARBER_URL = "http://localhost:8080/api/barber";
+
+const SERVICE_URL = `${API_URL}/api/service`;
+const APPOINTMENT_URL = `${API_URL}/api/appointment`;
+const BARBER_URL = `${API_URL}/api/barber`;
 
 function BookingPage() {
     const { serviceId } = useParams();
@@ -52,7 +54,7 @@ function BookingPage() {
     useEffect(() => {
         if (!barberId || !date) return;
 
-        fetch(`http://localhost:8080/api/appointment/availability?barberId=${barberId}&date=${date}`, {
+        fetch(`${APPOINTMENT_URL}/availability?barberId=${barberId}&date=${date}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

@@ -20,6 +20,14 @@ public class ProductJdbcClientRepository implements ProductRepository {
             FROM products
             """;
 
+    private static final String DECREASE_INVENTORY = """
+            UPDATE products
+            SET
+                stock_quantity = stock_quantity - ?
+            WHERE product_id = ?
+                AND stock_quantity >= ?;
+            """;
+
     public ProductJdbcClientRepository(JdbcClient jdbcClient) {
         this.jdbcClient = jdbcClient;
     }
@@ -101,5 +109,35 @@ public class ProductJdbcClientRepository implements ProductRepository {
                 .param(productId)
                 .query(mapper)
                 .list();
+    }
+
+    @Override
+    public boolean decreaseInventory(int productId, int quantity) {
+
+        int rowsAffected = jdbcClient.sql(DECREASE_INVENTORY)
+                .param(quantity)
+                .param(productId)
+                .param(quantity)
+                .update();
+
+        return rowsAffected > 0;
+    }
+
+    @Override
+    public void increaseInventory(int productId, int quantity) {
+        String sql = """
+            update products
+            set stock_quantity = stock_quantity + ?
+            where product_id = ?
+            """;
+
+        int rowsAffected = jdbcClient.sql(sql)
+                .param(quantity)
+                .param(productId)
+                .update();
+
+        if (rowsAffected != 1) {
+            throw new IllegalStateException("Product not found: " + productId);
+        }
     }
 }

@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate, useOutletContext, Link } from "react-router-dom"
 import "../../styles/login.css";
 import logo from "../../images/logo.png";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Login() {
     const navigate = useNavigate()
@@ -25,7 +26,7 @@ function Login() {
     async function handleSubmit(event) {
         event.preventDefault()
 
-        const response = await fetch("http://localhost:8080/api/user/login", {
+        const response = await fetch(`${API_URL}/api/user/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
