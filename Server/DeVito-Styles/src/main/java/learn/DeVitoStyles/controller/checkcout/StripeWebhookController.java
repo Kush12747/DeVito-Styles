@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import learn.DeVitoStyles.domain.checkout.CheckoutService;
 import learn.DeVitoStyles.domain.checkout.PaymentService;
 import learn.DeVitoStyles.domain.checkout.StripeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +22,8 @@ import java.nio.charset.StandardCharsets;
 @RestController
 @RequestMapping("/api/stripe")
 public class StripeWebhookController {
+
+    private static final Logger log = LoggerFactory.getLogger(StripeWebhookController.class);
 
     private final StripeService stripeService;
     private final PaymentService paymentService;
@@ -66,6 +70,9 @@ public class StripeWebhookController {
                     .body("Unable to read request.");
         }
         catch (Exception ex) {
+
+            // Non-2xx makes Stripe retry, and PaymentService is safe to re-run.
+            log.error("Stripe webhook failed", ex);
 
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)

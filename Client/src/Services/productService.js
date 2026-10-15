@@ -1,4 +1,4 @@
-const PRODUCT_BASE_URL = "http://localhost:8080/api/products";
+const PRODUCT_BASE_URL = `${import.meta.env.VITE_API_URL}/api/products`;
 
 export async function fetchProducts({token, keyword="", categoryId = "", sort="name"}) {
     const params = new URLSearchParams();

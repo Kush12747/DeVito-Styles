@@ -9,12 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static learn.DeVitoStyles.domain.ResultType.INVALID;
 import static learn.DeVitoStyles.domain.ResultType.NOT_FOUND;
 
 @RestController
 @RequestMapping("/api/checkout")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin
 public class CheckoutController {
 
     private final CheckoutService checkoutService;
@@ -42,11 +44,18 @@ public class CheckoutController {
      * }
      */
     @PostMapping
-    public ResponseEntity<?> checkout(@RequestBody CheckoutRequestDto request) throws StripeException {
-        Result<CheckoutResponseDTO> result = checkoutService.checkout(request);
+    public ResponseEntity<?> checkout(@RequestBody CheckoutRequestDto request) {
+        Result<CheckoutResponseDTO> result;
+
+        try {
+            result = checkoutService.checkout(request);
+        } catch (StripeException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                    .body(List.of("Unable to reach the payment provider. Please try again."));
+        }
 
         if (!result.isSuccess()) {
-            return ResponseEntity.status(mapStatus(result)).body(result);
+            return ResponseEntity.status(mapStatus(result)).body(result.getMessages());
         }
 
         return ResponseEntity.ok(result.getpayload());

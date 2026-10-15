@@ -224,6 +224,7 @@ CREATE TABLE orders (
         'Processing',
         'Completed',
         'Cancelled',
+        'PaymentFailed',
         'Refunded'
     ) DEFAULT 'Pending',
 

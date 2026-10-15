@@ -122,4 +122,22 @@ public class ProductJdbcClientRepository implements ProductRepository {
 
         return rowsAffected > 0;
     }
+
+    @Override
+    public void increaseInventory(int productId, int quantity) {
+        String sql = """
+            update products
+            set stock_quantity = stock_quantity + ?
+            where product_id = ?
+            """;
+
+        int rowsAffected = jdbcClient.sql(sql)
+                .param(quantity)
+                .param(productId)
+                .update();
+
+        if (rowsAffected != 1) {
+            throw new IllegalStateException("Product not found: " + productId);
+        }
+    }
 }

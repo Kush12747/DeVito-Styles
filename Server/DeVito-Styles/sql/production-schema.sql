@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS barber_shop;
-CREATE DATABASE barber_shop;
-USE barber_shop;
+DROP DATABASE IF EXISTS devitostyles;
+CREATE DATABASE devitostyles;
+USE devitostyles;
 
 CREATE TABLE users (
 	user_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -229,6 +229,7 @@ CREATE TABLE orders (
         'Processing',
         'Completed',
         'Cancelled',
+        'PaymentFailed',
         'Refunded'
     ) DEFAULT 'Pending',
 

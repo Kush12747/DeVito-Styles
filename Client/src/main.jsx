@@ -25,6 +25,8 @@ import ConfirmationPage from './components/AppointmentService/ConfirmationPage';
 import ProductsPage from './components/Products/pages/ProductsPage';
 import ProductDetailsPage from './components/Products/pages/ProductDetailsPage';
 import CartPage from './components/Checkout/pages/CartPage';
+import CheckoutSuccessPage from './components/Checkout/pages/CheckoutSuccessPage';
+import CheckoutCancelPage from './components/Checkout/pages/CheckoutCancelPage';
 
 const router = createBrowserRouter([
   {
@@ -106,6 +108,14 @@ const router = createBrowserRouter([
       {
         path: '/cart',
         element: <CartPage />
+      },
+      {
+        path: 'checkout/success',
+        element: <CheckoutSuccessPage />
+      },
+      {
+        path: 'checkout/cancel',
+        element: <CheckoutCancelPage />
       }
     ]
   }

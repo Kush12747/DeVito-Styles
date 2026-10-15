@@ -14,4 +14,6 @@ public interface PaymentRepository {
     boolean updateStatus(int paymentId, PaymentStatus paymentStatus);
 
     boolean updatePaymentIntent(int paymentId, String paymentIntentId);
+
+    Payment findByPaymentIntent(String paymentIntent);
 }

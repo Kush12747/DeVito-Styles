@@ -32,7 +32,7 @@ public class PaymentRepositoryJdbcClientRepository implements PaymentRepository 
             UPDATE payments
             SET
                 payment_status = ?,
-                paid_at = CURRENT_TIMESTAMP
+                paid_at = CASE WHEN ? = 'Succeeded' THEN CURRENT_TIMESTAMP ELSE paid_at END
             WHERE payment_id = ?;
             """;
 
@@ -116,6 +116,7 @@ public class PaymentRepositoryJdbcClientRepository implements PaymentRepository 
 
         int rowsAffected = jdbcClient.sql(UPDATE_STATUS)
                 .param(paymentStatus.name())
+                .param(paymentStatus.name())
                 .param(paymentId)
                 .update();
 
@@ -131,5 +132,10 @@ public class PaymentRepositoryJdbcClientRepository implements PaymentRepository 
                 .update();
 
         return rowsAffected > 0;
+    }
+
+    @Override
+    public Payment findByPaymentIntent(String paymentIntent) {
+        return findByPaymentIntentId(paymentIntent);
     }
 }

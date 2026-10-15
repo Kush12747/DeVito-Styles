@@ -1,6 +1,7 @@
 package learn.DeVitoStyles.domain.checkout;
 
 import com.stripe.exception.StripeException;
+import learn.DeVitoStyles.data.interfaces.CartItemRepository;
 import learn.DeVitoStyles.data.interfaces.CartRepository;
 import learn.DeVitoStyles.data.interfaces.ProductRepository;
 import learn.DeVitoStyles.data.interfaces.orders.OrderItemRepository;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +60,7 @@ public class CheckoutService {
     private final PaymentRepository paymentRepository;
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
+    private final CartItemRepository cartItemRepository;
     private final StripeService stripeService;
 
 
@@ -74,6 +77,7 @@ public class CheckoutService {
             PaymentRepository paymentRepository,
             ProductRepository productRepository,
             CartRepository cartRepository,
+            CartItemRepository cartItemRepository,
             StripeService stripeService
     ) {
         this.orderRepository = orderRepository;
@@ -81,6 +85,7 @@ public class CheckoutService {
         this.paymentRepository = paymentRepository;
         this.productRepository = productRepository;
         this.cartRepository = cartRepository;
+        this.cartItemRepository = cartItemRepository;
         this.stripeService = stripeService;
     }
 
@@ -98,10 +103,15 @@ public class CheckoutService {
      * The actual payment confirmation should be handled separately through
      * Stripe's payment confirmation/webhook flow.
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class) // StripeException is checked, so roll back on it too
     public Result<CheckoutResponseDTO> checkout(CheckoutRequestDto requestDto) throws StripeException {
 
         Result<CheckoutResponseDTO> result = new Result<>();
+
+        if (requestDto == null || requestDto.getCartId() == null) {
+            result.addErrorMessage("Cart id is required.", ResultType.INVALID);
+            return result;
+        }
 
         /*
          * STEP 1:
@@ -176,9 +186,9 @@ public class CheckoutService {
          * StripeService handles the actual Stripe API communication.
          * CheckoutService only coordinates when Stripe should be called.
          */
-        String clientSecret = stripeService.createCheckoutSession(orderItems, order.getOrderId());
+        String checkoutUrl = stripeService.createCheckoutSession(order, orderItems);
 
-        if (clientSecret == null) {
+        if (checkoutUrl == null) {
             result.addErrorMessage("Unable to create Stripe payment session.", ResultType.INVALID);
             return result;
         }
@@ -204,7 +214,7 @@ public class CheckoutService {
          * STEP 8:
          * Build the response that will eventually be returned to React.
          */
-        CheckoutResponseDTO response = buildCheckoutResponse(clientSecret, order, totals);
+        CheckoutResponseDTO response = buildCheckoutResponse(checkoutUrl, order, totals);
 
         result.setpayload(response);
 
@@ -242,8 +252,11 @@ public class CheckoutService {
         /*
          * A cart must contain at least one item before checkout
          * can continue.
+         *
+         * The cart row itself does not carry its items, so load them.
          */
-        List<CartItem> cartItems = cart.getItems();
+        List<CartItem> cartItems = cartItemRepository.findByCartId(cartId);
+        cart.setItems(cartItems);
 
         if (cartItems == null || cartItems.isEmpty()) {
             result.addErrorMessage("Cart is empty.", ResultType.INVALID);
@@ -300,6 +313,16 @@ public class CheckoutService {
             if (product == null) {
 
                 result.addErrorMessage("Product not found.", ResultType.NOT_FOUND);
+                return null;
+            }
+
+
+            /*
+             * Stock may have changed since the item was added to the cart.
+             */
+            if (cartItem.getQuantity() > product.getStockQuantity()) {
+
+                result.addErrorMessage("Not enough stock available for %s.", ResultType.INVALID, product.getName());
                 return null;
             }
 
@@ -384,7 +407,8 @@ public class CheckoutService {
          * Current tax rate:
          * 6.25%
          */
-        BigDecimal tax = subtotal.multiply(new BigDecimal("0.0625"));
+        BigDecimal tax = subtotal.multiply(new BigDecimal("0.0625"))
+                .setScale(2, RoundingMode.HALF_UP); // round to cents so the DB and Stripe agree
 
 
         /*
@@ -555,13 +579,13 @@ public class CheckoutService {
      * Builds the object that is returned to the frontend after
      * checkout setup succeeds.
      *
-     * The frontend needs the clientSecret to continue the Stripe
-     * payment process.
+     * The frontend redirects the customer to checkoutUrl, which is
+     * Stripe's hosted payment page.
      */
-    private CheckoutResponseDTO buildCheckoutResponse(String clientSecret, Order order, CheckoutTotals totals) {
+    private CheckoutResponseDTO buildCheckoutResponse(String checkoutUrl, Order order, CheckoutTotals totals) {
 
         return new CheckoutResponseDTO(
-                clientSecret,
+                checkoutUrl,
                 order.getOrderId(),
                 order.getOrderNumber(),
                 totals.getTotal().doubleValue()

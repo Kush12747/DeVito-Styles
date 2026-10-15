@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/admin.css";
-
+const API_URL = import.meta.env.VITE_API_URL;
+    
 function AdminDashboard() {
+    
 
     const navigate = useNavigate();
     const [appointments, setAppointments] = useState([]);
@@ -21,7 +23,7 @@ function AdminDashboard() {
 
     async function loadAppointments() {
         try {
-            const res = await fetch("http://localhost:8080/api/appointment");
+            const res = await fetch(`${API_URL}/api/appointment`);
 
             if (!res.ok) return;
 
@@ -30,13 +32,13 @@ function AdminDashboard() {
             const enriched = await Promise.all(
                 data.map(async (app) => {
 
-                const userRes = await fetch(`http://localhost:8080/api/user/${app.userId}`);
+                const userRes = await fetch(`${API_URL}/api/user/${app.userId}`);
                 const user = await userRes.json();
 
-                const serviceRes = await fetch(`http://localhost:8080/api/service/${app.serviceId}`);
+                const serviceRes = await fetch(`${API_URL}/api/service/${app.serviceId}`);
                 const service = await serviceRes.json();
 
-                const barberRes = await fetch(`http://localhost:8080/api/barber/${app.barberId}`);
+                const barberRes = await fetch(`${API_URL}/api/barber/${app.barberId}`);
                 const barber = await barberRes.json();
 
                 return {
@@ -57,7 +59,7 @@ function AdminDashboard() {
 
     async function updateStatus(appointment, newStatus) {
         try {
-            const response = await fetch(`http://localhost:8080/api/appointment/${appointment.appointmentId}`, {
+            const response = await fetch(`${API_URL}/api/appointment/${appointment.appointmentId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"

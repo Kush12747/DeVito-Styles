@@ -1,6 +1,6 @@
 import "../Style/OrderSummaryStyle.css";
 
-function OrderSummary({ subtotal, shipping, total, tax }) {
+function OrderSummary({ subtotal, shipping, total, tax, onCheckout, checkingOut, error }) {
 
     subtotal = Number(subtotal);
     tax = Number(tax);
@@ -9,7 +9,7 @@ function OrderSummary({ subtotal, shipping, total, tax }) {
     return (
 
         <div className="orderSummary">
-            
+
             <h2>Order Summary</h2>
 
             <div className="summaryRow">
@@ -23,7 +23,7 @@ function OrderSummary({ subtotal, shipping, total, tax }) {
             </div>
 
             <div className="summaryRow">
-                <span>Shiping</span>
+                <span>Shipping</span>
                 <span>
                     {shipping === 0
                         ? "FREE"
@@ -35,12 +35,16 @@ function OrderSummary({ subtotal, shipping, total, tax }) {
                 <span>Total</span>
                 <span>${total.toFixed(2)}</span>
             </div>
-            
-            <button>
-                Proceed to Checkout
+
+            {error && (
+                <p className="checkoutError">{error}</p>
+            )}
+
+            <button onClick={onCheckout} disabled={checkingOut}>
+                {checkingOut ? "Redirecting to payment..." : "Proceed to Checkout"}
             </button>
-            
-            
+
+
         </div>
     );
 }

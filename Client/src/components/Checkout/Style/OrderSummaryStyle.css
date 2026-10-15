@@ -137,3 +137,34 @@
 
 
 }
+
+/* Checkout state */
+
+.orderSummary button:disabled {
+
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+}
+
+
+.checkoutError {
+
+    margin: 20px 0 0;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background: rgba(220, 53, 69, 0.12);
+
+    border: 1px solid rgba(220, 53, 69, 0.4);
+
+    color: #f1aeb5;
+
+    font-size: 14px;
+
+}

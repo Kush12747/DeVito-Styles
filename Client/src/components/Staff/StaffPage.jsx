@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/StaffPage.css";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function StaffPage() {
 
@@ -8,7 +9,7 @@ function StaffPage() {
     const token = localStorage.getItem("token");
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/barber", {
+        fetch(`${API_URL}/api/barber`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

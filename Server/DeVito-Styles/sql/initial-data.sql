@@ -1,5 +1,5 @@
-USE barber_shop;
-
+USE devitostyles;
+SELECT DATABASE();
 -- =========================
 -- USERS
 -- =========================

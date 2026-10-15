@@ -152,3 +152,20 @@
     }
 
 }
+
+/* Logged-out message */
+
+.cartMessage {
+
+    color: #b3b3b3;
+
+    font-size: 16px;
+
+}
+
+
+.cartMessage a {
+
+    color: #c9a227;
+
+}

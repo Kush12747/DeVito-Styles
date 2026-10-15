@@ -14,4 +14,6 @@ public interface ProductRepository {
     List<Product> findRelatedProducts(int productId);
 
     boolean decreaseInventory(int productId, int quantity);
+
+    void increaseInventory(int productId, int quantity);
 }
