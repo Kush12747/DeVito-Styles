@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -54,6 +55,8 @@ import java.util.UUID;
  */
 @Service
 public class CheckoutService {
+
+    private static final DateTimeFormatter ORDER_NUMBER_TIMESTAMP = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
@@ -612,11 +615,7 @@ public class CheckoutService {
     private String generateOrderNumber() {
 
         return "DEV-"
-                + LocalDateTime.now()
-                .toString()
-                .replace("-", "")
-                .replace(":", "")
-                .substring(0, 14)
+                + LocalDateTime.now().format(ORDER_NUMBER_TIMESTAMP)
                 + "-"
                 + UUID.randomUUID()
                 .toString()

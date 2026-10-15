@@ -20,7 +20,6 @@ import learn.DeVitoStyles.models.Checkout.PaymentStatus;
 import learn.DeVitoStyles.models.Products.Product;
 import learn.DeVitoStyles.models.ShoppingCart.Cart;
 import learn.DeVitoStyles.models.ShoppingCart.CartItem;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -248,16 +247,8 @@ class CheckoutServiceTest {
         assertEquals(0.43, result.getpayload().getAmount(), 0.0001);
     }
 
-    /*
-     * Intended format per CheckoutService#generateOrderNumber's own doc comment
-     * ("DEV-20260903112345-A8F21C"). Disabled because the current implementation
-     * builds the timestamp from LocalDateTime#toString, which keeps the 'T'
-     * separator (yielding e.g. "DEV-20260903T11234-A8F21C") and throws
-     * StringIndexOutOfBoundsException when the time has zero seconds and nanos
-     * (toString then omits seconds and the string is only 13 chars).
-     */
+    // Order number format: DEV-<yyyyMMddHHmmss>-<6 uppercase hex chars>
     @Test
-    @Disabled("Production bug in CheckoutService#generateOrderNumber - see comment")
     void checkout_whenValid_orderNumberHasFourteenDigitTimestamp() throws StripeException {
         stubValidCart(List.of(cartItem(10, 1)), product(10, "Pomade", "20.00", 5));
         when(orderRepository.add(any(Order.class))).thenAnswer(inv -> withId(inv.getArgument(0)));
