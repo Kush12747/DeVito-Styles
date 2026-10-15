@@ -3,141 +3,180 @@ package learn.DeVitoStyles.domain;
 import learn.DeVitoStyles.data.interfaces.UserRepository;
 import learn.DeVitoStyles.models.User;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
-    @Autowired
-    UserService service;
+    private static final String HASH = "$2a$10$yfcaphpV5EtBieqi8XsTD.BEvatjKxttE4mWXJ8Aq8aM.XWYlgov.";
 
-    @MockBean
-    UserRepository repository;
+    @Mock private UserRepository repository;
+    @Mock private PasswordEncoder passwordEncoder;
+    @Mock private CloudinaryService cloudinaryService;
 
-    @Mock
-    PasswordEncoder passwordEncoder;
+    @InjectMocks private UserService service;
+
+    // =========================
+    // AUTHENTICATE
+    // =========================
 
     @Test
-    void authenticateHappyPath() {
-        User loginInput = new User();
-        loginInput.setUsername("jdoe");
-        loginInput.setPassword("password123");
+    void shouldAuthenticate() {
+        User dbUser = makeUser(1, "jdoe", HASH);
 
-        User dbUser = new User();
-        dbUser.setUserId(1);
-        dbUser.setUsername("jdoe");
-        dbUser.setPassword("$2a$10$yfcaphpV5EtBieqi8XsTD.BEvatjKxttE4mWXJ8Aq8aM.XWYlgov.");
+        when(repository.findByUsername("jdoe")).thenReturn(Optional.of(dbUser));
+        when(passwordEncoder.matches("password123", HASH)).thenReturn(true);
 
-        when(repository.findByUsername("jdoe"))
-                .thenReturn(Optional.of(dbUser));
-
-        when(passwordEncoder.matches("password123", "$2a$10$yfcaphpV5EtBieqi8XsTD.BEvatjKxttE4mWXJ8Aq8aM.XWYlgov."))
-                .thenReturn(true);
-
-        Result<User> result = service.authenticate(loginInput);
+        Result<User> result = service.authenticate(makeLogin("jdoe", "password123"));
 
         assertTrue(result.isSuccess());
-        assertNotNull(result.getpayload());
-        assertEquals("jdoe", result.getpayload().getUsername());
+        assertSame(dbUser, result.getpayload());
     }
 
     @Test
-    void authenticateUserNotFound() {
-        User loginInput = new User();
-        loginInput.setUsername("missing");
-        loginInput.setPassword("password123");
-
+    void shouldNotAuthenticateMissingUser() {
         when(repository.findByUsername("missing")).thenReturn(Optional.empty());
 
-        Result<User> result = service.authenticate(loginInput);
+        Result<User> result = service.authenticate(makeLogin("missing", "password123"));
 
         assertFalse(result.isSuccess());
-        assertTrue(result.getMessages().contains("User does not exist"));
+        assertEquals(ResultType.NOT_FOUND, result.getResultType());
+        assertEquals(List.of("User does not exist"), result.getMessages());
+        verifyNoInteractions(passwordEncoder);
     }
 
     @Test
-    void authenticateWrongPassword() {
-        User loginInput = new User();
-        loginInput.setUsername("jdoe");
-        loginInput.setPassword("wrong");
+    void shouldNotAuthenticateBlankPassword() {
+        when(repository.findByUsername("jdoe")).thenReturn(Optional.of(makeUser(1, "jdoe", HASH)));
 
-        User dbUser = new User();
-        dbUser.setUsername("jdoe");
-        dbUser.setPassword("correct");
-
-        when(repository.findByUsername("jdoe"))
-                .thenReturn(Optional.of(dbUser));
-
-        Result<User> result = service.authenticate(loginInput);
+        Result<User> result = service.authenticate(makeLogin("jdoe", " "));
 
         assertFalse(result.isSuccess());
-        assertTrue(result.getMessages().contains("Incorrect password"));
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertEquals(List.of("Password cannot be blank"), result.getMessages());
+        verifyNoInteractions(passwordEncoder);
     }
 
     @Test
-    void createHappyPath() {
-        User input = new User();
-        input.setUsername("newuser");
-        input.setPassword("pass123");
+    void shouldNotAuthenticateWrongPassword() {
+        when(repository.findByUsername("jdoe")).thenReturn(Optional.of(makeUser(1, "jdoe", HASH)));
+        when(passwordEncoder.matches("wrong", HASH)).thenReturn(false);
+
+        Result<User> result = service.authenticate(makeLogin("jdoe", "wrong"));
+
+        assertFalse(result.isSuccess());
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertEquals(List.of("Incorrect password"), result.getMessages());
+        assertNull(result.getpayload());
+    }
+
+    // =========================
+    // CREATE
+    // =========================
+
+    @Test
+    void shouldCreateWithHashedPassword() {
+        User input = makeUser(0, "newuser", "pass123");
         input.setEmail("new@email.com");
+        User saved = makeUser(1, "newuser", HASH);
 
         when(repository.findByUsername("newuser")).thenReturn(Optional.empty());
-
-        User saved = new User();
-        saved.setUserId(1);
-        saved.setUsername("newuser");
-
+        when(passwordEncoder.encode("pass123")).thenReturn(HASH);
         when(repository.create(input)).thenReturn(saved);
 
         Result<User> result = service.create(input);
 
         assertTrue(result.isSuccess());
-        assertNotNull(result.getpayload());
-        assertEquals("newuser", result.getpayload().getUsername());
+        assertEquals(1, result.getpayload().getUserId());
+
+        ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
+        verify(repository).create(captor.capture());
+        assertEquals(HASH, captor.getValue().getPassword());
     }
 
     @Test
-    void createDuplicateUsername() {
-        User input = new User();
-        input.setUsername("jdoe");
-        input.setPassword("pass123");
-        input.setEmail("email@test.com");
-
-        User existing = new User();
-        existing.setUsername("jdoe");
-
-        when(repository.findByUsername("jdoe"))
-                .thenReturn(Optional.of(existing));
+    void shouldNotCreateDuplicateUsername() {
+        User input = makeUser(0, "jdoe", "pass123");
+        when(repository.findByUsername("jdoe")).thenReturn(Optional.of(makeUser(1, "jdoe", HASH)));
 
         Result<User> result = service.create(input);
 
         assertFalse(result.isSuccess());
-        assertTrue(result.getMessages().contains("Username is already taken"));
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertEquals(List.of("Username is already taken"), result.getMessages());
+        verify(repository, never()).create(any());
+        verifyNoInteractions(passwordEncoder);
     }
 
+    @Test
+    void shouldNotCreateBlankUsername() {
+        User input = makeUser(0, " ", "pass123");
+
+        Result<User> result = service.create(input);
+
+        assertFalse(result.isSuccess());
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertEquals(List.of("Username cannot be blank"), result.getMessages());
+        verify(repository, never()).create(any());
+        verifyNoInteractions(passwordEncoder);
+    }
 
     @Test
-    void findByIdHappyPath() {
-        User user = new User();
-        user.setUserId(1);
+    void shouldNotCreateBlankPassword() {
+        User input = makeUser(0, "newuser", "");
 
+        Result<User> result = service.create(input);
+
+        assertFalse(result.isSuccess());
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertEquals(List.of("Password cannot be blank"), result.getMessages());
+        verify(repository, never()).create(any());
+        verifyNoInteractions(passwordEncoder);
+    }
+
+    @Test
+    void shouldReportAllCreateErrors() {
+        User input = makeUser(0, "", "");
+        when(repository.findByUsername("")).thenReturn(Optional.of(new User()));
+
+        Result<User> result = service.create(input);
+
+        assertFalse(result.isSuccess());
+        assertEquals(List.of(
+                "Username cannot be blank",
+                "Password cannot be blank",
+                "Username is already taken"
+        ), result.getMessages());
+        verify(repository, never()).create(any());
+    }
+
+    // =========================
+    // FIND BY ID
+    // =========================
+
+    @Test
+    void shouldFindById() {
+        User user = makeUser(1, "jdoe", HASH);
         when(repository.findById(1)).thenReturn(Optional.of(user));
 
         Result<User> result = service.findById(1);
 
         assertTrue(result.isSuccess());
-        assertEquals(1, result.getpayload().getUserId());
+        assertSame(user, result.getpayload());
     }
 
     @Test
@@ -147,44 +186,123 @@ class UserServiceTest {
         Result<User> result = service.findById(9999);
 
         assertFalse(result.isSuccess());
-        assertTrue(result.getMessages().contains("User not found"));
+        assertEquals(ResultType.NOT_FOUND, result.getResultType());
+        assertEquals(List.of("User not found"), result.getMessages());
     }
 
     @Test
-    void updateHappyPath() {
-        User existing = new User();
-        existing.setUserId(1);
+    void shouldNotFindByInvalidId() {
+        Result<User> result = service.findById(0);
 
-        User update = new User();
-        update.setUserId(1);
-        update.setUsername("updated");
+        assertFalse(result.isSuccess());
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertEquals(List.of("Invalid user ID"), result.getMessages());
+    }
 
-        when(repository.findById(1)).thenReturn(Optional.of(existing));
+    // =========================
+    // UPDATE
+    // =========================
+
+    @Test
+    void shouldUpdate() {
+        User update = makeUser(1, "updated", HASH);
+        when(repository.findById(1)).thenReturn(Optional.of(makeUser(1, "jdoe", HASH)));
         when(repository.update(update)).thenReturn(true);
 
         Result<User> result = service.update(update);
 
         assertTrue(result.isSuccess());
         assertEquals("updated", result.getpayload().getUsername());
+        verify(repository).update(update);
     }
 
     @Test
-    void updateUserNotFound() {
-        User update = new User();
-        update.setUserId(999);
-
+    void shouldNotUpdateMissingUser() {
+        User update = makeUser(999, "ghost", HASH);
         when(repository.findById(999)).thenReturn(Optional.empty());
 
         Result<User> result = service.update(update);
 
         assertFalse(result.isSuccess());
-        assertTrue(result.getMessages().contains("User not found"));
+        assertEquals(ResultType.NOT_FOUND, result.getResultType());
+        assertEquals(List.of("User not found"), result.getMessages());
+        verify(repository, never()).update(any());
     }
+
     @Test
-    void findAll() {
+    void shouldNotUpdateInvalidId() {
+        User update = makeUser(0, "jdoe", HASH);
+
+        Result<User> result = service.update(update);
+
+        assertFalse(result.isSuccess());
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertEquals(List.of("Invalid user ID"), result.getMessages());
+        verify(repository, never()).update(any());
+    }
+
+    // =========================
+    // FIND ALL
+    // =========================
+
+    @Test
+    void shouldFindAll() {
         when(repository.findAll()).thenReturn(List.of(new User(), new User()));
 
         Result<List<User>> result = service.findAll();
+
+        assertTrue(result.isSuccess());
         assertEquals(2, result.getpayload().size());
+    }
+
+    // =========================
+    // UPLOAD PROFILE PICTURE
+    // =========================
+
+    @Test
+    void shouldUploadProfilePicture() throws IOException {
+        User user = makeUser(1, "jdoe", HASH);
+        MultipartFile file = mock(MultipartFile.class);
+        String url = "https://cdn.example.com/u1.png";
+
+        when(repository.findById(1)).thenReturn(Optional.of(user));
+        when(cloudinaryService.uploadImage(file)).thenReturn(url);
+
+        User result = service.uploadProfilePicture(1, file);
+
+        assertEquals(url, result.getProfileUrl());
+        verify(repository).updateProfileUrl(1, url);
+    }
+
+    @Test
+    void shouldNotUploadProfilePictureForMissingUser() throws IOException {
+        MultipartFile file = mock(MultipartFile.class);
+        when(repository.findById(999)).thenReturn(Optional.empty());
+
+        RuntimeException ex = assertThrows(RuntimeException.class,
+                () -> service.uploadProfilePicture(999, file));
+
+        assertEquals("User not found", ex.getMessage());
+        verify(cloudinaryService, never()).uploadImage(any());
+        verify(repository, never()).updateProfileUrl(anyInt(), anyString());
+    }
+
+    // =========================
+    // HELPERS
+    // =========================
+
+    private User makeLogin(String username, String password) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        return user;
+    }
+
+    private User makeUser(int userId, String username, String password) {
+        User user = new User();
+        user.setUserId(userId);
+        user.setUsername(username);
+        user.setPassword(password);
+        return user;
     }
 }

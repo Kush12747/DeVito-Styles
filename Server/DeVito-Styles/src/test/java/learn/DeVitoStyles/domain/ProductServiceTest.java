@@ -3,40 +3,31 @@ package learn.DeVitoStyles.domain;
 import learn.DeVitoStyles.data.interfaces.*;
 import learn.DeVitoStyles.models.Products.*;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
 
-    @Autowired
-    ProductService service;
+    @Mock private ProductRepository productRepository;
+    @Mock private ProductBenefitRepository benefitRepository;
+    @Mock private ProductIngredientRepository ingredientRepository;
+    @Mock private ProductSpecificationRepository specificationRepository;
+    @Mock private ProductUsageStepRepository usageStepRepository;
 
-    @MockBean
-    ProductRepository repository;
-
-    @MockBean
-    ProductSpecificationRepository specificationRepository;
-
-    @MockBean
-    ProductBenefitRepository benefitRepository;
-
-    @MockBean
-    ProductIngredientRepository ingredientRepository;
-
-    @MockBean
-    ProductUsageStepRepository usageStepRepository;
+    @InjectMocks private ProductService service;
 
     @Test
-    void shouldFindById() {
-
+    void shouldFindByIdWithDetails() {
         Product product = new Product();
         product.setProductId(1);
         product.setName("Hair Gel");
@@ -56,132 +47,64 @@ class ProductServiceTest {
         step.setStepNumber(1);
         step.setInstruction("Apply to dry hair.");
 
-        when(repository.findById(1)).thenReturn(product);
-
-        when(specificationRepository.findByProductId(1))
-                .thenReturn(specification);
-
-        when(benefitRepository.findByProductId(1))
-                .thenReturn(List.of(benefit));
-
-        when(ingredientRepository.findByProductId(1))
-                .thenReturn(List.of(ingredient));
-
-        when(usageStepRepository.findByProductId(1))
-                .thenReturn(List.of(step));
+        when(productRepository.findById(1)).thenReturn(product);
+        when(specificationRepository.findByProductId(1)).thenReturn(specification);
+        when(benefitRepository.findByProductId(1)).thenReturn(List.of(benefit));
+        when(ingredientRepository.findByProductId(1)).thenReturn(List.of(ingredient));
+        when(usageStepRepository.findByProductId(1)).thenReturn(List.of(step));
 
         Result<Product> result = service.findById(1);
 
         assertTrue(result.isSuccess());
 
         Product payload = result.getpayload();
-
-        assertEquals("Hair Gel", payload.getName());
         assertEquals(1, payload.getProductId());
-
-        assertNotNull(payload.getSpecification());
+        assertEquals("Hair Gel", payload.getName());
         assertEquals("4 oz", payload.getSpecification().getSize());
-
-        assertEquals(1, payload.getBenefits().size());
-        assertEquals("Strong Hold", payload.getBenefits().get(0).getBenefit());
-
-        assertEquals(1, payload.getIngredients().size());
-        assertEquals("Beeswax", payload.getIngredients().get(0).getIngredient());
-
-        assertEquals(1, payload.getUsageSteps().size());
-        assertEquals(
-                "Apply to dry hair.",
-                payload.getUsageSteps().get(0).getInstruction()
-        );
+        assertEquals(List.of(benefit), payload.getBenefits());
+        assertEquals(List.of(ingredient), payload.getIngredients());
+        assertEquals(List.of(step), payload.getUsageSteps());
     }
 
     @Test
     void shouldNotFindById() {
-
-        when(repository.findById(999)).thenReturn(null);
+        when(productRepository.findById(999)).thenReturn(null);
 
         Result<Product> result = service.findById(999);
 
         assertFalse(result.isSuccess());
         assertEquals(ResultType.NOT_FOUND, result.getResultType());
-    }
+        assertEquals(List.of("Product with id 999 was not found."), result.getMessages());
+        assertNull(result.getpayload());
 
+        verifyNoInteractions(specificationRepository, benefitRepository,
+                ingredientRepository, usageStepRepository);
+    }
 
     @Test
     void shouldFindProducts() {
-
         Product product = new Product();
         product.setProductId(1);
         product.setName("Hair Gel");
 
-        when(repository.find(
-                "gel",
-                null,
-                null,
-                "priceAsc"
-        )).thenReturn(List.of(product));
+        when(productRepository.find("gel", null, null, "priceAsc")).thenReturn(List.of(product));
 
-
-        Result<List<Product>> result = service.find(
-                "gel",
-                null,
-                null,
-                "priceAsc"
-        );
-
+        Result<List<Product>> result = service.find("gel", null, null, "priceAsc");
 
         assertTrue(result.isSuccess());
         assertEquals(1, result.getpayload().size());
         assertEquals("Hair Gel", result.getpayload().get(0).getName());
     }
 
-
-    @Test
-    void shouldReturnEmptyListWhenNoProductsMatch() {
-
-        when(repository.find(
-                "unknown",
-                null,
-                null,
-                "name"
-        )).thenReturn(List.of());
-
-
-        Result<List<Product>> result = service.find(
-                "unknown",
-                null,
-                null,
-                "name"
-        );
-
-
-        assertTrue(result.isSuccess());
-        assertTrue(result.getpayload().isEmpty());
-    }
-
-
     @Test
     void shouldFindFeaturedProductsByCategory() {
-
         Product product = new Product();
         product.setProductId(1);
         product.setName("Premium Shampoo");
 
-        when(repository.find(
-                null,
-                2,
-                true,
-                "priceDesc"
-        )).thenReturn(List.of(product));
+        when(productRepository.find(null, 2, true, "priceDesc")).thenReturn(List.of(product));
 
-
-        Result<List<Product>> result = service.find(
-                null,
-                2,
-                true,
-                "priceDesc"
-        );
-
+        Result<List<Product>> result = service.find(null, 2, true, "priceDesc");
 
         assertTrue(result.isSuccess());
         assertEquals(1, result.getpayload().size());
@@ -189,34 +112,25 @@ class ProductServiceTest {
     }
 
     @Test
-    void shouldPopulateProductDetails() {
+    void shouldReturnEmptyListWhenNoProductsMatch() {
+        when(productRepository.find("unknown", null, null, "name")).thenReturn(List.of());
 
-        Product product = new Product();
-        product.setProductId(1);
-
-        when(repository.findById(1)).thenReturn(product);
-
-        when(specificationRepository.findByProductId(1))
-                .thenReturn(new ProductSpecification());
-
-        when(benefitRepository.findByProductId(1))
-                .thenReturn(List.of(new ProductBenefit()));
-
-        when(ingredientRepository.findByProductId(1))
-                .thenReturn(List.of(new ProductIngredient()));
-
-        when(usageStepRepository.findByProductId(1))
-                .thenReturn(List.of(new ProductUsageStep()));
-
-        Result<Product> result = service.findById(1);
+        Result<List<Product>> result = service.find("unknown", null, null, "name");
 
         assertTrue(result.isSuccess());
+        assertTrue(result.getpayload().isEmpty());
+    }
 
-        Product payload = result.getpayload();
+    @Test
+    void shouldFindRelatedProducts() {
+        Product related = new Product();
+        related.setProductId(2);
 
-        assertNotNull(payload.getSpecification());
-        assertFalse(payload.getBenefits().isEmpty());
-        assertFalse(payload.getIngredients().isEmpty());
-        assertFalse(payload.getUsageSteps().isEmpty());
+        when(productRepository.findRelatedProducts(1)).thenReturn(List.of(related));
+
+        List<Product> result = service.findRelatedProducts(1);
+
+        assertEquals(List.of(related), result);
+        verify(productRepository, never()).findById(anyInt());
     }
 }

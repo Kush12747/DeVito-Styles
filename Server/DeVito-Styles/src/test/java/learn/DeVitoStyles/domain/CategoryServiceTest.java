@@ -3,32 +3,26 @@ package learn.DeVitoStyles.domain;
 import learn.DeVitoStyles.data.interfaces.CategoryRepository;
 import learn.DeVitoStyles.models.Category;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@ExtendWith(MockitoExtension.class)
 class CategoryServiceTest {
 
-    @Autowired
-    CategoryService service;
+    @Mock private CategoryRepository repository;
 
-    @MockBean
-    CategoryRepository repository;
-
+    @InjectMocks private CategoryService service;
 
     @Test
     void shouldFindAll() {
-        Category category = new Category();
-        category.setCategoryId(1);
-        category.setName("Hair Products");
-
-        when(repository.findAll()).thenReturn(List.of(category));
+        when(repository.findAll()).thenReturn(List.of(makeCategory(1)));
 
         Result<List<Category>> result = service.findAll();
 
@@ -37,21 +31,26 @@ class CategoryServiceTest {
         assertEquals("Hair Products", result.getpayload().get(0).getName());
     }
 
+    @Test
+    void shouldFindAllWhenEmpty() {
+        when(repository.findAll()).thenReturn(List.of());
+
+        Result<List<Category>> result = service.findAll();
+
+        assertTrue(result.isSuccess());
+        assertTrue(result.getpayload().isEmpty());
+    }
 
     @Test
     void shouldFindById() {
-        Category category = new Category();
-        category.setCategoryId(1);
-        category.setName("Hair Products");
-
-        when(repository.findById(1)).thenReturn(category);
+        when(repository.findById(1)).thenReturn(makeCategory(1));
 
         Result<Category> result = service.findById(1);
 
         assertTrue(result.isSuccess());
+        assertEquals(1, result.getpayload().getCategoryId());
         assertEquals("Hair Products", result.getpayload().getName());
     }
-
 
     @Test
     void shouldNotFindById() {
@@ -61,5 +60,14 @@ class CategoryServiceTest {
 
         assertFalse(result.isSuccess());
         assertEquals(ResultType.NOT_FOUND, result.getResultType());
+        assertEquals(List.of("Category with id 999 was not found."), result.getMessages());
+        assertNull(result.getpayload());
+    }
+
+    private Category makeCategory(int categoryId) {
+        Category category = new Category();
+        category.setCategoryId(categoryId);
+        category.setName("Hair Products");
+        return category;
     }
 }
