@@ -17,13 +17,15 @@ function ProfileCard({ user, setEditMode, handleImageUpload }) {
                 </div>
 
                 <div className="profile-info">
+                    <span className="profile-eyebrow">Member Profile</span>
+
                     <h2>
                         {user?.firstName} {user?.lastName}
                     </h2>
 
-                    <p>Email: {user?.email}</p>
+                    <p><span className="profile-label">Email</span>{user?.email}</p>
 
-                    <p>Phone: {user?.phone}</p>
+                    <p><span className="profile-label">Phone</span>{user?.phone}</p>
 
                 </div>
 

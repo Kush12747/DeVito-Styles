@@ -43,9 +43,9 @@ function Navbar({ loggedInUser }) {
                             </NavLink>
                         )}
 
-                        <NavLink to="/cart">View Cart</NavLink>
+                        <NavLink to="/cart" className={({ isActive }) => isActive ? "active-link" : ""}>Cart</NavLink>
 
-                        <NavLink to="/profile">Profile</NavLink>
+                        <NavLink to="/profile" className={({ isActive }) => isActive ? "active-link" : ""}>Profile</NavLink>
                         <button className="logout-btn" onClick={handleLogout}>Logout</button>
                     </>
                 )}

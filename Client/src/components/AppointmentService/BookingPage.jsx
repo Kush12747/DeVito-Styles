@@ -114,49 +114,62 @@ function BookingPage() {
         <div className="booking-wrapper">
 
         <form className="booking-form" onSubmit={submit}>
-            
-            <p className="booking-subtitle">DeVito Styles</p>
 
-            <h2>Book: {service.name}</h2>
+            <div className="booking-intro">
+                <p className="booking-subtitle">DeVito Styles</p>
 
-            <p className="booking-description">
-                Reserve your appointment with one of our professional barbers.<br />
-                Precesion cuts. Premium expereince.
-            </p>
+                <h2>Book: {service.name}</h2>
+
+                <div className="booking-divider"></div>
+
+                <p className="booking-description">
+                    Reserve your appointment with one of our professional barbers.<br />
+                    Precision cuts. Premium experience.
+                </p>
+            </div>
 
             {/* BARBER SELECTION*/}
-            <label>Choose Barber</label>
-            <select value={barberId} onChange={(e) => setBarberId(e.target.value)} required>
-                <option value="">Select Barber</option>
-                {barbers.map(b => {
-                    return (
-                        <option key={b.barberId} value={b.barberId}>
-                            {b.firstName} {b.lastName}
-                        </option>
-                    );
-                })}
+            <div className="booking-step">
+                <span className="booking-step-number">01</span>
+                <label>Choose Barber</label>
+                <select value={barberId} onChange={(e) => setBarberId(e.target.value)} required>
+                    <option value="">Select Barber</option>
+                    {barbers.map(b => {
+                        return (
+                            <option key={b.barberId} value={b.barberId}>
+                                {b.firstName} {b.lastName}
+                            </option>
+                        );
+                    })}
 
-            </select>
+                </select>
+            </div>
 
             {/* DATE */}
-            <label>Date</label>
-            <input type="date" onChange={(e) => setDate(e.target.value)} required />
+            <div className="booking-step">
+                <span className="booking-step-number">02</span>
+                <label>Date</label>
+                <input type="date" onChange={(e) => setDate(e.target.value)} required />
+            </div>
 
             {/* TIME (NOW DYNAMIC) */}
-            <label>Time</label>
-            <select
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
-                required
-            >
-                <option value="">Select time</option>
+            <div className="booking-step">
+                <span className="booking-step-number">03</span>
+                <label>Time</label>
+                <select
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                    required
+                >
+                    <option value="">Select time</option>
 
-                {availableSlots.map(slot => (
-                    <option key={slot} value={slot}>
-                        {slot}
-                    </option>
-                ))}
-            </select>
+                    {availableSlots.map(slot => (
+                        <option key={slot} value={slot}>
+                            {slot}
+                        </option>
+                    ))}
+                </select>
+            </div>
 
             <button type="submit">Confirm Appointment</button>
         </form>

@@ -1,170 +1,111 @@
+/* ==================================================
+   ORDER SUMMARY — scoped to .orderSummary
+================================================== */
+
 .orderSummary {
-
-    background:#242424;
-
-    border:1px solid #3a3a3a;
-
-    border-radius:16px;
-
-    padding:28px;
-
-    color:#f5f5f5;
-
+    padding: 2.25rem 2rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--text);
 }
 
 .orderSummary h2 {
-
-    margin: 0 0 25px;
-
-    font-size: 24px;
-
-    font-weight: 700;
-
-    color:white;
-
+    margin: 0 0 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: var(--cream);
 }
-
 
 /* Each row */
-
-.summaryRow {
-
+.orderSummary .summaryRow {
     display: flex;
-
     justify-content: space-between;
-
-    align-items: center;
-
-    margin: 15px 0;
-
-    color:#b3b3b3;
-
-    font-size: 15px;
-
+    align-items: baseline;
+    margin: 0.9rem 0;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
 }
 
+.orderSummary .summaryRow span:last-child {
+    color: var(--cream);
+    font-size: 0.95rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: none;
+    font-variant-numeric: tabular-nums;
+}
 
-.summaryRow span:last-child {
+/* Total row (the last div in the summary) */
+.orderSummary .summaryRow:last-of-type {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+}
 
+.orderSummary .summaryRow:last-of-type span:first-child {
+    color: var(--cream);
     font-weight: 600;
-
-    color:white;
-
 }
 
-
-/* Divider before total */
-
-.summaryRow:last-of-type {
-
-    border-top:1px solid #3a3a3a;
-
-    padding-top: 20px;
-
-    margin-top: 20px;
-
+.orderSummary .summaryRow:last-of-type span:last-child {
+    color: var(--gold);
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
 }
-
-
-/* Total */
-
-.summaryRow:last-of-type span {
-
-    font-size: 20px;
-
-    font-weight: 700;
-
-    color:#c9a227;
-
-}
-
 
 /* Checkout button */
-
 .orderSummary button {
-
     width: 100%;
-
-    margin-top: 25px;
-
-    padding: 15px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background:#c9a227;
-
-    color:#111;
-
-    font-size: 16px;
-
+    margin-top: 2rem;
+    padding: 1.1rem 1rem;
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 11px;
     font-weight: 600;
-
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
     cursor: pointer;
-
-    transition: 0.2s ease;
-
+    transition: background 0.4s var(--ease), border-color 0.4s var(--ease), opacity 0.4s var(--ease);
 }
-
 
 .orderSummary button:hover {
-
-   background:#e1bd45;
-
-    transform: translateY(-1px);
-
-}
-
-
-/* Mobile */
-
-@media(max-width:600px){
-
-
-    .orderSummary {
-
-        padding:20px;
-
-    }
-
-
-    .orderSummary h2 {
-
-        font-size:21px;
-
-    }
-
-
+    background: var(--gold-light);
+    border-color: var(--gold-light);
 }
 
 /* Checkout state */
-
 .orderSummary button:disabled {
-
-    opacity: 0.6;
-
+    opacity: 0.55;
     cursor: not-allowed;
-
-    transform: none;
-
+    background: var(--gold);
+    border-color: var(--gold);
 }
 
+.orderSummary .checkoutError {
+    margin: 1.5rem 0 0;
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(201, 138, 122, 0.4);
+    border-radius: var(--radius);
+    background: rgba(201, 138, 122, 0.08);
+    color: #e3b4a7;
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
 
-.checkoutError {
-
-    margin: 20px 0 0;
-
-    padding: 12px;
-
-    border-radius: 10px;
-
-    background: rgba(220, 53, 69, 0.12);
-
-    border: 1px solid rgba(220, 53, 69, 0.4);
-
-    color: #f1aeb5;
-
-    font-size: 14px;
-
+/* Mobile */
+@media (max-width: 768px) {
+    .orderSummary {
+        padding: 1.75rem 1.5rem;
+    }
 }

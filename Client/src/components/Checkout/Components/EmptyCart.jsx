@@ -7,9 +7,7 @@ function EmptyCart() {
 
     return (
         <div className="emptyCart">
-            <div className="emptyCartIcon">
-                🛒
-            </div>
+            <div className="emptyCartIcon" aria-hidden="true"></div>
 
             <h2>Your Cart is Empty</h2>
 

@@ -1,402 +1,456 @@
-/* =========================
-   GLOBAL PAGE BEHAVIOR
-========================= */
-html,
-body {
-  height: 100%;
-  margin: 0;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-}
+/* ==================================================
+   PROFILE PAGE
+   Every rule is scoped to .profile-page (this file
+   used to set global html/body and bare `button`
+   rules that leaked into every page).
+================================================== */
 
-/* =========================
-   PROFILE PAGE BACKGROUND
-========================= */
 .profile-page {
-  position: relative;
-
-  min-height: 100vh;
-
-  padding: 2rem;
-
-  overflow-x: hidden;
-  overflow-y: visible;
-
-  color: white;
-  font-family: Arial, Helvetica, sans-serif;
-
-  background: linear-gradient(
-    -45deg,
-    #0a0a0a,
-    #1a1a1a,
-    #2b1f00,
-    #111111,
-    #3a2a00
-  );
-
-  background-size: 400% 400%;
-
-  animation: gradientFlow 8s ease infinite;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding: 4.5rem 2rem 7rem;
+    color: var(--text);
+    font-family: var(--font-body);
+    background: var(--ink);
+    animation: profileFadeIn 0.8s var(--ease) both;
 }
 
-/* ambient glow layer */
-.profile-page::before {
-  content: "";
-
-  position: absolute;
-
-  width: 700px;
-  height: 700px;
-
-  top: -200px;
-  right: -200px;
-
-  background: rgba(255, 215, 0, 0.08);
-
-  border-radius: 50%;
-
-  filter: blur(120px);
-
-  animation: pulseGlow 6s ease infinite alternate;
-}
 
 /* =========================
-   LAYOUT CARDS (SHARED)
+   SHARED PANELS
 ========================= */
-.profile-card,
-.edit-form-card,
-.appointments-card {
-  position: relative;
-  z-index: 2;
 
-  padding: 2rem;
-
-  border-radius: 22px;
-
-  background: rgba(18, 18, 18, 0.85);
-  border: 1px solid rgba(255, 215, 0, 0.08);
-
-  backdrop-filter: blur(14px);
-
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
-
-  transition: 0.3 ease;
+.profile-page .profile-card,
+.profile-page .edit-form-card,
+.profile-page .appointment-card {
+    padding: 2.5rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: border-color 0.4s var(--ease);
 }
 
-.profile-card:hover,
-.edit-form-card:hover,
-.appointments-card:hover {
-  transform: translateY(-6px);
-
-  border: 1px solid rgba(255, 215, 0, 0.18);
-
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55);
+.profile-page .profile-card:hover,
+.profile-page .edit-form-card:hover,
+.profile-page .appointment-card:hover {
+    border-color: var(--line-strong);
 }
+
+.profile-page .edit-form-card {
+    margin-top: 2rem;
+}
+
+.profile-page .edit-form-card h3,
+.profile-page .appointment-card h3 {
+    margin: 0 0 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: var(--cream);
+}
+
 
 /* =========================
-   PROFILE HEADER
+   PROFILE HEADER CARD
 ========================= */
-.profile-header {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+
+.profile-page .profile-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
 }
 
-.profile-image {
-  width: 150px;
-  height: 150px;
-
-  border-radius: 50%;
-  object-fit: cover;
-
-  border: 4px solid rgba(255, 215, 0, 0.9);
-
-  box-shadow:
-    0 0 20px rgba(255, 215, 0, 0.25),
-    0 0 40px rgba(255, 215, 0, 0.08);
-
-  transition: 0.3s ease;
+.profile-page .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
 }
 
-.profile-image:hover {
-  transform: scale(1.04);
+.profile-page .profile-image {
+    display: block;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--line-strong);
+    padding: 5px;
+    background: var(--ink);
 }
 
-.profile-info h2 {
-  font-size: 2.2rem;
-  margin-bottom: 0.3rem;
+.profile-page .profile-eyebrow {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
 }
 
-.profile-info p {
-  margin: 0.2rem 0;
-  color: #cfcfcf;
+.profile-page .profile-info h2 {
+    margin: 0 0 1rem;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.9rem);
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--cream);
 }
+
+.profile-page .profile-info p {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin: 0.35rem 0;
+    color: var(--text);
+    font-weight: 300;
+}
+
+.profile-page .profile-label {
+    min-width: 52px;
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+}
+
 
 /* =========================
    IMAGE UPLOAD OVERLAY
 ========================= */
-.image-upload-container {
-  position: relative;
-  cursor: pointer;
+
+.profile-page .image-upload-container {
+    position: relative;
+    flex-shrink: 0;
+    cursor: pointer;
 }
 
-.image-upload-container label {
-  cursor: pointer;
-  display: block;
+.profile-page .image-upload-container label {
+    display: block;
+    cursor: pointer;
 }
 
-.image-upload-container::after {
-  content: "Change Photo";
-
-  position: absolute;
-  inset: 0;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 50%;
-
-  background: rgba(0, 0, 0, 0.55);
-
-  color: white;
-  font-size: 0.9rem;
-  font-weight: bold;
-
-  opacity: 0;
-
-  transition: opacity 0.25s ease;
-
-  pointer-events: none;
+.profile-page .image-upload-container::after {
+    content: "Change Photo";
+    position: absolute;
+    inset: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(11, 10, 9, 0.7);
+    color: var(--cream);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.4s var(--ease);
+    pointer-events: none;
 }
 
-.image-upload-container:hover::after {
-  opacity: 1;
+.profile-page .image-upload-container:hover::after {
+    opacity: 1;
 }
+
 
 /* =========================
-   BUTTONS (GLOBAL)
+   BUTTONS (scoped)
 ========================= */
-button {
-  padding: 0.9rem 1.4rem;
 
-  border: none;
-  border-radius: 12px;
-
-  background: linear-gradient(135deg, #d4af37, #ffd700);
-  color: #111;
-
-  font-weight: 700;
-
-  cursor: pointer;
-
-  transition: 0.25s ease;
+.profile-page button {
+    padding: 0.9rem 1.6rem;
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.4s var(--ease), border-color 0.4s var(--ease), color 0.4s var(--ease);
 }
 
-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 18px rgba(255, 215, 0, 0.25);
+.profile-page button:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
 }
 
-button:active {
-  transform: scale(0.98);
+/* secondary / outline buttons */
+.profile-page .edit-btn,
+.profile-page .secondary-btn,
+.profile-page .reschedule-btn,
+.profile-page .confirmation-btn {
+    background: transparent;
+    color: var(--gold);
+    border-color: var(--gold);
 }
+
+.profile-page .edit-btn:hover,
+.profile-page .secondary-btn:hover,
+.profile-page .reschedule-btn:hover,
+.profile-page .confirmation-btn:hover {
+    background: rgba(var(--gold-rgb), 0.08);
+    color: var(--gold-light);
+    border-color: var(--gold-light);
+}
+
 
 /* =========================
-   EDIT FORM
+   EDIT FORMS
 ========================= */
-.edit-form-card form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+
+.profile-page .edit-form-card form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
 }
 
-.edit-form-card input {
-  padding: 1rem;
-
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-
-  background: rgba(40, 40, 40, 0.7);
-  color: white;
-
-  font-size: 1rem;
-
-  transition: 0.25s ease;
+.profile-page .edit-form-card input {
+    height: 50px;
+    padding: 0 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--charcoal);
+    color: var(--cream);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color-scheme: dark;
+    transition: border-color 0.4s var(--ease);
 }
 
-.edit-form-card input:focus {
-  outline: none;
-
-  border: 1px solid rgba(255, 215, 0, 0.6);
-  background: rgba(55, 55, 55, 0.8);
+.profile-page .edit-form-card input::placeholder {
+    color: var(--muted);
+    letter-spacing: 0.06em;
 }
 
-.form-buttons {
-  display: flex;
-  gap: 1rem;
+.profile-page .edit-form-card input:focus {
+    outline: none;
+    border-color: var(--gold);
 }
+
+.profile-page .form-buttons {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.75rem;
+}
+
 
 /* =========================
-   APPOINTMENTS GRID
+   APPOINTMENTS
 ========================= */
-.appointments-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
 
-  margin-top: 2rem;
+.profile-page .appointments-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+    align-items: start;
 }
 
-.appointment-item {
-  margin-bottom: 1rem;
-  padding: 1.2rem;
-
-  border-radius: 14px;
-
-  background: rgba(35, 35, 35, 0.75);
-  border: 1px solid rgba(255, 215, 0, 0.06);
-
-  transition: 0.25s ease;
+/* reschedule form spans the full row when shown */
+.profile-page .appointments-wrapper .edit-form-card {
+    grid-column: 1 / -1;
+    margin-top: 0;
 }
 
-.appointment-item:hover {
-  transform: translateY(-3px);
-  border: 1px solid rgba(255, 215, 0, 0.18);
+.profile-page .appointment-empty {
+    margin: 0;
+    color: var(--muted);
+    font-weight: 300;
+    font-style: italic;
 }
 
-.appointment-item h4 {
-  margin-bottom: 0.4rem;
-  color: #ffd700;
+.profile-page .appointment-item {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--line);
 }
 
-.appointment-item p {
-  margin: 0.2rem 0;
-  color: #d0d0d0;
+.profile-page .appointment-item:first-of-type {
+    padding-top: 0;
 }
+
+.profile-page .appointment-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.profile-page .appointment-item h4 {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--cream);
+}
+
+.profile-page .appointment-item p {
+    margin: 0.2rem 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.7;
+}
+
+.profile-page .leave-review-link {
+    display: inline-block;
+    margin-top: 0.85rem;
+    padding-bottom: 2px;
+    color: var(--gold);
+    border-bottom: 1px solid var(--line-strong);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+
+.profile-page .leave-review-link:hover {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold-light);
+}
+
+.profile-page .review-submitted {
+    display: inline-block;
+    margin-top: 0.85rem;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
 
 /* =========================
    APPOINTMENT ACTIONS
 ========================= */
-.appointment-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
 
-  margin-top: 1rem;
+.profile-page .appointment-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
 }
 
-.complete-btn,
-.cancel-btn,
-.reschedule-btn {
-  padding: 0.6rem 1rem;
-
-  border: none;
-  border-radius: 8px;
-
-  font-weight: 600;
-
-  cursor: pointer;
+.profile-page .appointment-actions button {
+    padding: 0.65rem 1rem;
+    font-size: 10px;
+    letter-spacing: 0.2em;
 }
 
-.complete-btn {
-  background: #d4af37;
-  color: black;
+.profile-page .cancel-btn {
+    background: transparent;
+    color: #d29a8b;
+    border-color: rgba(210, 154, 139, 0.5);
 }
 
-.cancel-btn {
-  background: #7a1f1f;
-  color: white;
+.profile-page .cancel-btn:hover {
+    background: rgba(210, 154, 139, 0.08);
+    color: #e3b4a7;
+    border-color: #d29a8b;
 }
+
 
 /* =========================
    STATUS BADGES
 ========================= */
-.status {
-  display: inline-block;
 
-  margin-top: 0.5rem;
-  padding: 0.35rem 0.7rem;
-
-  border-radius: 999px;
-
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-/* booked */
-.status.booked {
-  background: rgba(212, 175, 55, 0.15);
-  color: #d4af37;
-  border: 1px solid #d4af37;
-}
-
-/* completed */
-.status.completed {
-  background: rgba(46, 125, 50, 0.15);
-  border: 1px solid #66bb6a;
-  color: white;
-}
-
-/* cancelled */
-.status.cancelled {
-  background: rgba(183, 28, 28, 0.15);
-  border: 1px solid #ef5350;
-  color: white;
-}
-
-.confirmation-btn {
-    background: #d4af37;
-    color: #111;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    cursor: pointer;
+.profile-page .status {
+    display: inline-block;
+    margin-top: 0.6rem;
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    font-size: 10px;
     font-weight: 600;
-    transition: 0.2s ease;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
 }
 
-.confirmation-btn:hover {
-    background: #c89d20;
-    transform: translateY(-2px);
+.profile-page .status.booked,
+.profile-page .status.confirmed {
+    color: var(--gold);
+    border-color: var(--line-strong);
 }
+
+.profile-page .status.completed {
+    color: #9fbf9a;
+    border-color: rgba(159, 191, 154, 0.4);
+}
+
+.profile-page .status.cancelled {
+    color: #d29a8b;
+    border-color: rgba(210, 154, 139, 0.4);
+}
+
+
+/* =========================
+   ANIMATION
+========================= */
+
+@keyframes profileFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 
 /* =========================
    RESPONSIVE
 ========================= */
+
 @media (max-width: 900px) {
-  .appointments-wrapper {
-    grid-template-columns: 1fr;
-  }
-
-  .profile-header {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .profile-image {
-    width: 120px;
-    height: 120px;
-  }
+    .profile-page .appointments-wrapper {
+        grid-template-columns: 1fr;
+    }
 }
 
-/* =========================
-   ANIMATIONS
-========================= */
-@keyframes pulseGlow {
-  from {
-    transform: scale(1);
-    opacity: 0.5;
-  }
+@media (max-width: 768px) {
+    .profile-page {
+        padding: 3rem 1.25rem 5rem;
+    }
 
-  to {
-    transform: scale(1.2);
-    opacity: 0.9;
-  }
-}
+    .profile-page .profile-card,
+    .profile-page .edit-form-card,
+    .profile-page .appointment-card {
+        padding: 1.75rem 1.5rem;
+    }
 
-@keyframes gradientFlow {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+    .profile-page .profile-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .profile-page .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .profile-page .profile-info p {
+        justify-content: center;
+    }
+
+    .profile-page .profile-label {
+        min-width: 0;
+    }
+
+    .profile-page .profile-image {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profile-page .edit-form-card form {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-page .form-buttons {
+        flex-direction: column;
+    }
 }

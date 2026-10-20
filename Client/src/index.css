@@ -1,0 +1,152 @@
+/* ==================================================
+   DESIGN TOKENS
+   One palette and type system shared by every page.
+================================================== */
+
+:root {
+  /* Champagne gold */
+  --gold: #c8a45d;
+  --gold-light: #e3c88f;
+  --gold-dark: #9c7c3c;
+  --gold-rgb: 200, 164, 93;
+
+  /* Warm blacks */
+  --ink: #0b0a09;
+  --charcoal: #141311;
+  --surface: #1a1816;
+  --surface-raised: #211f1c;
+  --line: rgba(var(--gold-rgb), 0.18);
+  --line-strong: rgba(var(--gold-rgb), 0.4);
+
+  /* Text */
+  --cream: #f3ede2;
+  --text: #e6dfd3;
+  --muted: #a39b8f;
+
+  /* Type */
+  --font-display: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-body: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+
+  /* Shape & motion */
+  --radius: 4px;
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+
+/* ==================================================
+   BASE
+================================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--cream);
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+}
+
+/* Site-wide default; any class-based button style overrides this */
+button {
+  padding: 0.85rem 1.4rem;
+
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+
+  background: var(--gold);
+  color: var(--ink);
+
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition: background 0.4s var(--ease), border-color 0.4s var(--ease), color 0.4s var(--ease);
+}
+
+button:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: rgba(var(--gold-rgb), 0.35);
+  color: var(--cream);
+}
+
+:focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: 3px;
+}
+
+
+/* ==================================================
+   SCROLLBAR
+================================================== */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2c2925;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-dark);
+}
+
+
+/* ==================================================
+   REDUCED MOTION
+================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -155,16 +155,18 @@ function ChatWindow({ onClose }) {
             {/* Header Section */}
             <div className="chat-header">
 
-                <span>
-                    ✂️ DeVito Styles Assistant
-                </span>
+                <div className="chat-header-title">
+                    <span className="chat-eyebrow">Concierge</span>
+                    <span className="chat-title">DeVito Styles Assistant</span>
+                </div>
 
                 {/* Close button */}
                 <button
                     className="close-chat-btn"
+                    aria-label="Close chat"
                     onClick={onClose}
                 >
-                    X
+                    ×
                 </button>
 
             </div>
@@ -206,7 +208,7 @@ function ChatWindow({ onClose }) {
                     }}
                 />
 
-                <button onClick={sendMessage}>
+                <button className="chat-send-btn" onClick={sendMessage}>
                     Send
                 </button>
 

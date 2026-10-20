@@ -65,7 +65,9 @@ function ProductsPage() {
         <div className="products-page">
 
             <header className="products-header">
+                <span className="products-eyebrow">The DeVito Shop</span>
                 <h1>Products</h1>
+                <span className="products-divider" aria-hidden="true"></span>
                 <p>Professional barber products for every style.</p>
             </header>
 

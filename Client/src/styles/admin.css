@@ -1,243 +1,393 @@
 /* ==================================================
-   ADMIN LAYOUT
+   ADMIN (dashboard + user management)
+   Scoped to .admin-container / .admin-users-page
 ================================================== */
 
 .admin-container {
     display: flex;
     min-height: 100vh;
-
-    background: #0b0b0b;
-    color: white;
+    background: var(--ink);
+    color: var(--text);
 }
-
-/* ==================================================
-   ADMIN USERS PAGE BACKGROUND
-================================================== */
 
 .admin-users-page {
     display: flex;
     min-height: 100vh;
-
-    background-image: url("../images/admin.webp");
+    color: var(--text);
+    background-color: var(--ink);
+    background-image:
+        linear-gradient(rgba(11, 10, 9, 0.88), rgba(11, 10, 9, 0.94)),
+        url("../images/admin.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
+
 /* ==================================================
    SIDEBAR
 ================================================== */
 
-.admin-sidebar {
-    width: 220px;
-
-    padding: 20px;
-
-    background: #111;
-    border-right: 1px solid #222;
+.admin-container .admin-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 240px;
+    flex-shrink: 0;
+    padding: 3rem 1.75rem;
+    background: var(--charcoal);
+    border-right: 1px solid var(--line);
 }
 
-.admin-logo {
-    margin-bottom: 30px;
-
-    color: #d4af37;
+.admin-container .admin-logo {
+    margin: 0 0 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--cream);
 }
 
-.admin-sidebar button {
+.admin-container .admin-sidebar button {
     width: 100%;
-
-    margin: 10px 0;
-    padding: 10px;
-
+    margin: 0;
+    padding: 0.85rem 0 0.85rem 1rem;
+    border: none;
+    border-left: 1px solid transparent;
+    border-radius: 0;
     background: transparent;
-
-    border: 1px solid #333;
-
-    color: white;
-
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-align: left;
+    text-transform: uppercase;
     cursor: pointer;
+    transition: color 0.4s var(--ease), border-color 0.4s var(--ease), background 0.4s var(--ease);
 }
 
-.admin-sidebar button:hover {
-    border-color: #d4af37;
-    color: #d4af37;
+.admin-container .admin-sidebar button:hover {
+    color: var(--cream);
+    background: rgba(var(--gold-rgb), 0.04);
 }
+
+.admin-container .admin-sidebar button.active {
+    color: var(--gold);
+    border-left-color: var(--gold);
+}
+
+.admin-container .admin-sidebar .logout-btn {
+    margin-top: auto;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    color: var(--gold);
+    text-align: center;
+}
+
+.admin-container .admin-sidebar .logout-btn:hover {
+    border-color: var(--gold);
+    background: rgba(var(--gold-rgb), 0.08);
+    color: var(--gold-light);
+}
+
 
 /* ==================================================
    MAIN CONTENT
 ================================================== */
 
-.admin-main {
+.admin-container .admin-main,
+.admin-users-page .admin-main {
     flex: 1;
-    padding: 30px;
+    min-width: 0;
+    padding: 3.5rem 3rem 5rem;
+    animation: adminFadeIn 0.8s var(--ease) both;
 }
 
+.admin-container .admin-main h1,
+.admin-users-page .admin-main h1 {
+    margin: 0 0 2.5rem;
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-weight: 500;
+    color: var(--cream);
+}
+
+.admin-container .admin-main h1::after,
+.admin-users-page .admin-main h1::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 1px;
+    margin-top: 1.25rem;
+    background: var(--gold);
+}
+
+.admin-users-page .admin-main > p {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+}
+
+
 /* ==================================================
-   CARDS
+   STAT CARDS
 ================================================== */
 
-.admin-cards {
+.admin-container .admin-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.admin-container .admin-card {
     display: flex;
-    gap: 20px;
-
-    margin-top: 20px;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: border-color 0.4s var(--ease);
 }
 
-.card {
-    padding: 20px;
-
-    background: #1a1a1a;
-
-    border-radius: 8px;
-    border: 1px solid #333;
+.admin-container .admin-card:hover {
+    border-color: var(--line-strong);
 }
+
+.admin-container .admin-card-label {
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+}
+
+.admin-container .admin-card-value {
+    color: var(--cream);
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 500;
+    line-height: 1;
+}
+
 
 /* ==================================================
-   TABLE BASE
+   TABLE
 ================================================== */
 
-.admin-table {
+.admin-container .table-card,
+.admin-users-page .table-card {
+    overflow-x: auto;
+    padding: 0.5rem 2rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+
+.admin-container .admin-table,
+.admin-users-page .admin-table {
     width: 100%;
     border-collapse: collapse;
-
-    color: white;
-    font-weight: 500;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 400;
 }
 
-/* table cells */
-.admin-table th,
-.admin-table td {
-    padding: 12px;
-    border-bottom: 1px solid #222;
-}
-
-/* header styling */
-.admin-table th {
+.admin-container .admin-table th,
+.admin-container .admin-table td,
+.admin-users-page .admin-table th,
+.admin-users-page .admin-table td {
+    padding: 1.15rem 1rem;
+    border-bottom: 1px solid var(--line);
     text-align: left;
+    white-space: nowrap;
+}
 
-    color: #d4af37;
-
-    font-size: 14px;
+.admin-container .admin-table th,
+.admin-users-page .admin-table th {
+    padding-top: 1.4rem;
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.26em;
     text-transform: uppercase;
-    letter-spacing: 1px;
-
-    border-bottom: 2px solid rgba(212, 175, 55, 0.4);
 }
 
-/* row behavior */
-.admin-table tr {
-    transition: all 0.2s ease;
+.admin-container .admin-table tbody tr:last-child td,
+.admin-users-page .admin-table tbody tr:last-child td {
+    border-bottom: none;
 }
 
-.admin-table tr:hover {
-    background: rgba(212, 175, 55, 0.08);
-    transform: scale(1.01);
+.admin-container .admin-table tbody tr,
+.admin-users-page .admin-table tbody tr {
+    transition: background 0.4s var(--ease);
 }
+
+.admin-container .admin-table tbody tr:hover,
+.admin-users-page .admin-table tbody tr:hover {
+    background: rgba(var(--gold-rgb), 0.04);
+}
+
 
 /* ==================================================
-   TABLE CARD WRAPPER
+   STATUS BADGES (scoped to admin tables)
 ================================================== */
 
-.table-card {
-    margin: 20px;
-    padding: 20px;
-
-    background: rgba(10, 10, 10, 0.85);
-
-    border-radius: 12px;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-
-    backdrop-filter: blur(6px);
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.7),
-        0 0 20px rgba(212, 175, 55, 0.15);
+.admin-table .status {
+    display: inline-block;
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--text);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
 }
+
+.admin-table .status.pending,
+.admin-table .status.booked {
+    color: var(--gold-light);
+    border-color: var(--line-strong);
+}
+
+.admin-table .status.confirmed {
+    color: #a9bccf;
+    border-color: rgba(169, 188, 207, 0.4);
+}
+
+.admin-table .status.completed,
+.admin-table .status.active {
+    color: #9fbf9a;
+    border-color: rgba(159, 191, 154, 0.4);
+}
+
+.admin-table .status.cancelled,
+.admin-table .status.banned {
+    color: #d29a8b;
+    border-color: rgba(210, 154, 139, 0.4);
+}
+
 
 /* ==================================================
-   STATUS BADGES (BASE)
+   ACTION BUTTONS (scoped to admin tables)
 ================================================== */
 
-.status {
-    padding: 5px 10px;
-
-    border-radius: 5px;
-
-    font-size: 12px;
-}
-
-/* legacy status style variants (kept for compatibility) */
-.status.active {
-    background: green;
-}
-
-.status.banned {
-    background: red;
-}
-
-/* extended status system */
-.status.pending {
-    background: #f0ad4e;
-}
-
-.status.confirmed {
-    background: #2d8cff;
-}
-
-.status.completed {
-    background: #28a745;
-}
-
-.status.cancelled {
-    background: #dc3545;
-}
-
-/* older duplicated variant preserved intentionally */
-.status.active {
-    background: rgba(40, 167, 69, 0.9);
-}
-
-.status.banned {
-    background: rgba(220, 53, 69, 0.9);
-}
-
-/* ==================================================
-   ACTION BUTTONS
-================================================== */
-
-.actions button {
-    margin-right: 8px;
-    padding: 6px 10px;
-
-    border: none;
-
-    font-size: 12px;
-
+.admin-table button {
+    margin-right: 0.5rem;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--cream);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
     cursor: pointer;
+    transition: background 0.4s var(--ease), border-color 0.4s var(--ease), color 0.4s var(--ease);
 }
 
-.confirm {
-    background: #2d8cff;
-    color: white;
+.admin-table button:last-child {
+    margin-right: 0;
 }
 
-.complete {
-    background: #28a745;
-    color: white;
+.admin-table button.complete {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
 }
 
-.cancel {
-    background: #dc3545;
-    color: white;
+.admin-table button.complete:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
 }
+
+.admin-table button.confirm {
+    color: var(--gold);
+    border-color: var(--gold);
+}
+
+.admin-table button.confirm:hover {
+    background: rgba(var(--gold-rgb), 0.08);
+    color: var(--gold-light);
+}
+
+.admin-table button.cancel {
+    color: #d29a8b;
+    border-color: rgba(210, 154, 139, 0.5);
+}
+
+.admin-table button.cancel:hover {
+    background: rgba(210, 154, 139, 0.08);
+    border-color: #d29a8b;
+}
+
 
 /* ==================================================
-   LOGOUT BUTTON OVERRIDE
+   ANIMATION
 ================================================== */
 
-.admin-container .logout-btn {
-    margin-top: 30px;
+@keyframes adminFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
-    border-color: #d4af37 !important;
-    color: #d4af37 !important;
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 768px) {
+    .admin-container {
+        flex-direction: column;
+    }
+
+    .admin-container .admin-sidebar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        width: auto;
+        padding: 1.5rem 1.25rem;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .admin-container .admin-logo {
+        width: 100%;
+        margin-bottom: 0.75rem;
+        padding-bottom: 1rem;
+        font-size: 1.4rem;
+    }
+
+    .admin-container .admin-sidebar button {
+        width: auto;
+        padding: 0.65rem 0.85rem;
+        border-left: none;
+        border-bottom: 1px solid transparent;
+    }
+
+    .admin-container .admin-sidebar button.active {
+        border-bottom-color: var(--gold);
+    }
+
+    .admin-container .admin-sidebar .logout-btn {
+        margin-top: 0;
+        margin-left: auto;
+    }
+
+    .admin-container .admin-main,
+    .admin-users-page .admin-main {
+        padding: 2.5rem 1.25rem 4rem;
+    }
+
+    .admin-container .table-card,
+    .admin-users-page .table-card {
+        padding: 0.25rem 1rem;
+    }
 }

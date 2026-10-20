@@ -41,10 +41,13 @@ public class UserController {
     public ResponseEntity<Object> login(@RequestBody User user) throws DataAccessException, JsonProcessingException {
         Result<User> result = service.authenticate(user);
 
-        if (result.getResultType() == ResultType.NOT_FOUND) {
-            return new ResponseEntity<>(result.getMessages(), HttpStatus.NOT_FOUND);
-        } else if (result.getResultType() == ResultType.INVALID) {
-            return new ResponseEntity<>(result.getMessages(), HttpStatus.UNAUTHORIZED);
+        if (!result.isSuccess()) {
+            HttpStatus status = switch (result.getResultType()) {
+                case NOT_FOUND -> HttpStatus.NOT_FOUND;
+                case INVALID -> HttpStatus.UNAUTHORIZED;
+                default -> HttpStatus.BAD_REQUEST;
+            };
+            return new ResponseEntity<>(result.getMessages(), status);
         }
 
         User authenticatedUser = result.getpayload();

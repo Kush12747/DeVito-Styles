@@ -1,216 +1,250 @@
+/* ===========================
+   STAFF PAGE  (/staff)
+   Scoped under .staff-page
+=========================== */
+
 .staff-page {
-    max-width: 1300px;
+    min-height: calc(100vh - 92px);
+    padding: 110px 6% 130px;
+    background:
+        radial-gradient(ellipse at top, rgba(var(--gold-rgb), 0.06), transparent 60%),
+        var(--ink);
+    color: var(--text);
+    font-family: var(--font-body);
+}
+
+/* ---------- Header ---------- */
+
+.staff-page .staff-header {
+    max-width: 640px;
+    margin: 0 auto 80px;
+    text-align: center;
+    animation: staffFade 0.9s var(--ease) both;
+}
+
+.staff-page .staff-eyebrow {
+    display: block;
+    margin-bottom: 18px;
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+}
+
+.staff-page .staff-header h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 5vw, 3.8rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    color: var(--cream);
+}
+
+.staff-page .staff-header-divider {
+    width: 56px;
+    height: 1px;
+    margin: 28px auto;
+    background: var(--gold);
+}
+
+.staff-page .staff-header p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+}
+
+/* ---------- Grid ---------- */
+
+.staff-page .staff-grid {
+    max-width: 1240px;
     margin: 0 auto;
-    padding: 60px 30px;
-    background-color: black;
-}
-
-.staff-header{
-
-    text-align:center;
-
-    margin-bottom:70px;
-
-}
-
-.staff-header h1{
-
-    font-size:4rem;
-
-    letter-spacing:5px;
-
-    text-transform:uppercase;
-
-}
-
-.staff-header p{
-
-    color:#b0b0b0;
-
-    font-size:1.15rem;
-
-}
-
-.staff-header::after{
-
-    content:"";
-
-    display:block;
-
-    width:120px;
-
-    height:2px;
-
-    background:#C9A227;
-
-    margin:25px auto 0;
-
-}
-
-.staff-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 40px;
 }
 
-.staff-card {
+/* ---------- Card ---------- */
 
-    background:#1a1a1a;
-
-    border:1px solid rgba(201,162,39,.25);
-
-    border-radius:18px;
-
-    overflow:hidden;
-
-    text-decoration:none;
-
-    color:white;
-
-    transition:.35s ease;
-
-    position:relative;
-
+.staff-page .staff-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--text);
+    transition:
+        border-color 0.4s var(--ease),
+        transform 0.4s var(--ease),
+        box-shadow 0.4s var(--ease);
+    animation: staffFade 0.9s var(--ease) both;
 }
 
-.staff-card:hover{
-
-    transform:translateY(-10px);
-
-    border-color:#C9A227;
-
-    box-shadow:
-        0 20px 40px rgba(0,0,0,.45),
-        0 0 30px rgba(201,162,39,.25);
-
+.staff-page .staff-card:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
 }
 
-.staff-card img {
-    transition: transform .35s ease;
+.staff-page .staff-image-frame {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--charcoal);
+}
+
+.staff-page .staff-image-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(11, 10, 9, 0.6));
+    pointer-events: none;
+}
+
+.staff-page .staff-image {
+    display: block;
     width: 100%;
-    height: 380px;
+    height: 100%;
     object-fit: cover;
-}
-
-/* Chris */
-.barber-2 {
-    object-position: center 20%;
-}
-
-/* David */
-.barber-3 {
     object-position: center top;
+    filter: grayscale(0.25) contrast(1.02);
+    transition: transform 1.2s var(--ease), filter 0.6s var(--ease);
 }
 
-.barber-4 {
-    object-position: center 20%;
+.staff-page .staff-card:hover .staff-image {
+    transform: scale(1.04);
+    filter: grayscale(0) contrast(1.02);
 }
 
-.staff-card:hover img {
-    transform: scale(1.05);
+/* Per-barber framing */
+.staff-page .barber-2 { object-position: center 20%; }
+.staff-page .barber-3 { object-position: center top; }
+.staff-page .barber-4 { object-position: center 20%; }
+
+/* ---------- Info ---------- */
+
+.staff-page .staff-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 30px 30px;
 }
 
-.staff-info{
-
-    padding:25px;
-
+.staff-page .staff-info h4 {
+    margin: 0 0 10px;
+    font-family: var(--font-body);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
 }
 
-.staff-content {
-    padding: 24px;
+.staff-page .staff-info h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--cream);
 }
 
-.staff-info h2{
-
-    margin:0;
-
-    font-size:1.8rem;
-
-    font-weight:700;
-
+.staff-page .staff-divider {
+    width: 40px;
+    height: 1px;
+    margin: 22px 0;
+    background: var(--gold);
 }
 
-.staff-info h4{
-
-    color:#C9A227;
-
-    letter-spacing:2px;
-
-    text-transform:uppercase;
-
-    margin-top:8px;
-
+.staff-page .staff-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.staff-divider{
-
-    width:70px;
-
-    height:2px;
-
-    background:#C9A227;
-
-    margin:20px 0;
-
+.staff-page .staff-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
 }
 
-.staff-detail{
-
-    display:flex;
-
-    gap:15px;
-
-    align-items:center;
-
-    margin-bottom:18px;
-
+.staff-page .staff-detail > span {
+    width: 18px;
+    color: var(--gold);
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+    opacity: 0.85;
 }
 
-.staff-detail span{
-
-    color:#C9A227;
-
-    font-size:24px;
-
+.staff-page .staff-detail strong {
+    display: block;
+    color: var(--cream);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
 }
 
-.staff-detail strong{
-
-    display:block;
-
+.staff-page .staff-detail small {
+    display: block;
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
 }
 
-.staff-detail small{
-
-    color:#999;
-
+.staff-page .staff-card-cta {
+    display: block;
+    margin-top: 28px;
+    padding: 14px 20px;
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-align: center;
+    text-transform: uppercase;
+    transition: background 0.4s var(--ease), color 0.4s var(--ease);
 }
 
-
-.staff-info button{
-
-    width:100%;
-
-    margin-top:20px;
-
-    background:#C9A227;
-
-    color:white;
-
-    border:none;
-
-    padding:14px;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-    transition:.3s;
-
+.staff-page .staff-card:hover .staff-card-cta {
+    background: rgba(var(--gold-rgb), 0.08);
+    color: var(--gold-light);
 }
 
-.staff-info button:hover{
+@keyframes staffFade {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
 
-    background:#d7b74d;
+/* ===========================
+   Mobile
+=========================== */
 
+@media (max-width: 768px) {
+    .staff-page {
+        padding: 72px 20px 90px;
+    }
+
+    .staff-page .staff-header {
+        margin-bottom: 52px;
+    }
+
+    .staff-page .staff-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .staff-page .staff-info {
+        padding: 26px 24px 24px;
+    }
 }

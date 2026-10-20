@@ -15,7 +15,7 @@ function EditProfileForm({ formData, handleChange, handleSubmit, setEditMode }) 
 
                 <div className="form-buttons">
                     <button type="submit">Save Changes</button>
-                    <button type="button" onClick={() => setEditMode(false)}>Cancel</button>
+                    <button type="button" className="secondary-btn" onClick={() => setEditMode(false)}>Cancel</button>
                 </div>
 
             </form>

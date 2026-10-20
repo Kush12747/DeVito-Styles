@@ -1,6 +1,7 @@
 function CategoryFilter({ categories, categoryId, onCategoryChange }) {
     return (
         <select 
+            className="products-select"
             value={categoryId}
             onChange={(e) => onCategoryChange(e.target.value)}
         >

@@ -1,74 +1,61 @@
+/* ==================================================
+   EMPTY CART — scoped to .emptyCart
+================================================== */
+
 .emptyCart {
-
-    background: #242424;
-
-    border: 1px solid #3a3a3a;
-
-    border-radius: 16px;
-
-    padding: 60px 30px;
-
+    padding: 5rem 2rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
     text-align: center;
-
-    color: #f5f5f5;
-
+    color: var(--text);
 }
 
-
-.emptyCartIcon {
-
-    font-size: 50px;
-
-    margin-bottom: 20px;
-
+/* thin gold ornament */
+.emptyCart .emptyCartIcon {
+    width: 56px;
+    height: 1px;
+    margin: 0 auto 2rem;
+    background: var(--gold);
 }
-
 
 .emptyCart h2 {
-
-    font-size: 28px;
-
-    margin-bottom: 15px;
-
+    margin: 0 0 1rem;
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: var(--cream);
 }
-
 
 .emptyCart p {
-
-    max-width: 450px;
-
-    margin: 0 auto 30px;
-
-    color: #b3b3b3;
-
-    line-height: 1.6;
-
+    max-width: 440px;
+    margin: 0 auto 2.5rem;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.7;
 }
-
 
 .emptyCart button {
-
-    background: #c9a227;
-
-    color: #111;
-
-    border:none;
-
-    padding:14px 30px;
-
-    border-radius:10px;
-
-    font-size:16px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
+    padding: 1rem 2.25rem;
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.4s var(--ease), border-color 0.4s var(--ease);
 }
 
-
 .emptyCart button:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
+}
 
-    background:#e1bd45;
-
+@media (max-width: 768px) {
+    .emptyCart {
+        padding: 3.5rem 1.5rem;
+    }
 }

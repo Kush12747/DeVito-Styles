@@ -23,78 +23,88 @@ function StaffPage() {
         <div className="staff-page">
 
             <section className="staff-header">
+                <span className="staff-eyebrow">The Team</span>
+
                 <h1>Meet Our Team</h1>
 
+                <div className="staff-header-divider"></div>
+
                 <p>
-                    Passion. Precesion. Personility.
+                    Passion. Precision. Personality.
                     Meet the professionals behind DeVito Styles.
                 </p>
             </section>
 
             <div className="staff-grid">
 
-    {barbers.map(barber => (
+                {barbers.map(barber => (
 
-        <Link
-            to={`/staff/${barber.barberId}`}
-            className="staff-card"
-            key={barber.barberId}
-        >
+                    <Link
+                        to={`/staff/${barber.barberId}`}
+                        className="staff-card"
+                        key={barber.barberId}
+                    >
 
-            <img
-                src={barber.imageUrl}
-                alt={`${barber.firstName} ${barber.lastName}`}
-                className={`staff-image barber-${barber.barberId}`}
-            />
+                        <div className="staff-image-frame">
+                            <img
+                                src={barber.imageUrl}
+                                alt={`${barber.firstName} ${barber.lastName}`}
+                                className={`staff-image barber-${barber.barberId}`}
+                            />
+                        </div>
 
-            <div className="staff-info">
+                        <div className="staff-info">
 
-                <h2>
-                    {barber.firstName} {barber.lastName}
-                </h2>
+                            <h4>{barber.title}</h4>
 
-                <h4>{barber.title}</h4>
+                            <h2>
+                                {barber.firstName} {barber.lastName}
+                            </h2>
 
-                <div className="staff-divider"></div>
+                            <div className="staff-divider"></div>
 
-                <div className="staff-detail">
+                            <div className="staff-details">
 
-                    <span>★</span>
+                                <div className="staff-detail">
 
-                    <div>
-                        <strong>
-                            {new Date().getFullYear() - barber.startYear}+ Years
-                        </strong>
+                                    <span>★</span>
 
-                        <small>Experience</small>
-                    </div>
+                                    <div>
+                                        <strong>
+                                            {new Date().getFullYear() - barber.startYear}+ Years
+                                        </strong>
 
-                </div>
+                                        <small>Experience</small>
+                                    </div>
 
-                <div className="staff-detail">
+                                </div>
 
-                    <span>✂</span>
+                                <div className="staff-detail">
 
-                    <div>
-                        <strong>{barber.specialization}</strong>
+                                    <span>✂</span>
 
-                        <small>Specialty</small>
-                    </div>
+                                    <div>
+                                        <strong>{barber.specialization}</strong>
 
-                </div>
+                                        <small>Specialty</small>
+                                    </div>
 
-                <button>
-                    View Profile →
-                </button>
+                                </div>
+
+                            </div>
+
+                            <span className="staff-card-cta">
+                                View Profile →
+                            </span>
+
+                        </div>
+
+                    </Link>
+
+                ))}
 
             </div>
 
-        </Link>
-
-    ))}
-
-</div>
-            
         </div>
     );
 }

@@ -67,7 +67,7 @@ function ProductDetailsPage() {
     }
 
     if (!product) {
-        return <p>Loading...</p>;
+        return <p className="product-details-loading">Loading...</p>;
     }
 
     return (
@@ -93,7 +93,7 @@ function ProductDetailsPage() {
 
                     {product.featured && (
                         <span className="featured-badge">
-                            ★ Featured
+                            Featured
                         </span>
                     )}
 
@@ -110,7 +110,7 @@ function ProductDetailsPage() {
                     <div className="product-meta">
 
                         <div className="meta-card">
-                            <span className="meta-label">🚚 Shipping</span>
+                            <span className="meta-label">Shipping</span>
                             <span className="meta-value">2 - 3 business days</span>
                         </div>
 
@@ -128,7 +128,7 @@ function ProductDetailsPage() {
                         </div>
 
                         <div className="meta-card">
-                            <span className="meta-label">📦 Stock</span>
+                            <span className="meta-label">Stock</span>
                             <span className="meta-value">
                                 {product.stockQuantity} Left
                             </span>
@@ -136,23 +136,33 @@ function ProductDetailsPage() {
 
                     </div>
 
-                    <div className="quantity-container">
+                    <div className="product-purchase">
 
-                        <button onClick={decreaseQuantity}>
-                            -
-                        </button>
+                        <span className="quantity-label">Quantity</span>
 
-                        <span>{quantity}</span>
+                        <div className="product-purchase-row">
 
-                        <button onClick={increaseQuantity}>
-                            +
-                        </button>
+                            <div className="quantity-container">
+
+                                <button onClick={decreaseQuantity}>
+                                    -
+                                </button>
+
+                                <span>{quantity}</span>
+
+                                <button onClick={increaseQuantity}>
+                                    +
+                                </button>
+
+                            </div>
+
+                            <button className="cart-button" onClick={handleAddToCart}>
+                                Add to Cart
+                            </button>
+
+                        </div>
 
                     </div>
-
-                    <button className="cart-button" onClick={handleAddToCart}>
-                        Add to Cart
-                    </button>
                 </div>
             </section>
 
@@ -161,7 +171,7 @@ function ProductDetailsPage() {
                         
                         <ul className="benefits-lists">
                             {product.benefits.map(benefit => (
-                                <li key={benefit.benefitId}>✓ {benefit.benefit}</li>
+                                <li key={benefit.benefitId}>{benefit.benefit}</li>
                             ))}
                         </ul>
                 </section>
@@ -257,11 +267,13 @@ function ProductDetailsPage() {
                             className="related-card"
                             onClick={() => navigate(`/products/${product.productId}`)}
                         >
-                            <img 
-                                src={product.imageUrl}
-                                alt={product.name}
-                                className="related-card"
-                            />
+                            <div className="related-card-media">
+                                <img 
+                                    src={product.imageUrl}
+                                    alt={product.name}
+                                    className="related-card-image"
+                                />
+                            </div>
 
                             <h3>{product.name}</h3>
                             <p>${product.price.toFixed(2)}</p>

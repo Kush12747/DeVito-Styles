@@ -11,7 +11,7 @@ function CheckoutSuccessPage() {
         <div className="checkoutResultPage">
             <div className="checkoutResult">
 
-                <div className="checkoutResultIcon">✅</div>
+                <div className="checkoutResultIcon" aria-hidden="true">✓</div>
 
                 <h1>Thank You for Your Order!</h1>
 

@@ -27,7 +27,7 @@ function ReviewForm({ onSubmit }) {
 
         1:"Needs Improvement",
 
-        2:"Fair Expereince",
+        2:"Fair Experience",
 
         3:"Good Service",
 

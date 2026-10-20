@@ -141,6 +141,19 @@ class UserControllerTest {
         verifyNoInteractions(jwtUtil);
     }
 
+    @Test
+    void login_whenOtherFailure_returns400AndNoToken() throws Exception {
+        when(service.authenticate(any(User.class))).thenReturn(failure("Something went wrong", ResultType.CONFLICT));
+
+        mvc.perform(post("/api/user/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"username\":\"jsmith\",\"password\":\"pw\"}"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$[0]").value("Something went wrong"));
+
+        verifyNoInteractions(jwtUtil);
+    }
+
     // ---------- POST /register ----------
 
     @Test

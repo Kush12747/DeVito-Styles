@@ -11,9 +11,11 @@ function InitialPage() {
                     Welcome to
                 </p>
 
-                <h1 className="typewriter">
+                <h1 className="hero-title">
                     DeVito Styles
                 </h1>
+
+                <span className="hero-divider" aria-hidden="true"></span>
 
                 <p className="sub-text">
                     Luxury barber experience crafted for your style.
@@ -21,9 +23,6 @@ function InitialPage() {
 
                 <button className="btn" onClick={() => navigate("/services")}>Book Appointment</button>
             </div>
-            
-            
-            
         </div>
     )
 }

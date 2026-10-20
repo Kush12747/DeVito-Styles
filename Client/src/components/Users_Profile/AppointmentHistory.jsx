@@ -7,7 +7,7 @@ function AppointmentHistory({ appointments }) {
             <h3>Appointment History</h3>
 
             {appointments.length === 0 ? (
-                <p>No Appointment History</p>
+                <p className="appointment-empty">No Appointment History</p>
             ) : (
                 appointments.map(a => (
                     <div className="appointment-item" key={a.appointmentId}>
@@ -22,6 +22,7 @@ function AppointmentHistory({ appointments }) {
 
                         {a.status === "COMPLETED" && !a.hasReview && (
                             <Link
+                                className="leave-review-link"
                                 to={`/appointments/${a.appointmentId}/review`}
                                 state={{ appointment: a }}
                             >
@@ -32,7 +33,7 @@ function AppointmentHistory({ appointments }) {
                         {a.status === "COMPLETED" && a.hasReview && (
 
                             <span className="review-submitted">
-                                ✓ Review Submitted
+                                Review Submitted
                             </span>
 
                         )}
