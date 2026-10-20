@@ -16,7 +16,7 @@ import { GiRazor } from "react-icons/gi";
 import { FaCalendarAlt } from "react-icons/fa";
 
 import ReviewForm from "../AppointmentService/ReviewForm";
-import "../../styles/ReviewPage.css";
+import "../../styles/reviewPage.css";
 
 function ReviewPage() {
 
@@ -95,7 +95,7 @@ function ReviewPage() {
     }
 
     if (!appointment) {
-        return <p>Loading appointment...</p>;
+        return <p className="review-loading">Loading appointment...</p>;
     }
 
     return (
@@ -111,10 +111,12 @@ function ReviewPage() {
                     <div className="review-header">
 
                         <span className="review-tag">
-                            ★ PREMIUM EXPERIENCE
+                            Premium Experience
                         </span>
 
                         <h1>Leave Your Review</h1>
+
+                        <div className="review-divider"></div>
 
                         <p>
                             Your feedback helps us continue delivering
@@ -127,7 +129,7 @@ function ReviewPage() {
 
                     <div className="appointment-section">
 
-                        <h2>Appointment Summary</h2>
+                        <h2 className="review-eyebrow">Appointment Summary</h2>
 
                         <div className="summary-grid">
 

@@ -23,10 +23,21 @@ function Services() {
     }, []);
 
     return (
-        <div className="services-grid">
-            {services.map(s => (
-                <ServiceCard key={s.serviceId} service={s} />
-            ))}
+        <div className="services-page">
+            <header className="services-header">
+                <span className="services-eyebrow">The Menu</span>
+                <h1>Our Services</h1>
+                <div className="services-divider"></div>
+                <p className="services-intro">
+                    Select a service to reserve your chair.
+                </p>
+            </header>
+
+            <div className="services-grid">
+                {services.map(s => (
+                    <ServiceCard key={s.serviceId} service={s} />
+                ))}
+            </div>
         </div>
     );
 }

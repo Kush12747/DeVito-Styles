@@ -1,129 +1,123 @@
+/* ==================================================
+   CHECKOUT RESULT (success / cancel)
+   scoped to .checkoutResultPage
+================================================== */
+
 .checkoutResultPage {
-
     min-height: 100vh;
-
-    padding: 80px 20px;
-
-    background: #171717;
-
-    color: #f5f5f5;
-
+    padding: 7rem 1.5rem;
+    background: var(--ink);
+    color: var(--text);
+    animation: checkoutResultFadeIn 0.8s var(--ease) both;
 }
 
-
-.checkoutResult {
-
-    max-width: 560px;
-
+.checkoutResultPage .checkoutResult {
+    max-width: 600px;
     margin: 0 auto;
-
-    background: #242424;
-
-    border: 1px solid #3a3a3a;
-
-    border-radius: 16px;
-
-    padding: 50px 30px;
-
+    padding: 4.5rem 3rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
     text-align: center;
-
 }
 
-
-.checkoutResultIcon {
-
-    font-size: 50px;
-
-    margin-bottom: 20px;
-
-}
-
-
-.checkoutResult h1 {
-
-    font-size: 30px;
-
-    margin: 0 0 15px;
-
-}
-
-
-.checkoutResult p {
-
-    color: #b3b3b3;
-
-    line-height: 1.6;
-
-    margin: 0 auto 15px;
-
-}
-
-
-.checkoutResult .orderNumber {
-
-    color: #c9a227;
-
-    font-weight: 700;
-
-}
-
-
-.checkoutResultActions {
-
+.checkoutResultPage .checkoutResultIcon {
     display: flex;
-
-    flex-wrap: wrap;
-
+    align-items: center;
     justify-content: center;
-
-    gap: 12px;
-
-    margin-top: 30px;
-
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 2rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    color: var(--gold);
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    line-height: 1;
 }
 
+.checkoutResultPage .checkoutResult h1 {
+    margin: 0 0 1.25rem;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--cream);
+}
 
-.checkoutResultActions button {
+.checkoutResultPage .checkoutResult h1::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 1px;
+    margin: 1.5rem auto 0;
+    background: var(--gold);
+}
 
-    background: #c9a227;
+.checkoutResultPage .checkoutResult p {
+    max-width: 440px;
+    margin: 0 auto 1rem;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.7;
+}
 
-    color: #111;
+.checkoutResultPage .checkoutResult .orderNumber {
+    color: var(--gold);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+}
 
-    border: none;
+.checkoutResultPage .checkoutResultActions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+}
 
-    padding: 14px 28px;
-
-    border-radius: 10px;
-
-    font-size: 16px;
-
-    font-weight: 700;
-
+.checkoutResultPage .checkoutResultActions button {
+    padding: 1rem 2rem;
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
     cursor: pointer;
-
+    transition: background 0.4s var(--ease), border-color 0.4s var(--ease), color 0.4s var(--ease);
 }
 
-
-.checkoutResultActions button:hover {
-
-    background: #e1bd45;
-
+.checkoutResultPage .checkoutResultActions button:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
 }
 
-
-.checkoutResultActions button.secondary {
-
+.checkoutResultPage .checkoutResultActions button.secondary {
     background: transparent;
-
-    color: #f5f5f5;
-
-    border: 1px solid #3a3a3a;
-
+    color: var(--gold);
+    border-color: var(--gold);
 }
 
+.checkoutResultPage .checkoutResultActions button.secondary:hover {
+    background: rgba(var(--gold-rgb), 0.08);
+    color: var(--gold-light);
+    border-color: var(--gold-light);
+}
 
-.checkoutResultActions button.secondary:hover {
+@keyframes checkoutResultFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
-    border-color: #c9a227;
+@media (max-width: 768px) {
+    .checkoutResultPage {
+        padding: 4rem 1.25rem;
+    }
 
+    .checkoutResultPage .checkoutResult {
+        padding: 3rem 1.5rem;
+    }
 }

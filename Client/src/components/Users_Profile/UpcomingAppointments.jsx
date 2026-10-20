@@ -2,10 +2,10 @@ function UpcommingAppointments({ appointments, onEdit, onComplete, onCancel, onV
     return (
         <div className="appointment-card">
 
-            <h3>Upcomming Appointments</h3>
+            <h3>Upcoming Appointments</h3>
 
             {appointments.length == 0 ? (
-                <p>No Upcomming Appointments.</p>
+                <p className="appointment-empty">No Upcoming Appointments.</p>
             ) : (
                 appointments.map(a => (
                     <div className="appointment-item" key={a.appointmentId} >

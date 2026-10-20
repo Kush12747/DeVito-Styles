@@ -44,7 +44,19 @@ function ChatBot() {
                 <ChatWindow onClose={() => setIsOpen(false)} />
             )}
 
-            <button className="chat-button" onClick={() => setIsOpen(!isOpen)}></button>
+            <button
+                className="chat-button"
+                aria-label="Chat with the DeVito Styles assistant"
+                onClick={() => setIsOpen(!isOpen)}
+            >
+                <svg
+                    className="chat-button-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+                    <path d="M4 5.5h16v10H9l-5 4v-14z" />
+                </svg>
+            </button>
         </div>
     );   
 }

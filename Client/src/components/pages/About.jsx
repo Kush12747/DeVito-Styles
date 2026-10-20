@@ -6,18 +6,17 @@ function About() {
     const navigate = useNavigate();
 
     return (
-        <section className="backdrop">
-            <div className="overlay">
+        <section className="about-page">
+            <div className="about-inner">
                 <div className="about-content">
-                    <p className="section-tag">DeVito Styles</p>
+                    <p className="about-eyebrow">DeVito Styles</p>
 
                     <h1 className="about-title">
-                        <span className="line-one">Precesion Cuts.</span>
-                        <br />
-                        <span className="line-two">Timeless Style.</span>
+                        <span className="about-title-line">Precision Cuts.</span>
+                        <span className="about-title-line about-title-accent">Timeless Style.</span>
                     </h1>
 
-                    <div className="gold-line"></div>
+                    <div className="about-divider"></div>
 
                     <p className="about-text">
                         At DeVito Styles, we combine classic barbering
@@ -26,32 +25,34 @@ function About() {
                     </p>
 
                     {/* Buttons */}
-                    <div className="hero-buttons">
-                        <button className="primary-btn" onClick={() => navigate("/services")}>Book Now</button>
+                    <div className="about-actions">
+                        <button className="about-btn about-btn--primary" onClick={() => navigate("/services")}>Book Now</button>
 
-                        <button className="secondary-btn" onClick={() => navigate("/contact")}>Contact Us</button>
+                        <button className="about-btn about-btn--secondary" onClick={() => navigate("/contact")}>Contact Us</button>
                     </div>
 
                     {/* Stats */}
-                    <div className="stats-container">
-                        <div className="stat-card">
+                    <div className="about-stats">
+                        <div className="about-stat">
                             <h2>10+</h2>
                             <p>Years Experience</p>
                         </div>
 
-                        <div className="stat-card">
+                        <div className="about-stat">
                             <h2>9000+</h2>
                             <p>Clients</p>
                         </div>
 
-                        <div className="stat-card">
+                        <div className="about-stat">
                             <h2>5.0★</h2>
                             <p>Rating</p>
                         </div>
                     </div>
                 </div>
-                <div className="logo-side">
-                    <img src={logo} alt="DeVito Styles Logo" className="hero-logo"
+
+                <div className="about-visual">
+                    <div className="about-image" aria-hidden="true"></div>
+                    <img src={logo} alt="DeVito Styles Logo" className="about-logo"
                          onClick={() => navigate("/initial")}/>
                 </div>
             </div>

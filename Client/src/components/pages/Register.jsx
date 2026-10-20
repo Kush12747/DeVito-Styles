@@ -46,142 +46,140 @@ function Register() {
         }
     }
     return (
-        <div className="bg">
-            <div className="register-page">
+        <div className="register-page">
 
-                <div className="register-card">
+            <div className="register-card">
 
-                    <div className="register-header">
-                        <img
-                            src={logo}
-                            alt="Devito Styles Logo"
-                            className="register-logo"
-                        />
+                <div className="register-header">
+                    <img
+                        src={logo}
+                        alt="Devito Styles Logo"
+                        className="register-logo"
+                    />
 
-                        <h1 className="register-title">
-                            Devito Styles
-                        </h1>
+                    <p className="register-eyebrow">Membership</p>
 
-                        <p className="register-subtitle">
-                            Create your customer account
-                        </p>
-                    </div>
+                    <h1 className="register-title">Join DeVito Styles</h1>
 
-                    <div className="register-form-box">
+                    <p className="register-subtitle">
+                        Create your customer account
+                    </p>
+                </div>
 
-                        {errors.length > 0 && (
-                            <ul className="error-list">
-                                {errors.map((error) => (
-                                    <li key={error}>{error}</li>
-                                ))}
-                            </ul>
-                        )}
+                <div className="register-body">
 
-                        <form onSubmit={handleSubmit}>
+                    {errors.length > 0 && (
+                        <ul className="register-errors">
+                            {errors.map((error) => (
+                                <li key={error}>{error}</li>
+                            ))}
+                        </ul>
+                    )}
 
-                            <div className="form-control">
-                                <label htmlFor='username'>Username</label>
-                                <input
-                                    id="username"
-                                    type="text"
-                                    name="username"
-                                    placeholder='Enter Your Username'
-                                    autoComplete='username'
-                                    autoFocus
-                                    value={user.username}
-                                    onChange={handleChange}
-                                />
-                            </div>
+                    <form className="register-form" onSubmit={handleSubmit}>
 
-                            <div className="form-control">
-                                <label htmlFor='password'>Password</label>
-                                <input
-                                    id="password"
-                                    type="password"
-                                    name="password"
-                                    autoComplete='password'
-                                    placeholder='Create a Password'
-                                    value={user.password}
-                                    onChange={handleChange}
-                                />
-                            </div>
+                        <div className="register-field">
+                            <label htmlFor='username'>Username</label>
+                            <input
+                                id="username"
+                                type="text"
+                                name="username"
+                                placeholder='Enter Your Username'
+                                autoComplete='username'
+                                autoFocus
+                                value={user.username}
+                                onChange={handleChange}
+                            />
+                        </div>
 
-                            <div className="form-control">
-                                <label htmlFor='firstName'>First Name</label>
-                                <input
-                                    id="firstName"
-                                    type="text"
-                                    name="firstName"
-                                    placeholder='John'
-                                    autoComplete='firstname'
-                                    value={user.firstName}
-                                    onChange={handleChange}
-                                />
-                            </div>
+                        <div className="register-field">
+                            <label htmlFor='password'>Password</label>
+                            <input
+                                id="password"
+                                type="password"
+                                name="password"
+                                autoComplete='password'
+                                placeholder='Create a Password'
+                                value={user.password}
+                                onChange={handleChange}
+                            />
+                        </div>
 
-                            <div className="form-control">
-                                <label htmlFor='lastName'>Last Name</label>
-                                <input
-                                    id="lastName"
-                                    type="text"
-                                    name="lastName"
-                                    autoComplete='lastname'
-                                    placeholder='Doe'
-                                    value={user.lastName}
-                                    onChange={handleChange}
-                                />
-                            </div>
+                        <div className="register-field">
+                            <label htmlFor='firstName'>First Name</label>
+                            <input
+                                id="firstName"
+                                type="text"
+                                name="firstName"
+                                placeholder='John'
+                                autoComplete='firstname'
+                                value={user.firstName}
+                                onChange={handleChange}
+                            />
+                        </div>
 
-                            <div className="form-control">
-                                <label htmlFor='email'>Email</label>
-                                <input
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    placeholder='john@gmail.com'
-                                    autoComplete='email'
-                                    value={user.email}
-                                    onChange={handleChange}
-                                />
-                            </div>
+                        <div className="register-field">
+                            <label htmlFor='lastName'>Last Name</label>
+                            <input
+                                id="lastName"
+                                type="text"
+                                name="lastName"
+                                autoComplete='lastname'
+                                placeholder='Doe'
+                                value={user.lastName}
+                                onChange={handleChange}
+                            />
+                        </div>
 
-                            <div className="form-control full width">
-                                <label htmlFor='address'>Address</label>
-                                <input
-                                    id="address"
-                                    type="text"
-                                    name="address"
-                                    placeholder='Enter your street address'
-                                    autoComplete='address'
-                                    value={user.address}
-                                    onChange={handleChange}
-                                />
-                            </div>
+                        <div className="register-field">
+                            <label htmlFor='email'>Email</label>
+                            <input
+                                id="email"
+                                type="email"
+                                name="email"
+                                placeholder='john@gmail.com'
+                                autoComplete='email'
+                                value={user.email}
+                                onChange={handleChange}
+                            />
+                        </div>
 
-                            <div className="form-control">
-                                <label htmlFor='phone'>Phone</label>
-                                <input
-                                    id="phone"
-                                    type="text"
-                                    name="phone"
-                                    autoComplete='phone'
-                                    placeholder='555-555-5555'
-                                    value={user.phone}
-                                    onChange={handleChange}
-                                />
-                            </div>
+                        <div className="register-field">
+                            <label htmlFor='phone'>Phone</label>
+                            <input
+                                id="phone"
+                                type="text"
+                                name="phone"
+                                autoComplete='phone'
+                                placeholder='555-555-5555'
+                                value={user.phone}
+                                onChange={handleChange}
+                            />
+                        </div>
 
-                            <button className="register-btn" type="submit">
-                                Create Account
-                            </button>
+                        <div className="register-field register-field--full">
+                            <label htmlFor='address'>Address</label>
+                            <input
+                                id="address"
+                                type="text"
+                                name="address"
+                                placeholder='Enter your street address'
+                                autoComplete='address'
+                                value={user.address}
+                                onChange={handleChange}
+                            />
+                        </div>
 
-                        </form>
+                        <button className="register-btn" type="submit">
+                            Create Account
+                        </button>
 
-                        <p className='register-footer'>
-                            Already have an account?{" "}
-                            <Link to="/login">Sign in</Link>
-                        </p>
-                    </div>
+                    </form>
+
+                    <p className="register-footer">
+                        Already have an account?{" "}
+                        <Link to="/login">Sign in</Link>
+                    </p>
                 </div>
             </div>
         </div>

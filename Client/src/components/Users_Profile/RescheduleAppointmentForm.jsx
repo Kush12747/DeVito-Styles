@@ -15,7 +15,7 @@ function RescheduleAppointmentForm({ appointmentForm, setAppointmentForm, handle
 
                 <div className="form-buttons">
                     <button type="submit">Save Changes</button>
-                    <button type="button" onClick={() => setEditingAppointment(null)}>Cancel</button>
+                    <button type="button" className="secondary-btn" onClick={() => setEditingAppointment(null)}>Cancel</button>
                 </div>
 
             </form>

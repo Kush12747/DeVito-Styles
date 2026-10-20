@@ -110,6 +110,7 @@ function CartPage() {
         return (
             <div className="cartPage">
                 <div className="cartTitle">
+                    <span className="cartEyebrow">The DeVito Shop</span>
                     <h1>Shopping Cart</h1>
                 </div>
                 <p className="cartMessage">
@@ -120,13 +121,14 @@ function CartPage() {
     }
 
     if (loading) {
-        return <h2>Loading</h2>
+        return <h2 className="cartLoading">Loading</h2>
     }
     
     return (
         <div className="cartPage">
 
             <div className="cartTitle">
+                <span className="cartEyebrow">The DeVito Shop</span>
                 <h1>Shopping Cart</h1>
             </div>
 

@@ -3,7 +3,7 @@ import "../../styles/service.css";
 import classic from "../../images/haircut.png";
 import devito from "../../images/devito.jpg";
 import skinfade from "../../images/skinfade.png";
-import beardTrim from "../../images/beardtrim.png";
+import beardTrim from "../../images/beardTrim.png";
 import combo from "../../images/combo.jpg";
 
 function ServiceCard({ service }) {
@@ -50,16 +50,18 @@ function ServiceCard({ service }) {
     <div className="service-content">
         <h3>{service.name}</h3>
 
-        <p className="description">
+        <p className="service-description">
             {service.description}
         </p>
 
         <div className="service-meta">
-            <span>{service.durationMinutes} min</span>
-            <span className="price">
+            <span className="service-duration">{service.durationMinutes} min</span>
+            <span className="service-price">
                 ${service.price}
             </span>
         </div>
+
+        <span className="service-cta">Reserve &rarr;</span>
     </div>
 </div>
     );

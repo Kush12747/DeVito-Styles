@@ -1,276 +1,245 @@
-.label{
-    display:flex;
-    align-items:center;
-    gap:10px;
-
-    color:#bdbdbd;
-    font-weight:600;
-}
-
-.icon{
-    color:#d4af37;
-    font-size:18px;
-}
-
-.success-icon{
-    width:90px;
-    height:90px;
-
-    margin:0 auto 25px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    border-radius:50%;
-
-    background:#22c55e;
-}
-
-.success-icon svg{
-    color:white;
-    font-size:50px;
-}
-
 /* ===========================
-   Confirmation Page
+   CONFIRMATION PAGE  (/confirmation)
+   Scoped under .confirm-page / .confirmation-page
 =========================== */
 
-.confirm-page {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #111 0%, #1b1b1b 100%);
+.confirm-page,
+.confirmation-page {
+    min-height: calc(100vh - 92px);
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 60px 20px;
+    padding: 90px 20px;
+    background:
+        radial-gradient(ellipse at top, rgba(var(--gold-rgb), 0.07), transparent 60%),
+        var(--ink);
+    color: var(--text);
+    font-family: var(--font-body);
 }
 
-/* ===========================
-   Card
-=========================== */
+/* ---------- Shared ornaments ---------- */
 
-.confirmation-card {
-    width: 100%;
-    max-width: 720px;
-    background: #202020;
-    border-radius: 18px;
-    padding: 45px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, .45);
-    border: 1px solid rgba(255,255,255,.08);
-}
-
-/* ===========================
-   Header
-=========================== */
-
-.confirmation-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.success-icon {
-    width: 95px;
-    height: 95px;
-
-    margin: 0 auto 25px;
-
-    border-radius: 50%;
-
-    background: #22c55e;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.success-icon svg {
-    color: white;
-    font-size: 50px;
-}
-
-.confirmation-header h1 {
-    color: white;
-    font-size: 2.3rem;
-    margin-bottom: 15px;
-}
-
-.confirmation-header p {
-    color: #bdbdbd;
-    line-height: 1.7;
-    margin: 6px 0;
-}
-
-.confirmation-email {
-    color: #d4af37;
+.confirm-page .confirm-eyebrow,
+.confirmation-page .confirm-eyebrow {
+    display: block;
+    margin-bottom: 16px;
+    color: var(--gold);
+    font-size: 11px;
     font-weight: 600;
-}
-
-/* ===========================
-   Appointment Details
-=========================== */
-
-.appointment-details h2 {
-    color: white;
-    margin-bottom: 30px;
-    display: inline-block;
-    padding-bottom: 8px;
-    border-bottom: 3px solid #d4af37;
-}
-
-.detail-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 18px 0;
-
-    border-bottom: 1px solid rgba(255,255,255,.08);
-}
-
-.label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    color: #bdbdbd;
-    font-weight: 600;
-}
-
-.icon {
-    color: #d4af37;
-    font-size: 18px;
-}
-
-.value {
-    color: white;
-    font-weight: 600;
-}
-
-/* ===========================
-   Status
-=========================== */
-
-.status {
-    padding: 6px 18px;
-    border-radius: 30px;
-    font-size: .85rem;
-    font-weight: bold;
-    letter-spacing: 1px;
+    letter-spacing: 0.32em;
     text-transform: uppercase;
 }
 
-.status.booked {
-    background: rgba(34,197,94,.15);
-    color: #22c55e;
+.confirm-page .confirm-divider,
+.confirmation-page .confirm-divider {
+    width: 56px;
+    height: 1px;
+    margin: 26px auto;
+    background: var(--gold);
 }
 
-/* ===========================
-   Google Calendar Button
-=========================== */
+/* ---------- Card ---------- */
 
-.calendar-button {
-    margin-top: 35px;
+.confirm-page .confirmation-card {
+    width: 100%;
+    max-width: 680px;
+    padding: 64px 60px 56px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    animation: confirmFade 0.9s var(--ease) both;
+}
 
+/* ---------- Header ---------- */
+
+.confirm-page .confirmation-header {
+    text-align: center;
+    margin-bottom: 52px;
+}
+
+.confirm-page .success-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    background: rgba(var(--gold-rgb), 0.06);
+}
+
+.confirm-page .success-icon svg {
+    color: var(--gold);
+    font-size: 30px;
+}
+
+.confirm-page .confirmation-header h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--cream);
+}
+
+.confirm-page .confirmation-header p {
+    max-width: 480px;
+    margin: 8px auto;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.8;
+}
+
+.confirm-page .confirmation-header .confirmation-email {
+    margin-top: 16px;
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+}
+
+/* ---------- Details ---------- */
+
+.confirm-page .appointment-details h2 {
+    margin: 0 0 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line-strong);
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--cream);
+}
+
+.confirm-page .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.confirm-page .confirm-label {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
+.confirm-page .confirm-icon {
+    color: var(--gold);
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.confirm-page .confirm-value {
+    color: var(--cream);
+    font-size: 15px;
+    font-weight: 400;
+    text-align: right;
+}
+
+.confirm-page .confirm-status {
+    padding: 6px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: rgba(var(--gold-rgb), 0.08);
+    color: var(--gold-light);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+/* ---------- Buttons ---------- */
+
+.confirm-page .confirm-btn,
+.confirmation-page .confirm-btn {
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    gap: 10px;
+    padding: 16px 28px;
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.4s var(--ease), color 0.4s var(--ease), border-color 0.4s var(--ease);
+}
 
+.confirm-page .confirm-btn--primary,
+.confirmation-page .confirm-btn--primary {
+    background: var(--gold);
+    color: var(--ink);
+}
+
+.confirm-page .confirm-btn--primary:hover,
+.confirmation-page .confirm-btn--primary:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
+}
+
+.confirm-page .confirm-btn--secondary {
+    background: transparent;
+    color: var(--gold);
+}
+
+.confirm-page .confirm-btn--secondary:hover {
+    background: rgba(var(--gold-rgb), 0.08);
+    color: var(--gold-light);
+}
+
+.confirm-page .calendar-button {
     width: 100%;
-
-    background: #d4af37;
-    color: black;
-
-    padding: 16px;
-
-    border-radius: 10px;
-
-    text-decoration: none;
-
-    font-weight: bold;
-
-    transition: .3s ease;
+    margin-top: 36px;
 }
 
-.calendar-button:hover {
-    background: #c89d20;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(212,175,55,.25);
-}
-
-/* ===========================
-   Bottom Buttons
-=========================== */
-
-.confirmation-actions {
+.confirm-page .confirmation-actions {
     display: flex;
-    gap: 15px;
-    margin-top: 25px;
+    gap: 14px;
+    margin-top: 14px;
 }
 
-.primary-btn,
-.secondary-btn {
+.confirm-page .confirmation-actions .confirm-btn {
     flex: 1;
+}
 
-    padding: 15px;
+/* ---------- Missing appointment ---------- */
 
-    border-radius: 10px;
-
+.confirmation-page .confirmation-empty {
+    max-width: 520px;
+    padding: 64px 48px;
     text-align: center;
-
-    text-decoration: none;
-
-    font-weight: bold;
-
-    transition: .3s;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    animation: confirmFade 0.9s var(--ease) both;
 }
 
-.primary-btn {
-    background: #d4af37;
-    color: black;
+.confirmation-page .confirmation-empty h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--cream);
 }
 
-.primary-btn:hover {
-    background: #c89d20;
-}
-
-.secondary-btn {
-    border: 2px solid #d4af37;
-    color: #d4af37;
-}
-
-.secondary-btn:hover {
-    background: #d4af37;
-    color: black;
-}
-
-/* ===========================
-   Missing Appointment
-=========================== */
-
-.confirmation-page {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background: #111;
-
-    color: white;
-    text-align: center;
-}
-
-.confirmation-page a {
-    display: inline-block;
-    margin-top: 20px;
-
-    padding: 12px 24px;
-
-    background: #d4af37;
-    color: black;
-
-    border-radius: 8px;
-
-    text-decoration: none;
+@keyframes confirmFade {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ===========================
@@ -278,22 +247,30 @@
 =========================== */
 
 @media (max-width: 768px) {
-
-    .confirmation-card {
-        padding: 30px 22px;
+    .confirm-page,
+    .confirmation-page {
+        padding: 48px 16px;
     }
 
-    .confirmation-header h1 {
-        font-size: 1.9rem;
+    .confirm-page .confirmation-card {
+        padding: 44px 24px 36px;
     }
 
-    .detail-row {
+    .confirm-page .detail-row {
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
     }
 
-    .confirmation-actions {
+    .confirm-page .confirm-value {
+        text-align: left;
+    }
+
+    .confirm-page .confirmation-actions {
         flex-direction: column;
+    }
+
+    .confirmation-page .confirmation-empty {
+        padding: 48px 24px;
     }
 }

@@ -2,117 +2,98 @@
    NAVBAR LAYOUT
 ========================= */
 .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  position: sticky;
+  height: 92px;
+  padding: 0 48px;
 
-  padding: 0 20px;
-  height: 100px;
+  background: rgba(11, 10, 9, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 
-  background-color: #111;
-  opacity: 100%;
-  border-bottom: 2px solid #d4af37;
+  border-bottom: 1px solid var(--line);
 
-  animation: navDrop 0.8s ease;
+  animation: navFade 0.9s var(--ease);
 }
 
-/* entrance animation */
-@keyframes navDrop {
-  from {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+@keyframes navFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* =========================
-   NAV LINKS (BASE STATE)
+   NAV LINKS
 ========================= */
 .nav-left a,
 .nav-right a {
   position: relative;
 
-  color: white;
+  padding: 6px 0;
+
+  color: var(--text);
   text-decoration: none;
 
-  font-size: 14px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
 
-  transition: 0.3s ease;
+  transition: color 0.4s var(--ease);
 }
 
-/* hover underline base */
+/* hairline underline that draws in from the center */
 .nav-left a::after,
 .nav-right a::after {
   content: "";
 
   position: absolute;
-  left: 0;
-  bottom: -6px;
+  left: 50%;
+  bottom: -2px;
 
-  width: 0%;
-  height: 2px;
+  width: 0;
+  height: 1px;
 
-  background: #d4af37;
+  background: var(--gold);
 
-  transition: 0.3s ease;
+  transition: width 0.4s var(--ease), left 0.4s var(--ease);
 }
 
-/* hover underline active */
-.nav-left a:hover::after,
-.nav-right a:hover::after {
-  width: 100%;
-}
-
-/* hover state */
 .nav-left a:hover,
-.nav-right a:hover {
-  color: #d4af37;
-
-  transform: translateY(-1px);
-
-  text-shadow: 0 0 10px rgba(212,175,55,0.4);
-}
-
-/* =========================
-   ACTIVE LINK STATE
-========================= */
+.nav-right a:hover,
 .active-link {
-  color: #d4af37;
+  color: var(--gold-light);
 }
 
+.nav-left a:hover::after,
+.nav-right a:hover::after,
 .active-link::after {
+  left: 0;
   width: 100%;
-
-  box-shadow: 0 0 10px rgba(212,175,55,0.6);
 }
 
 /* =========================
    NAV SECTIONS
 ========================= */
-
-/* left */
 .nav-left {
   display: flex;
-  gap: 20px;
+  gap: 30px;
 }
 
-/* center logo */
 .nav-center {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
 }
 
-/* right */
 .nav-right {
   display: flex;
-  gap: 15px;
+  gap: 28px;
   align-items: center;
 }
 
@@ -120,79 +101,93 @@
    LOGO
 ========================= */
 .logo-img {
-  height: 85px;
+  height: 72px;
   width: auto;
   object-fit: contain;
 
-  transition: 0.4s ease;
+  transition: opacity 0.4s var(--ease);
 }
 
 .logo-img:hover {
-  transform: scale(1.05) rotate(-1deg);
-  filter: drop-shadow(0 0 10px rgba(212,175,55,0.4));
+  opacity: 0.85;
 }
 
 /* =========================
    ACTION BUTTONS
 ========================= */
 .logout-btn {
+  padding: 9px 18px;
+
   background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
 
-  border: 1px solid #d4af37;
-  color: #d4af37;
+  color: var(--gold-light);
 
-  padding: 6px 12px;
+  font-size: 10px;
+  font-weight: 500;
 
   cursor: pointer;
+
+  transition: background 0.4s var(--ease), color 0.4s var(--ease), border-color 0.4s var(--ease);
 }
 
 .logout-btn:hover {
-  background: #d4af37;
-  color: black;
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
 }
 
-.admin-link {
-  color: #d4af37;
+.nav-right .admin-link {
+  padding: 8px 14px;
 
-  text-decoration: none;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
 
-  border: 1px solid #ff0000;
-
-  padding: 6px 12px;
-  margin-right: 10px;
-
-  font-size: 14px;
+  color: var(--gold);
 }
 
-.admin-link:hover {
-  background: #ec2315;
-  color: rgb(0, 0, 0);
+.nav-right .admin-link::after {
+  display: none;
+}
+
+.nav-right .admin-link:hover {
+  background: rgba(var(--gold-rgb), 0.12);
 }
 
 /* =========================
-   NAVBAR GLOW EFFECT
+   SMALLER SCREENS
 ========================= */
-.navbar::after {
-  content: "";
+@media (max-width: 1200px) {
+  .navbar {
+    padding: 0 24px;
+  }
 
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  .nav-left {
+    gap: 18px;
+  }
 
-  height: 2px;
-  width: 100%;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    #d4af37,
-    transparent
-  );
-
-  animation: slideGlow 3s linear infinite;
+  .nav-right {
+    gap: 16px;
+  }
 }
 
-@keyframes slideGlow {
-  from { transform: translateX(-100%); }
-  to   { transform: translateX(100%); }
+@media (max-width: 768px) {
+  .navbar {
+    position: relative;
+    height: auto;
+    padding: 16px 20px;
+    gap: 14px;
+  }
+
+  .nav-center {
+    position: static;
+    transform: none;
+    align-self: center;
+  }
+
+  .nav-left,
+  .nav-right {
+    flex-wrap: wrap;
+  }
 }

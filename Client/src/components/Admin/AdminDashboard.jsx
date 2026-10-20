@@ -91,11 +91,17 @@ function AdminDashboard() {
             <div className="admin-sidebar">
                 <h2 className="admin-logo">DeVito Admin</h2>
 
-                <button onClick={() => setActiveTab("appointments")}>
+                <button
+                    className={activeTab === "appointments" ? "active" : ""}
+                    onClick={() => setActiveTab("appointments")}
+                >
                     Appointments
                 </button>
 
-                <button onClick={() => setActiveTab("stats")}>
+                <button
+                    className={activeTab === "stats" ? "active" : ""}
+                    onClick={() => setActiveTab("stats")}
+                >
                     Dashboard
                 </button>
 
@@ -117,20 +123,23 @@ function AdminDashboard() {
                         <h1>Dashboard</h1>
 
                         <div className="admin-cards">
-                            <div className="card">
-                                Total: {appointments.length}
+                            <div className="admin-card">
+                                <span className="admin-card-label">Total</span>
+                                <span className="admin-card-value">{appointments.length}</span>
                             </div>
 
-                            <div className="card">
-                                Pending: {
+                            <div className="admin-card">
+                                <span className="admin-card-label">Pending</span>
+                                <span className="admin-card-value">{
                                     appointments.filter(a => a.status === "PENDING").length
-                                }
+                                }</span>
                             </div>
 
-                            <div className="card">
-                                Completed: {
+                            <div className="admin-card">
+                                <span className="admin-card-label">Completed</span>
+                                <span className="admin-card-value">{
                                     appointments.filter(a => a.status === "COMPLETED").length
-                                }
+                                }</span>
                             </div>
                         </div>
                     </div>
@@ -141,66 +150,68 @@ function AdminDashboard() {
                     <div>
                         <h1>Appointments</h1>
 
-                        <table className="admin-table">
-                            <thead>
-                                <tr>
-                                    <th>User</th>
-                                    <th>Service</th>
-                                    <th>Barber</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {appointments.map(app => (
-                                    <tr key={app.id}>
-                                        <td>{app.userName}</td>
-                                        <td>{app.serviceName}</td>
-                                        <td>{app.barberName}</td>
-                                        <td>
-                                            {new Date(app.appointmentDatetime).toLocaleString()}
-                                        </td>
-
-                                        <td>
-                                            <span className={`status ${app.status?.toLowerCase()}`}>
-                                                {app.status}
-                                            </span>
-                                        </td>
-
-                                        <td className="actions">
-                                            {app.status !== "COMPLETED" && (
-                                                <button
-                                                    onClick={() => updateStatus(app, "COMPLETED")}
-                                                    className="complete"
-                                                >
-                                                    Complete
-                                                </button>
-                                            )}
-
-                                            {app.status === "PENDING" && (
-                                                <button
-                                                    onClick={() => updateStatus(app, "CONFIRMED")}
-                                                    className="confirm"
-                                                >
-                                                    Confirm
-                                                </button>
-                                            )}
-
-                                            {app.status !== "CANCELLED" && (
-                                                <button
-                                                    onClick={() => updateStatus(app, "CANCELLED")}
-                                                    className="cancel"
-                                                >
-                                                    Cancel
-                                                </button>
-                                            )}
-                                        </td>
+                        <div className="table-card">
+                            <table className="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Service</th>
+                                        <th>Barber</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+
+                                <tbody>
+                                    {appointments.map(app => (
+                                        <tr key={app.id}>
+                                            <td>{app.userName}</td>
+                                            <td>{app.serviceName}</td>
+                                            <td>{app.barberName}</td>
+                                            <td>
+                                                {new Date(app.appointmentDatetime).toLocaleString()}
+                                            </td>
+
+                                            <td>
+                                                <span className={`status ${app.status?.toLowerCase()}`}>
+                                                    {app.status}
+                                                </span>
+                                            </td>
+
+                                            <td className="actions">
+                                                {app.status !== "COMPLETED" && (
+                                                    <button
+                                                        onClick={() => updateStatus(app, "COMPLETED")}
+                                                        className="complete"
+                                                    >
+                                                        Complete
+                                                    </button>
+                                                )}
+
+                                                {app.status === "PENDING" && (
+                                                    <button
+                                                        onClick={() => updateStatus(app, "CONFIRMED")}
+                                                        className="confirm"
+                                                    >
+                                                        Confirm
+                                                    </button>
+                                                )}
+
+                                                {app.status !== "CANCELLED" && (
+                                                    <button
+                                                        onClick={() => updateStatus(app, "CANCELLED")}
+                                                        className="cancel"
+                                                    >
+                                                        Cancel
+                                                    </button>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 )}
 

@@ -9,7 +9,7 @@ function CheckoutCancelPage() {
         <div className="checkoutResultPage">
             <div className="checkoutResult">
 
-                <div className="checkoutResultIcon">🛒</div>
+                <div className="checkoutResultIcon" aria-hidden="true">×</div>
 
                 <h1>Checkout Cancelled</h1>
 

@@ -6,17 +6,20 @@ function ProductCard({ product }) {
         <div className="product-card">
             
 
-            {product.featured && (
-                <span className="featured-badge">
-                    ★ Featured
-                </span>
-            )}
+            <div className="product-card-media">
 
+                {product.featured && (
+                    <span className="featured-badge">
+                        Featured
+                    </span>
+                )}
 
-            <img 
-                src={product.imageUrl}
-                alt={product.name}
-            />
+                <img 
+                    src={product.imageUrl}
+                    alt={product.name}
+                />
+
+            </div>
 
 
             <div className="product-card-content">

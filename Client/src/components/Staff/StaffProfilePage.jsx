@@ -27,7 +27,7 @@ function StaffProfilePage() {
     }, [barberId, token]);
 
     if (!barber) {
-        return <h2 className="loading">Loading...</h2>;
+        return <h2 className="barber-profile-loading">Loading...</h2>;
     }
 
     const yearsExperience = barber.startYear
@@ -42,9 +42,9 @@ function StaffProfilePage() {
         <div className="barber-profile-page">
 
             {/* HERO */}
-            <section className="hero">
+            <section className="barber-hero">
 
-                <div className="hero-image">
+                <div className="barber-hero-image">
                     <img
                         src={barber.imageUrl}
                         alt={`${barber.firstName} ${barber.lastName}`}
@@ -52,20 +52,24 @@ function StaffProfilePage() {
                     />
                 </div>
 
-                <div className="hero-content">
+                <div className="barber-hero-content">
+
+                    <h2>{barber.title}</h2>
 
                     <h1>
                         {barber.firstName} {barber.lastName}
                     </h1>
 
-                    <h2>{barber.title}</h2>
+                    <div className="barber-divider"></div>
 
                     <p className="trust-line">
-                        <FaStar />
-                        <FaStar />
-                        <FaStar />
-                        <FaStar />
-                        <FaStar />
+                        <span className="trust-stars">
+                            <FaStar />
+                            <FaStar />
+                            <FaStar />
+                            <FaStar />
+                            <FaStar />
+                        </span>
                         {" "}Trusted Professional
                     </p>
 
@@ -75,9 +79,9 @@ function StaffProfilePage() {
                         </p>
                     )}
 
-                    <div className="hero-buttons">
+                    <div className="barber-hero-buttons">
 
-                        <button className="primary-btn" onClick={() => navigate(`/services?barberId=${barber.barberId}`)}>
+                        <button className="barber-btn barber-btn--primary" onClick={() => navigate(`/services?barberId=${barber.barberId}`)}>
                             Schedule Appointment
                         </button>
 
@@ -86,7 +90,7 @@ function StaffProfilePage() {
                                 href={barber.instagramUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="secondary-btn"
+                                className="barber-btn barber-btn--secondary"
                             >
                                 <FaInstagram /> Instagram
                             </a>
@@ -102,6 +106,8 @@ function StaffProfilePage() {
 
             <section className="profile-section dark">
 
+                <span className="profile-eyebrow">About</span>
+
                 <h2>Craftsmanship. Precision. Attention to Detail.</h2>
 
                 <p className="bio">
@@ -115,6 +121,8 @@ function StaffProfilePage() {
             {specialties.length > 0 && (
 
                 <section className="profile-section light">
+
+                    <span className="profile-eyebrow">Expertise</span>
 
                     <h2>Specialties</h2>
 
@@ -141,32 +149,38 @@ function StaffProfilePage() {
 
             <section className="profile-section dark">
 
+                <span className="profile-eyebrow">The Experience</span>
+
                 <h2>
                     Why Clients Choose {barber.firstName}
                 </h2>
 
                 <ul className="trust-list">
-                    <li>✓ Personalized consultation</li>
-                    <li>✓ Premium grooming experience</li>
-                    <li>✓ Detail-focused craftsmanship</li>
-                    <li>✓ Modern & classic techniques</li>
-                    <li>✓ Relaxed atmosphere</li>
+                    <li>Personalized consultation</li>
+                    <li>Premium grooming experience</li>
+                    <li>Detail-focused craftsmanship</li>
+                    <li>Modern &amp; classic techniques</li>
+                    <li>Relaxed atmosphere</li>
                 </ul>
 
             </section>
 
             {/* CTA */}
 
-            <section className="cta-section">
+            <section className="barber-cta-section">
+
+                <span className="profile-eyebrow">Reservations</span>
 
                 <h2>Ready for your next visit?</h2>
+
+                <div className="barber-divider"></div>
 
                 <p>
                     Book an appointment with {barber.firstName} today and
                     experience the DeVito Styles difference.
                 </p>
 
-                <button className="primary-btn glow" onClick={() => navigate(`/services?barberId=${barber.barberId}`)}>
+                <button className="barber-btn barber-btn--primary" onClick={() => navigate(`/services?barberId=${barber.barberId}`)}>
                     Schedule Appointment
                 </button>
 

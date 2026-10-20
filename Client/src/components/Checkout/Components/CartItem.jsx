@@ -33,11 +33,11 @@ function CartItem({ item, onQuantityUpdate, onRemoveItem }) {
                     {product.name}
                 </h3>
 
-                <p>
+                <p className="cartItemDescription">
                     {product.description}
                 </p>
 
-                <p>
+                <p className="cartItemPrice">
                     Price: ${product.price}
                 </p>
 

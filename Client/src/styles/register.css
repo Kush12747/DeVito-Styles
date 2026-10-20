@@ -1,349 +1,295 @@
-/* =========================
-   BACKGROUND
-========================= */
-
-.bg {
-    background: url("../images/form.jpg");
-}
-
-/* =========================
-   PAGE LAYOUT
-========================= */
+/* ==================================================
+   REGISTER PAGE
+   Every rule is scoped under .register-page because all
+   CSS in the app is bundled globally.
+================================================== */
 
 .register-page {
-    min-height: 100vh;
+    min-height: calc(100vh - 92px);
+    box-sizing: border-box;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
-    padding: 2rem;
+    padding: 4rem 1.5rem;
+
+    background:
+        linear-gradient(rgba(11, 10, 9, 0.82), rgba(11, 10, 9, 0.92)),
+        url("../images/form.jpg") center / cover no-repeat;
 }
 
-/* =========================
-   CARD
-========================= */
+/* ==================================================
+   CARD (hairline double frame)
+================================================== */
 
-.register-card {
-    width: min(700px, 95vw);
+.register-page .register-card {
+    position: relative;
+    box-sizing: border-box;
 
-    background: rgba(26, 26, 26, 0.95);
+    width: 100%;
+    max-width: 680px;
 
-    border: 1px solid rgba(212, 175, 55, 0.25);
+    padding: 3.25rem 3.25rem 2.75rem;
 
-    border-radius: 16px;
+    background: rgba(20, 19, 17, 0.94);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
 
-    padding: 2.5rem;
-
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
-
-    backdrop-filter: blur(8px);
-
-    animation: fadeSlideUp 0.5s ease;
+    animation: registerFadeIn 0.8s var(--ease) both;
 }
 
-/* =========================
+.register-page .register-card::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+
+    border: 1px solid rgba(var(--gold-rgb), 0.08);
+    border-radius: 2px;
+
+    pointer-events: none;
+}
+
+/* ==================================================
    HEADER
-========================= */
+================================================== */
 
-.register-header {
+.register-page .register-header {
     text-align: center;
-
-    margin-bottom: 2rem;
-
-    padding-bottom: 1.5rem;
-
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 2.75rem;
 }
 
-.register-logo {
-    width: 90px;
-    height: 90px;
+.register-page .register-logo {
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1.75rem;
 
     object-fit: contain;
-
-    margin-bottom: 1rem;
+    opacity: 0.92;
 }
 
-.register-title {
-    color: #d4af37;
+.register-page .register-eyebrow {
+    margin: 0 0 0.9rem;
 
-    font-size: 2rem;
-
-    font-weight: 700;
-
-    letter-spacing: 1px;
-
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.32em;
     text-transform: uppercase;
-
-    margin-bottom: .5rem;
 }
 
-.register-subtitle {
-    color: #b5b5b5;
+.register-page .register-title {
+    margin: 0;
 
-    font-size: .95rem;
+    font-family: var(--font-display);
+    font-size: 2.6rem;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    color: var(--cream);
 }
 
-/* =========================
-   FORM
-========================= */
+.register-page .register-title::after {
+    content: "";
+    display: block;
 
-.register-form-box {
-    margin-top: 2rem;
+    width: 56px;
+    height: 1px;
+    margin: 1.4rem auto 0;
+
+    background: var(--gold);
+    opacity: 0.7;
 }
 
-.register-form-box form {
+.register-page .register-subtitle {
+    margin: 1.2rem 0 0;
+
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.7;
+}
+
+/* ==================================================
+   FORM GRID
+================================================== */
+
+.register-page .register-form {
     display: grid;
-
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.6rem 1.5rem;
 }
 
-/* =========================
-   FORM CONTROLS
-========================= */
-
-.form-control {
+.register-page .register-field {
     display: flex;
-
     flex-direction: column;
 }
 
-.form-control.full-width {
+.register-page .register-field--full {
     grid-column: 1 / -1;
 }
 
-.form-control label {
-    color: #f4f4f4;
+.register-page .register-field label {
+    margin-bottom: 0.6rem;
 
-    margin-bottom: .5rem;
-
-    font-size: .9rem;
-
+    color: var(--muted);
+    font-size: 11px;
     font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
 }
 
-.form-control input {
-    padding: .9rem 1rem;
-
-    border: 1px solid #444;
-
-    border-radius: 8px;
-
-    background: #232323;
-
-    color: white;
-
-    font-size: 1rem;
-
-    transition: all .25s ease;
-}
-
-.form-control input::placeholder {
-    color: #9a9a9a;
-}
-
-.form-control input:focus {
-    outline: none;
-
-    border-color: #d4af37;
-
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, .18);
-}
-
-/* =========================
-   PASSWORD
-========================= */
-
-.password-wrapper {
-    position: relative;
-}
-
-.password-wrapper input {
-    width: 100%;
-
-    padding-right: 75px;
-
+.register-page .register-field input {
     box-sizing: border-box;
+    width: 100%;
+
+    padding: 0.95rem 1rem;
+
+    background: rgba(11, 10, 9, 0.6);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+
+    color: var(--cream);
+    font-size: 0.95rem;
+    font-weight: 400;
+
+    transition: border-color 0.4s var(--ease), background-color 0.4s var(--ease);
 }
 
-.show-password-btn {
-    position: absolute;
-
-    top: 50%;
-    right: 12px;
-
-    transform: translateY(-50%);
-
-    background: transparent;
-
-    border: none;
-
-    color: #d4af37;
-
-    font-size: .9rem;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: color .2s;
+.register-page .register-field input::placeholder {
+    color: rgba(163, 155, 143, 0.6);
 }
 
-.show-password-btn:hover {
-    color: #f1c94a;
+.register-page .register-field input:hover {
+    border-color: var(--line-strong);
 }
 
-/* =========================
-   BUTTON
-========================= */
+.register-page .register-field input:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: rgba(11, 10, 9, 0.85);
+}
 
-.register-btn {
+/* ==================================================
+   PRIMARY BUTTON
+================================================== */
+
+.register-page .register-btn {
     grid-column: 1 / -1;
 
     width: 100%;
+    margin-top: 0.6rem;
+    padding: 1.05rem 1.5rem;
 
-    padding: .95rem;
+    background: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
 
-    border: none;
-
-    border-radius: 8px;
-
-    background: #d4af37;
-
-    color: #111;
-
-    font-size: 1rem;
-
-    font-weight: 700;
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
 
     cursor: pointer;
-
-    transition:
-        transform .2s ease,
-        background .2s ease,
-        box-shadow .2s ease;
+    transition: background-color 0.4s var(--ease), border-color 0.4s var(--ease);
 }
 
-.register-btn:hover {
-    background: #e5bf4b;
-
-    transform: translateY(-2px);
-
-    box-shadow: 0 8px 20px rgba(212, 175, 55, .3);
+.register-page .register-btn:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
 }
 
-.register-btn:active {
-    transform: scale(.98);
-}
+/* ==================================================
+   ERRORS
+================================================== */
 
-/* =========================
-   ERROR BOX
-========================= */
-
-.error-list {
-    grid-column: 1 / -1;
-
+.register-page .register-errors {
     list-style: none;
+    margin: 0 0 1.75rem;
+    padding: 0.85rem 1rem;
 
-    padding: 12px;
+    background: rgba(176, 72, 60, 0.08);
+    border: 1px solid rgba(214, 120, 104, 0.35);
+    border-radius: var(--radius);
 
-    margin: 0 0 1rem;
-
-    border-left: 4px solid #ff5f5f;
-
-    border-radius: 8px;
-
-    background: rgba(255, 0, 0, .08);
-
-    color: #ff8b8b;
-
-    animation: fadeError .3s ease;
+    color: #e7a395;
+    font-size: 0.85rem;
+    line-height: 1.6;
 }
 
-.error-list li {
-    margin-bottom: .35rem;
+.register-page .register-errors li + li {
+    margin-top: 0.3rem;
 }
 
-.error-list li:last-child {
-    margin-bottom: 0;
-}
-
-/* =========================
+/* ==================================================
    FOOTER
-========================= */
+================================================== */
 
-.register-footer {
+.register-page .register-footer {
+    margin: 2.25rem 0 0;
+    padding-top: 1.75rem;
+
+    border-top: 1px solid var(--line);
+
     text-align: center;
-
-    margin-top: 2rem;
-
-    color: #9a9a9a;
-
-    font-size: .9rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 300;
 }
 
-.register-footer a {
-    color: #d4af37;
+.register-page .register-footer a {
+    margin-left: 0.25rem;
 
+    color: var(--gold);
+    font-weight: 500;
     text-decoration: none;
 
-    font-weight: 600;
+    border-bottom: 1px solid rgba(var(--gold-rgb), 0.35);
+    transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 
-.register-footer a:hover {
-    color: #f1c94a;
+.register-page .register-footer a:hover {
+    color: var(--gold-light);
+    border-color: var(--gold-light);
 }
 
-/* =========================
-   ANIMATIONS
-========================= */
-
-@keyframes fadeSlideUp {
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeError {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* =========================
+/* ==================================================
    RESPONSIVE
-========================= */
+================================================== */
 
 @media (max-width: 768px) {
-
-    .register-card {
-        padding: 2rem;
+    .register-page {
+        padding: 2.5rem 1rem;
     }
 
-    .register-form-box form {
+    .register-page .register-card {
+        padding: 2.5rem 1.6rem 2.25rem;
+    }
+
+    .register-page .register-title {
+        font-size: 2.2rem;
+    }
+
+    .register-page .register-form {
         grid-template-columns: 1fr;
     }
+}
 
-    .form-control.full-width {
-        grid-column: auto;
+/* ==================================================
+   ANIMATION (one-time)
+================================================== */
+
+@keyframes registerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
     }
 
-    .register-btn {
-        grid-column: auto;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

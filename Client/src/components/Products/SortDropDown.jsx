@@ -1,6 +1,7 @@
 function SortDropDown({ sort, onSortChange }) {
     return (
         <select
+            className="products-select"
             value={sort}
             onChange={(e) => onSortChange(e.target.value)}
         >
