@@ -44,13 +44,7 @@ public class UserService {
     public Result<User> authenticate(User proposedLoginUser) throws DataAccessException {
         Result<User> result = new Result<>();
 
-        Optional<User> userFromDatabase = repository.findByUsername(proposedLoginUser.getUsername());
-
-        if (userFromDatabase.isEmpty()) {
-            result.addErrorMessage("User does not exist", ResultType.NOT_FOUND);
-            return result;
-        }
-
+        // Validate input before touching the database
         if (proposedLoginUser.getUsername() == null || proposedLoginUser.getUsername().isBlank()) {
             result.addErrorMessage("Username cannot be blank", ResultType.INVALID);
             return result;
@@ -58,6 +52,13 @@ public class UserService {
 
         if (proposedLoginUser.getPassword() == null || proposedLoginUser.getPassword().isBlank()) {
             result.addErrorMessage("Password cannot be blank", ResultType.INVALID);
+            return result;
+        }
+
+        Optional<User> userFromDatabase = repository.findByUsername(proposedLoginUser.getUsername());
+
+        if (userFromDatabase.isEmpty()) {
+            result.addErrorMessage("User does not exist", ResultType.NOT_FOUND);
             return result;
         }
 

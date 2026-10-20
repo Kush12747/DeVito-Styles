@@ -25,16 +25,25 @@ function Login() {
 
     async function handleSubmit(event) {
         event.preventDefault()
+        setErrors([])
 
-        const response = await fetch(`${API_URL}/api/user/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(credentials)
-        })
+        let response
+        let payload
 
-        const payload = await response.json()
+        try {
+            response = await fetch(`${API_URL}/api/user/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(credentials)
+            })
+
+            payload = await response.json().catch(() => null)
+        } catch {
+            setErrors(["Unable to reach the server. Please try again."])
+            return
+        }
 
         if (response.ok) {
             
@@ -55,91 +64,87 @@ function Login() {
                 navigate("/initial")
             }
         } else {
-            setErrors(Array.isArray(payload) ? payload : [payload.message || "Login failed"]);
+            setErrors(Array.isArray(payload) ? payload : [payload?.message || "Login failed"]);
         }
     }
 
     return (
-        <div className="bg">
-            <div className="login-page">
-                <div className="login-card">
+        <div className="login-page">
+            <div className="login-card">
 
-                    <div className="login-header">
-                        <img
-                            src={logo}
-                            alt="Devito Styles Logo"
-                            className="login-logo"
-                        />
+                <div className="login-header">
+                    <img
+                        src={logo}
+                        alt="Devito Styles Logo"
+                        className="login-logo"
+                    />
 
-                        <h1 className="login-title">
-                            Devito Styles
-                        </h1>
+                    <p className="login-eyebrow">Members Entrance</p>
 
-                        <p className="login-subtitle">
-                            Sign in to your account
-                        </p>
-                    </div>
+                    <h1 className="login-title">Welcome Back</h1>
 
-                    <div className="login-form-box">
-                        <form onSubmit={handleSubmit}>
-
-                            {errors.length > 0 && (
-                                <ul className="error-list">
-                                    {errors.map((e) => (
-                                        <li key={e}>{e}</li>
-                                    ))}
-                                </ul>
-                            )}
-
-                            <div className="form-control">
-                                <label htmlFor="username">Username</label>
-
-                                <input
-                                    id="username"
-                                    name="username"
-                                    type="text"
-                                    placeholder="Enter your username"
-                                    value={credentials.username}
-                                    onChange={handleChange}
-                                />
-                            </div>
-
-                            <div className="form-control">
-                                <label htmlFor="password">Password</label>
-
-                                <div className="password-wrapper">
-
-                                    <input
-                                        id="password"
-                                        name="password"
-                                        type={showPassword ? "text" : "password"}
-                                        placeholder="Enter your password"
-                                        value={credentials.password}
-                                        onChange={handleChange}
-                                    />
-
-                                    <button
-                                        type="button"
-                                        className="show-password-btn"
-                                        onClick={() => setShowPassedword(!showPassword)}
-                                    >
-                                        {showPassword ? "Hide" : "Show"}
-                                    </button>
-                                </div>
-                            </div>
-
-                            <button className="login-btn" type="submit">
-                                Sign In
-                            </button>
-
-                        </form>
-                        <p className='register-footer'>
-                            Don't have an account, Click here to make one.{" "}
-                            <Link to="/register">Create an account</Link>
-                        </p>
-                    </div>
-
+                    <p className="login-subtitle">
+                        Sign in to your DeVito Styles account
+                    </p>
                 </div>
+
+                <form className="login-form" onSubmit={handleSubmit}>
+
+                    {errors.length > 0 && (
+                        <ul className="login-errors">
+                            {errors.map((e) => (
+                                <li key={e}>{e}</li>
+                            ))}
+                        </ul>
+                    )}
+
+                    <div className="login-field">
+                        <label htmlFor="username">Username</label>
+
+                        <input
+                            id="username"
+                            name="username"
+                            type="text"
+                            placeholder="Your username"
+                            value={credentials.username}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="login-field">
+                        <label htmlFor="password">Password</label>
+
+                        <div className="login-password">
+                            <input
+                                id="password"
+                                name="password"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Your password"
+                                value={credentials.password}
+                                onChange={handleChange}
+                            />
+
+                            <button
+                                type="button"
+                                className="login-toggle"
+                                onClick={() => setShowPassword(!showPassword)}
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                            >
+                                {showPassword ? "Hide" : "Show"}
+                            </button>
+                        </div>
+                    </div>
+
+                    <button className="login-btn" type="submit">
+                        Sign In
+                    </button>
+                </form>
+
+                <p className="login-footer">
+                    New to DeVito Styles?{" "}
+                    <Link to="/register">Create an account</Link>
+                </p>
+
             </div>
         </div>
     );

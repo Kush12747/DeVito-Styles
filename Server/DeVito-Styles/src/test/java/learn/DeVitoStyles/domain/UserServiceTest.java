@@ -60,15 +60,32 @@ class UserServiceTest {
     }
 
     @Test
-    void shouldNotAuthenticateBlankPassword() {
-        when(repository.findByUsername("jdoe")).thenReturn(Optional.of(makeUser(1, "jdoe", HASH)));
+    void shouldNotAuthenticateBlankUsername() {
+        Result<User> result = service.authenticate(makeLogin(" ", "password123"));
 
+        assertFalse(result.isSuccess());
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertEquals(List.of("Username cannot be blank"), result.getMessages());
+        verifyNoInteractions(repository, passwordEncoder);
+    }
+
+    @Test
+    void shouldNotAuthenticateNullUsername() {
+        Result<User> result = service.authenticate(makeLogin(null, "password123"));
+
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertEquals(List.of("Username cannot be blank"), result.getMessages());
+        verifyNoInteractions(repository, passwordEncoder);
+    }
+
+    @Test
+    void shouldNotAuthenticateBlankPassword() {
         Result<User> result = service.authenticate(makeLogin("jdoe", " "));
 
         assertFalse(result.isSuccess());
         assertEquals(ResultType.INVALID, result.getResultType());
         assertEquals(List.of("Password cannot be blank"), result.getMessages());
-        verifyNoInteractions(passwordEncoder);
+        verifyNoInteractions(repository, passwordEncoder);
     }
 
     @Test
