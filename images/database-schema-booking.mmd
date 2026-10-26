@@ -1,0 +1,64 @@
+%% Generated from database-schema.mmd (full schema). Source of truth: Server/DeVito-Styles/sql/production-schema.sql
+erDiagram
+    users ||--o{ appointment : ""
+    barber ||--o{ appointment : ""
+    service ||--o{ appointment : ""
+    appointment ||--o| review : ""
+    users ||--o{ review : ""
+    barber ||--o{ review : ""
+
+    users {
+        int user_id PK
+        varchar first_name
+        varchar last_name
+        varchar email UK
+        varchar username UK
+        varchar password "bcrypt hash"
+        varchar address
+        varchar phone
+        varchar role "CUSTOMER or ADMIN"
+        varchar profile_picture_url
+    }
+
+    barber {
+        int barber_id PK
+        varchar first_name
+        varchar last_name
+        varchar availability_status
+        varchar specialization
+        varchar image_url
+        varchar title
+        text bio
+        int start_year
+        varchar instagram_url
+        int display_order
+        boolean is_active
+    }
+
+    service {
+        int service_id PK
+        varchar name
+        int duration_minutes
+        decimal price
+        text description
+    }
+
+    appointment {
+        int appointment_id PK
+        int user_id FK
+        int barber_id FK "unique with datetime"
+        int service_id FK
+        datetime appointment_datetime
+        varchar status
+        varchar google_event_id
+    }
+
+    review {
+        int review_id PK
+        int user_id FK
+        int appointment_id FK, UK
+        int barber_id FK
+        tinyint rating
+        text review_text
+        timestamp created_at
+    }

@@ -1,0 +1,74 @@
+%% Generated from database-schema.mmd (full schema). Source of truth: Server/DeVito-Styles/sql/production-schema.sql
+erDiagram
+    users ||--o{ carts : ""
+    carts ||--o{ cart_items : ""
+    products ||--o{ cart_items : ""
+    users ||--o{ orders : ""
+    orders ||--o{ order_items : ""
+    products ||--o{ order_items : ""
+    orders ||--o{ payments : ""
+
+    users {
+        int user_id PK
+        varchar username UK
+        string more "..."
+    }
+
+    products {
+        int product_id PK
+        varchar name
+        decimal price
+        int stock_quantity
+        string more "..."
+    }
+
+    carts {
+        int cart_id PK
+        int user_id FK
+        datetime created_at
+        datetime updated_at
+    }
+
+    cart_items {
+        int cart_item_id PK
+        int cart_id FK
+        int product_id FK
+        int quantity
+    }
+
+    orders {
+        int order_id PK
+        varchar order_number UK
+        int user_id FK
+        enum status "Pending to Refunded"
+        decimal subtotal
+        decimal tax_amount
+        decimal shipping_cost
+        decimal discount_amount
+        decimal total_amount
+        datetime created_at
+        datetime updated_at
+    }
+
+    order_items {
+        int order_item_id PK
+        int order_id FK
+        int product_id FK
+        varchar product_name "snapshot"
+        int quantity
+        decimal unit_price "snapshot"
+        decimal line_total
+    }
+
+    payments {
+        int payment_id PK
+        int order_id FK
+        varchar payment_provider
+        varchar payment_intent_id "indexed"
+        varchar stripe_charge_id
+        enum payment_status "Pending Succeeded Failed Refunded"
+        decimal amount
+        char currency
+        datetime paid_at
+        datetime created_at
+    }
