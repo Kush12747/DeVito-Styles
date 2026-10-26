@@ -268,17 +268,26 @@ DeVito-Styles/
 │       │   ├── models/         # Domain models
 │       │   └── dto/            # Request and response objects
 │       └── test/               # Unit and repository tests
-└── images/                     # README screenshots, wireframes, schema
+└── images/                     # Screenshots, wireframes, schema diagrams
 ```
 
+## Database Schema
+
+The MySQL database has 16 tables, grouped below by area. The complete schema is in [`images/database-schema.mmd`](images/database-schema.mmd), a Mermaid ER file that mirrors [`production-schema.sql`](Server/DeVito-Styles/sql/production-schema.sql). Each diagram below is rendered from its own `images/database-schema-*.mmd` file.
+
+**Accounts & Booking**: customers book appointments with a barber for a service and can leave one review per appointment.
+
+![Accounts and booking schema](images/database-schema-booking.png)
+
+**Product Catalog**: each product belongs to a category and has optional specifications, benefits, ingredients and usage steps.
+
+![Product catalog schema](images/database-schema-catalog.png)
+
+**Cart, Orders & Payments**: cart items become an order at checkout. Order items snapshot the product name and price, and payments track the Stripe payment status.
+
+![Cart, orders and payments schema](images/database-schema-orders.png)
+
 ## Design
-
-<details>
-<summary><strong>Database schema</strong></summary>
-
-![Database schema](images/image.png)
-
-</details>
 
 <details>
 <summary><strong>Wireframes</strong></summary>

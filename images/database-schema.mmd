@@ -1,0 +1,185 @@
+%% DeVito Styles database schema
+%% Source of truth: Server/DeVito-Styles/sql/production-schema.sql
+%% Regenerate images/database-schema.png from this file after schema changes.
+erDiagram
+    users ||--o{ appointment : books
+    barber ||--o{ appointment : performs
+    service ||--o{ appointment : "booked as"
+    appointment ||--o| review : "reviewed in"
+    users ||--o{ review : writes
+    barber ||--o{ review : receives
+
+    categories ||--o{ products : groups
+    products ||--o| product_specifications : "described by"
+    products ||--o{ product_benefits : lists
+    products ||--o{ product_ingredients : contains
+    products ||--o{ product_usage_steps : "used via"
+
+    users ||--o{ carts : owns
+    carts ||--o{ cart_items : holds
+    products ||--o{ cart_items : "added as"
+
+    users ||--o{ orders : places
+    orders ||--o{ order_items : includes
+    products ||--o{ order_items : "sold as"
+    orders ||--o{ payments : "paid by"
+
+    users {
+        int user_id PK
+        varchar first_name
+        varchar last_name
+        varchar email UK
+        varchar username UK
+        varchar password "bcrypt hash"
+        varchar address
+        varchar phone
+        varchar role "CUSTOMER or ADMIN"
+        varchar profile_picture_url
+    }
+
+    service {
+        int service_id PK
+        varchar name
+        int duration_minutes
+        decimal price
+        text description
+    }
+
+    barber {
+        int barber_id PK
+        varchar first_name
+        varchar last_name
+        varchar availability_status
+        varchar specialization
+        varchar image_url
+        varchar title
+        text bio
+        int start_year
+        varchar instagram_url
+        int display_order
+        boolean is_active
+    }
+
+    appointment {
+        int appointment_id PK
+        int user_id FK
+        int barber_id FK "unique with datetime"
+        int service_id FK
+        datetime appointment_datetime
+        varchar status
+        varchar google_event_id
+    }
+
+    review {
+        int review_id PK
+        int user_id FK
+        int appointment_id FK, UK
+        int barber_id FK
+        tinyint rating
+        text review_text
+        timestamp created_at
+    }
+
+    categories {
+        int category_id PK
+        varchar name UK
+        varchar description
+    }
+
+    products {
+        int product_id PK
+        int category_id FK
+        varchar name
+        text description
+        decimal price
+        int stock_quantity
+        varchar image_url
+        boolean is_featured
+        boolean is_active
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    product_specifications {
+        int product_id PK, FK
+        varchar size
+        varchar scent
+        varchar hair_type
+        varchar hold_strength
+        varchar finish
+        varchar country_of_origin
+        varchar weight
+        varchar sku UK
+    }
+
+    product_benefits {
+        int benefit_id PK
+        int product_id FK
+        varchar benefit
+        int display_order
+    }
+
+    product_ingredients {
+        int ingredient_id PK
+        int product_id FK
+        varchar ingredient
+        int display_order
+    }
+
+    product_usage_steps {
+        int step_id PK
+        int product_id FK
+        int step_number
+        varchar instruction
+    }
+
+    carts {
+        int cart_id PK
+        int user_id FK
+        datetime created_at
+        datetime updated_at
+    }
+
+    cart_items {
+        int cart_item_id PK
+        int cart_id FK
+        int product_id FK
+        int quantity
+    }
+
+    orders {
+        int order_id PK
+        varchar order_number UK
+        int user_id FK
+        enum status "Pending to Refunded"
+        decimal subtotal
+        decimal tax_amount
+        decimal shipping_cost
+        decimal discount_amount
+        decimal total_amount
+        datetime created_at
+        datetime updated_at
+    }
+
+    order_items {
+        int order_item_id PK
+        int order_id FK
+        int product_id FK
+        varchar product_name "snapshot"
+        int quantity
+        decimal unit_price "snapshot"
+        decimal line_total
+    }
+
+    payments {
+        int payment_id PK
+        int order_id FK
+        varchar payment_provider
+        varchar payment_intent_id "indexed"
+        varchar stripe_charge_id
+        enum payment_status "Pending Succeeded Failed Refunded"
+        decimal amount
+        char currency
+        datetime paid_at
+        datetime created_at
+    }

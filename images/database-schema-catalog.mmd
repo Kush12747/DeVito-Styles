@@ -1,0 +1,60 @@
+%% Generated from database-schema.mmd (full schema). Source of truth: Server/DeVito-Styles/sql/production-schema.sql
+erDiagram
+    categories ||--o{ products : ""
+    products ||--o| product_specifications : ""
+    products ||--o{ product_benefits : ""
+    products ||--o{ product_ingredients : ""
+    products ||--o{ product_usage_steps : ""
+
+    categories {
+        int category_id PK
+        varchar name UK
+        varchar description
+    }
+
+    products {
+        int product_id PK
+        int category_id FK
+        varchar name
+        text description
+        decimal price
+        int stock_quantity
+        varchar image_url
+        boolean is_featured
+        boolean is_active
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    product_specifications {
+        int product_id PK, FK
+        varchar size
+        varchar scent
+        varchar hair_type
+        varchar hold_strength
+        varchar finish
+        varchar country_of_origin
+        varchar weight
+        varchar sku UK
+    }
+
+    product_benefits {
+        int benefit_id PK
+        int product_id FK
+        varchar benefit
+        int display_order
+    }
+
+    product_ingredients {
+        int ingredient_id PK
+        int product_id FK
+        varchar ingredient
+        int display_order
+    }
+
+    product_usage_steps {
+        int step_id PK
+        int product_id FK
+        int step_number
+        varchar instruction
+    }
