@@ -221,16 +221,62 @@ class UserServiceTest {
     // =========================
 
     @Test
-    void shouldUpdate() {
-        User update = makeUser(1, "updated", HASH);
-        when(repository.findById(1)).thenReturn(Optional.of(makeUser(1, "jdoe", HASH)));
+    void shouldUpdateKeepingStoredPasswordWhenNoneSent() {
+        User current = makeUser(1, "jdoe", HASH);
+        current.setRole("CUSTOMER");
+        User update = makeUser(1, "updated", null);
+        when(repository.findById(1)).thenReturn(Optional.of(current));
         when(repository.update(update)).thenReturn(true);
 
         Result<User> result = service.update(update);
 
         assertTrue(result.isSuccess());
         assertEquals("updated", result.getpayload().getUsername());
+        assertEquals(HASH, result.getpayload().getPassword());
         verify(repository).update(update);
+        verifyNoInteractions(passwordEncoder);
+    }
+
+    @Test
+    void shouldHashNewPasswordOnUpdate() {
+        User current = makeUser(1, "jdoe", HASH);
+        User update = makeUser(1, "jdoe", "new-password");
+        when(repository.findById(1)).thenReturn(Optional.of(current));
+        when(passwordEncoder.encode("new-password")).thenReturn("new-hash");
+        when(repository.update(update)).thenReturn(true);
+
+        Result<User> result = service.update(update);
+
+        assertTrue(result.isSuccess());
+        assertEquals("new-hash", result.getpayload().getPassword());
+    }
+
+    @Test
+    void shouldNotLetUpdateChangeRole() {
+        User current = makeUser(1, "jdoe", HASH);
+        current.setRole("CUSTOMER");
+        User update = makeUser(1, "jdoe", null);
+        update.setRole("ADMIN");
+        when(repository.findById(1)).thenReturn(Optional.of(current));
+        when(repository.update(update)).thenReturn(true);
+
+        Result<User> result = service.update(update);
+
+        assertTrue(result.isSuccess());
+        assertEquals("CUSTOMER", result.getpayload().getRole());
+    }
+
+    @Test
+    void shouldNotUpdateWhenRepositoryFails() {
+        User update = makeUser(1, "jdoe", null);
+        when(repository.findById(1)).thenReturn(Optional.of(makeUser(1, "jdoe", HASH)));
+        when(repository.update(update)).thenReturn(false);
+
+        Result<User> result = service.update(update);
+
+        assertFalse(result.isSuccess());
+        assertEquals(ResultType.INVALID, result.getResultType());
+        assertEquals(List.of("Unable to update user"), result.getMessages());
     }
 
     @Test
@@ -255,7 +301,7 @@ class UserServiceTest {
         assertFalse(result.isSuccess());
         assertEquals(ResultType.INVALID, result.getResultType());
         assertEquals(List.of("Invalid user ID"), result.getMessages());
-        verify(repository, never()).update(any());
+        verifyNoInteractions(repository);
     }
 
     // =========================

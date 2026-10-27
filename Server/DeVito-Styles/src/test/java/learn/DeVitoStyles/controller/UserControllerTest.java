@@ -1,6 +1,7 @@
 package learn.DeVitoStyles.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import learn.DeVitoStyles.domain.Result;
 import learn.DeVitoStyles.domain.ResultType;
 import learn.DeVitoStyles.domain.UserService;
@@ -48,6 +49,13 @@ class UserControllerTest {
     private static User user(int id) {
         return new User(id, "John", "Smith", "john@example.com", "jsmith", "secret",
                 "123 Main St", "555-1234", "CUSTOMER");
+    }
+
+    // The password is write-only in JSON, so serializing a User drops it; add it back for requests
+    private String requestJsonWithPassword(User user, String password) {
+        ObjectNode body = mapper.valueToTree(user);
+        body.put("password", password);
+        return body.toString();
     }
 
     private static <T> Result<T> success(T payload) {
@@ -162,11 +170,12 @@ class UserControllerTest {
 
         mvc.perform(post("/api/user/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(user(0))))
+                        .content(requestJsonWithPassword(user(0), "secret")))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.userId").value(9))
                 .andExpect(jsonPath("$.username").value("jsmith"))
-                .andExpect(jsonPath("$.email").value("john@example.com"));
+                .andExpect(jsonPath("$.email").value("john@example.com"))
+                .andExpect(jsonPath("$.password").doesNotExist());
 
         ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
         verify(service).create(captor.capture());
@@ -208,7 +217,9 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.userId").value(4))
                 .andExpect(jsonPath("$.firstName").value("John"))
                 .andExpect(jsonPath("$.lastName").value("Smith"))
-                .andExpect(jsonPath("$.role").value("CUSTOMER"));
+                .andExpect(jsonPath("$.role").value("CUSTOMER"))
+                // user(4) has a password set; it must never be serialized
+                .andExpect(jsonPath("$.password").doesNotExist());
 
         verify(service).findById(4);
     }

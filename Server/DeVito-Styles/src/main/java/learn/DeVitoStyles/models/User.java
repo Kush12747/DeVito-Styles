@@ -1,5 +1,7 @@
 package learn.DeVitoStyles.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public class User {
@@ -8,6 +10,9 @@ public class User {
     private String lastName;
     private String email;
     private String username;
+    // Accepted in requests (register, login) but never written to responses,
+    // so password hashes don't leak to the browser.
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String address;
     private String phone;

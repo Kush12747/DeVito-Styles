@@ -1,0 +1,7 @@
+# Applies to backend.Dockerfile (BuildKit reads <Dockerfile>.dockerignore)
+target/
+.idea/
+*.iml
+.mvn/
+# google-credentials.json is intentionally NOT ignored: the app loads it from
+# the classpath at startup, so it must be baked into the image.

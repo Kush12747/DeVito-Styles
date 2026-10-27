@@ -135,23 +135,37 @@ public class UserService {
     public Result<User> update(User user) {
         Result<User> result = new Result<>();
 
-        Optional<User> existing = repository.findById(user.getUserId());
-
         if (user.getUserId() <= 0) {
             result.addErrorMessage("Invalid user ID", ResultType.INVALID);
             return result;
         }
+
+        Optional<User> existing = repository.findById(user.getUserId());
 
         if (existing.isEmpty()) {
             result.addErrorMessage("User not found", ResultType.NOT_FOUND);
             return result;
         }
 
-        if (!result.isSuccess()) {
+        User current = existing.get();
+
+        // Role can't be changed through a profile update; otherwise any user
+        // could send "role": "ADMIN" and promote themselves.
+        user.setRole(current.getRole());
+
+        // Responses never include the password, so updates usually arrive without
+        // one: keep the stored hash. A new password is hashed, never stored as-is.
+        if (user.getPassword() == null || user.getPassword().isBlank()) {
+            user.setPassword(current.getPassword());
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        if (!repository.update(user)) {
+            result.addErrorMessage("Unable to update user", ResultType.INVALID);
             return result;
         }
 
-        repository.update(user);
         result.setpayload(user);
 
         return result;

@@ -1,0 +1,4 @@
+# Scripts run in bash (and inside Linux containers); keep LF line endings
+*.sh text eol=lf
+*.Dockerfile text eol=lf
+*.yml text eol=lf

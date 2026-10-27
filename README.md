@@ -73,7 +73,7 @@ The frontend is a React single-page app with a dark, gold-accented design. The b
 | **Backend** | Java 21, Spring Boot 3.2 (Web, Security, JDBC, Mail), JWT |
 | **Database** | MySQL |
 | **Payments** | Stripe Checkout and webhooks |
-| **Integrations** | Cloudinary (images), Google Calendar API, SMTP email, Ollama (`llama3`) for the chat assistant |
+| **Integrations** | Cloudinary (images), Google Calendar API, SMTP email, Claude API for the chat assistant |
 | **Testing** | JUnit 5, Mockito, Spring MockMvc |
 
 ## Getting Started
@@ -86,7 +86,7 @@ The frontend is a React single-page app with a dark, gold-accented design. The b
 - A Stripe account (test mode is fine) and the [Stripe CLI](https://docs.stripe.com/stripe-cli) for local webhooks
 - A Cloudinary account for image uploads
 - An SMTP account for email (for example, a Gmail app password)
-- *Optional:* [Ollama](https://ollama.com) running locally with the `llama3` model, for the chat assistant
+- *Optional:* a [Claude API key](https://console.anthropic.com/) for the chat assistant (without one, it replies that it's unavailable)
 - *Optional:* a Google service account credentials file, for calendar events
 
 ### 1. Clone the repository
@@ -147,6 +147,9 @@ Use the signing secret it prints as `STRIPE_WEBHOOK_SECRET`. You can test checko
 | `CLOUD_NAME` / `API_KEY` / `API_SECRET` | Cloudinary credentials |
 | `STRIPE_SECRET_KEY` | Stripe secret key (`sk_test_...`) |
 | `STRIPE_WEBHOOK_SECRET` | Stripe webhook signing secret (`whsec_...`) |
+| `JWT_SECRET` | **Required.** Random string of at least 32 characters used to sign login tokens. Generate one with `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` |
+| `ANTHROPIC_API_KEY` | *Optional.* Claude API key for the chat assistant |
+| `CLAUDE_MODEL` | *Optional.* Chat assistant model, default `claude-opus-5-5` (`claude-haiku-5-5` is cheapest) |
 
 ### Running the tests
 
@@ -156,6 +159,10 @@ mvn test -Dtest='learn.DeVitoStyles.domain.**.*Test,learn.DeVitoStyles.controlle
 ```
 
 These unit tests need no database or credentials. The repository tests under `data/` run against a live MySQL test database built from `sql/test-schema.sql`.
+
+## Deployment
+
+Scripts for deploying the full stack to AWS live in [`deploy/`](deploy/). They use CloudFront, S3, ECS Fargate, RDS MySQL and Secrets Manager. See the [deployment guide](deploy/README.md) for setup, costs and teardown.
 
 ## API Reference
 
@@ -268,6 +275,7 @@ DeVito-Styles/
 │       │   ├── models/         # Domain models
 │       │   └── dto/            # Request and response objects
 │       └── test/               # Unit and repository tests
+├── deploy/                     # AWS deployment scripts and guide
 └── images/                     # Screenshots, wireframes, schema diagrams
 ```
 

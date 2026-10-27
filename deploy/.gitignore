@@ -1,0 +1,4 @@
+# Real configuration and generated deployment state
+config.env
+.state.env
+.build/
