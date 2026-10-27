@@ -36,7 +36,7 @@ The frontend is a React single-page app with a dark, gold-accented design. The b
 - Ask questions through an AI chat assistant
 
 **For admins**
-- Dashboard with totals for users, appointments, barbers and services
+- Shop overview dashboard with daily, weekly and monthly views: revenue (services vs products), bookings, clients served, product orders and ratings compared with the previous period, plus trend charts, a busy-times heatmap, top services and products, barber performance, upcoming appointments and a live activity log
 - View all users, appointments, barbers and services
 - Update appointment statuses from the dashboard
 - Create, update and delete barbers and services through the REST API
@@ -106,6 +106,14 @@ mysql -u root -p < Server/DeVito-Styles/sql/initial-data.sql
 ```
 
 > **Warning:** `production-schema.sql` drops and recreates the `devitostyles` database. Don't run it against data you want to keep.
+
+**Optional: demo data for the admin dashboard.** A fresh database has almost no history, so the dashboard charts would be empty. This script adds about a year of demo customers, appointments, orders and reviews, dated relative to the day you run it:
+
+```bash
+mysql -u root -p < Server/DeVito-Styles/sql/dashboard-demo-data.sql
+```
+
+Every demo row belongs to a customer with an `@demo.devitostyles.com` email, so it never touches real data and can be removed with `sql/remove-dashboard-demo-data.sql`. Demo customers can't log in. To change the data, edit and run `sql/generate-dashboard-demo-data.py`.
 
 ### 3. Configure and run the backend
 
@@ -252,6 +260,17 @@ All endpoints are under `/api`. Except for login, register and the Stripe webhoo
 | `GET` | `/api/review/{id}` | Get a review by ID |
 | `POST` | `/api/review` | Create a review |
 | `POST` | `/api/chat` | Send a message to the AI assistant |
+
+</details>
+
+<details>
+<summary><strong>Admin</strong></summary>
+
+Admin endpoints check the `ADMIN` role from the signed JWT and return `403` for everyone else.
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| `GET` | `/api/admin/dashboard?range=day\|week\|month` | Dashboard stats: KPIs vs the previous period, trend, breakdowns, upcoming appointments and recent activity |
 
 </details>
 

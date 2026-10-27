@@ -28,6 +28,9 @@ public class SecurityConfig {
                         "/api/user/register",
                         "/api/stripe/webhook") // Stripe calls this without a JWT; it is verified by signature instead
                         .permitAll()
+                        // Role comes from the signed JWT (see JwtFilter), so it can't be faked client-side
+                        .requestMatchers("/api/admin/**")
+                        .hasRole("ADMIN")
                         .anyRequest()
                         .authenticated()
                 )

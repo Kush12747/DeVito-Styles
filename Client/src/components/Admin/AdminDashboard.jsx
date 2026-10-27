@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/admin.css";
+import DashboardOverview from "./dashboard/DashboardOverview";
 const API_URL = import.meta.env.VITE_API_URL;
+
+// Every /api call needs the login token
+function authHeaders() {
+    const token = localStorage.getItem("token");
+    return token ? { Authorization: `Bearer ${token}` } : {};
+}
     
 function AdminDashboard() {
     
 
     const navigate = useNavigate();
     const [appointments, setAppointments] = useState([]);
-    const [activeTab, setActiveTab] = useState("appointments");
+    const [activeTab, setActiveTab] = useState("overview");
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -18,28 +25,40 @@ function AdminDashboard() {
             return;
         }
 
-        loadAppointments();
     }, []);
+
+    // Only fetch the full appointment list when that tab is opened
+    useEffect(() => {
+        if (activeTab === "appointments") {
+            loadAppointments();
+        }
+    }, [activeTab]);
 
     async function loadAppointments() {
         try {
-            const res = await fetch(`${API_URL}/api/appointment`);
+            const res = await fetch(`${API_URL}/api/appointment`, { headers: authHeaders() });
 
             if (!res.ok) return;
 
             const data = await res.json();
 
+            // Many appointments share a user/service/barber: fetch each one once
+            const cache = new Map();
+            const lookup = (path) => {
+                if (!cache.has(path)) {
+                    cache.set(path, fetch(`${API_URL}${path}`, { headers: authHeaders() }).then(r => r.json()));
+                }
+                return cache.get(path);
+            };
+
             const enriched = await Promise.all(
                 data.map(async (app) => {
 
-                const userRes = await fetch(`${API_URL}/api/user/${app.userId}`);
-                const user = await userRes.json();
-
-                const serviceRes = await fetch(`${API_URL}/api/service/${app.serviceId}`);
-                const service = await serviceRes.json();
-
-                const barberRes = await fetch(`${API_URL}/api/barber/${app.barberId}`);
-                const barber = await barberRes.json();
+                const [user, service, barber] = await Promise.all([
+                    lookup(`/api/user/${app.userId}`),
+                    lookup(`/api/service/${app.serviceId}`),
+                    lookup(`/api/barber/${app.barberId}`)
+                ]);
 
                 return {
                     ...app,
@@ -62,7 +81,8 @@ function AdminDashboard() {
             const response = await fetch(`${API_URL}/api/appointment/${appointment.appointmentId}`, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    ...authHeaders()
                 },
                 body: JSON.stringify({ 
                     ...appointment,
@@ -81,6 +101,7 @@ function AdminDashboard() {
 
     function logout() {
         localStorage.removeItem("loggedInUser");
+        localStorage.removeItem("token");
         navigate("/login");
     }
 
@@ -88,8 +109,20 @@ function AdminDashboard() {
         <div className="admin-container">
 
             {/* SIDEBAR */}
-            <div className="admin-sidebar">
-                <h2 className="admin-logo">DeVito Admin</h2>
+            <nav className="admin-sidebar" aria-label="Admin">
+                <h2 className="admin-logo">
+                    DEVITO//OPS
+                    <span>admin console</span>
+                </h2>
+
+                <p className="admin-nav-label">Monitor</p>
+
+                <button
+                    className={activeTab === "overview" ? "active" : ""}
+                    onClick={() => setActiveTab("overview")}
+                >
+                    Overview
+                </button>
 
                 <button
                     className={activeTab === "appointments" ? "active" : ""}
@@ -98,12 +131,7 @@ function AdminDashboard() {
                     Appointments
                 </button>
 
-                <button
-                    className={activeTab === "stats" ? "active" : ""}
-                    onClick={() => setActiveTab("stats")}
-                >
-                    Dashboard
-                </button>
+                <p className="admin-nav-label">Manage</p>
 
                 <button onClick={() => navigate("/admin/users")}>
                     Users
@@ -112,38 +140,13 @@ function AdminDashboard() {
                 <button onClick={logout} className="logout-btn">
                     Logout
                 </button>
-            </div>
+            </nav>
 
             {/* MAIN CONTENT */}
             <div className="admin-main">
 
-                {/* DASHBOARD VIEW */}
-                {activeTab === "stats" && (
-                    <div>
-                        <h1>Dashboard</h1>
-
-                        <div className="admin-cards">
-                            <div className="admin-card">
-                                <span className="admin-card-label">Total</span>
-                                <span className="admin-card-value">{appointments.length}</span>
-                            </div>
-
-                            <div className="admin-card">
-                                <span className="admin-card-label">Pending</span>
-                                <span className="admin-card-value">{
-                                    appointments.filter(a => a.status === "PENDING").length
-                                }</span>
-                            </div>
-
-                            <div className="admin-card">
-                                <span className="admin-card-label">Completed</span>
-                                <span className="admin-card-value">{
-                                    appointments.filter(a => a.status === "COMPLETED").length
-                                }</span>
-                            </div>
-                        </div>
-                    </div>
-                )}
+                {/* OVERVIEW (metrics dashboard) */}
+                {activeTab === "overview" && <DashboardOverview />}
 
                 {/* APPOINTMENTS VIEW */}
                 {activeTab === "appointments" && (
@@ -165,7 +168,7 @@ function AdminDashboard() {
 
                                 <tbody>
                                     {appointments.map(app => (
-                                        <tr key={app.id}>
+                                        <tr key={app.appointmentId}>
                                             <td>{app.userName}</td>
                                             <td>{app.serviceName}</td>
                                             <td>{app.barberName}</td>

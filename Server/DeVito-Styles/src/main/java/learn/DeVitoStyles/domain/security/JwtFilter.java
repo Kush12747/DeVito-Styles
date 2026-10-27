@@ -1,10 +1,12 @@
 package learn.DeVitoStyles.domain.security;
 
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -12,6 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
@@ -43,12 +46,18 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        String username = jwtUtil.extractUsername(token);
+        Claims claims = jwtUtil.getClaims(token);
+
+        // The role claim (CUSTOMER / ADMIN) becomes ROLE_CUSTOMER / ROLE_ADMIN
+        Object role = claims.get("role");
+        List<SimpleGrantedAuthority> authorities = role == null
+                ? Collections.emptyList()
+                : List.of(new SimpleGrantedAuthority("ROLE_" + role.toString().toUpperCase()));
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                username,
+                claims.getSubject(),
                 null,
-                Collections.emptyList()
+                authorities
         );
 
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

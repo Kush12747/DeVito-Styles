@@ -1,26 +1,52 @@
 /* ==================================================
    ADMIN (dashboard + user management)
-   Scoped to .admin-container / .admin-users-page
+   Dark ops-console theme, scoped to .admin-container /
+   .admin-users-page so the public site keeps its look.
 ================================================== */
 
-.admin-container {
-    display: flex;
-    min-height: 100vh;
-    background: var(--ink);
-    color: var(--text);
-}
-
+.admin-container,
 .admin-users-page {
+    /* surfaces */
+    --adm-bg: #070a09;
+    --adm-surface: #0f1412;
+    --adm-terminal: #0a0e0c;
+    --adm-line: #1c2622;
+    --adm-line-strong: #2a3832;
+    --adm-grid: #1a2420;
+    --adm-baseline: #34443d;
+    --adm-track: #17201c;
+
+    /* text */
+    --adm-text: #e3ece7;
+    --adm-text-2: #a8b9b0;
+    --adm-muted: #74867c;
+
+    /* phosphor accent: UI chrome only, never a data series */
+    --adm-accent: #4ade80;
+    --adm-accent-wash: rgba(74, 222, 128, 0.08);
+
+    /* status (always paired with an icon or label) */
+    --adm-good: #0ca30c;
+    --adm-good-text: #3ccf6e;
+    --adm-critical: #d03b3b;
+    --adm-critical-text: #f07c7c;
+    --adm-neutral: #5d7286;
+
+    /* sequential scale for the heatmap (one hue, dark -> bright) */
+    --adm-seq-low: #141c19;
+    --adm-seq-high: #3ee0a0;
+
+    --adm-font: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
     display: flex;
     min-height: 100vh;
-    color: var(--text);
-    background-color: var(--ink);
+    background-color: var(--adm-bg);
     background-image:
-        linear-gradient(rgba(11, 10, 9, 0.88), rgba(11, 10, 9, 0.94)),
-        url("../images/admin.webp");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+        linear-gradient(rgba(74, 222, 128, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 222, 128, 0.025) 1px, transparent 1px);
+    background-size: 32px 32px;
+    color: var(--adm-text);
+    font-family: var(--adm-font);
 }
 
 
@@ -29,68 +55,113 @@
 ================================================== */
 
 .admin-container .admin-sidebar {
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
-    width: 240px;
+    gap: 0.2rem;
+    width: 230px;
+    height: 100vh;
     flex-shrink: 0;
-    padding: 3rem 1.75rem;
-    background: var(--charcoal);
-    border-right: 1px solid var(--line);
+    padding: 1.75rem 1rem;
+    background: rgba(10, 14, 12, 0.92);
+    border-right: 1px solid var(--adm-line);
 }
 
 .admin-container .admin-logo {
-    margin: 0 0 2.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--line);
-    font-family: var(--font-display);
-    font-size: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin: 0 0 1.75rem;
+    padding: 0 0.75rem 1.25rem;
+    border-bottom: 1px dashed var(--adm-line-strong);
+    color: var(--adm-text);
+    font-family: var(--adm-font);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.admin-container .admin-logo span {
+    color: var(--adm-accent);
+    font-size: 0.68rem;
     font-weight: 500;
-    letter-spacing: 0.04em;
-    color: var(--cream);
+    letter-spacing: 0.14em;
+}
+
+.admin-container .admin-nav-label {
+    margin: 0.75rem 0 0.4rem;
+    padding: 0 0.75rem;
+    color: var(--adm-muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
 }
 
 .admin-container .admin-sidebar button {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
     width: 100%;
+    min-height: 40px;
     margin: 0;
-    padding: 0.85rem 0 0.85rem 1rem;
-    border: none;
-    border-left: 1px solid transparent;
-    border-radius: 0;
+    padding: 0 0.75rem;
+    border: 1px solid transparent;
+    border-radius: 6px;
     background: transparent;
-    color: var(--muted);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.22em;
+    color: var(--adm-text-2);
+    font-family: var(--adm-font);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
     text-align: left;
-    text-transform: uppercase;
+    text-transform: none;
     cursor: pointer;
-    transition: color 0.4s var(--ease), border-color 0.4s var(--ease), background 0.4s var(--ease);
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.admin-container .admin-sidebar button::before {
+    content: ">";
+    color: transparent;
+    transition: color 0.2s;
 }
 
 .admin-container .admin-sidebar button:hover {
-    color: var(--cream);
-    background: rgba(var(--gold-rgb), 0.04);
+    color: var(--adm-text);
+    background: rgba(255, 255, 255, 0.03);
 }
 
 .admin-container .admin-sidebar button.active {
-    color: var(--gold);
-    border-left-color: var(--gold);
+    color: var(--adm-accent);
+    background: var(--adm-accent-wash);
+    border-color: rgba(74, 222, 128, 0.25);
+}
+
+.admin-container .admin-sidebar button.active::before {
+    color: var(--adm-accent);
+}
+
+.admin-container .admin-sidebar button:focus-visible {
+    outline: 2px solid var(--adm-accent);
+    outline-offset: 2px;
 }
 
 .admin-container .admin-sidebar .logout-btn {
+    justify-content: center;
     margin-top: auto;
-    padding: 0.85rem 1rem;
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius);
-    color: var(--gold);
-    text-align: center;
+    border-color: var(--adm-line-strong);
+    color: var(--adm-text-2);
+}
+
+.admin-container .admin-sidebar .logout-btn::before {
+    content: none;
 }
 
 .admin-container .admin-sidebar .logout-btn:hover {
-    border-color: var(--gold);
-    background: rgba(var(--gold-rgb), 0.08);
-    color: var(--gold-light);
+    border-color: var(--adm-critical);
+    background: rgba(208, 59, 59, 0.08);
+    color: var(--adm-critical-text);
 }
 
 
@@ -102,118 +173,69 @@
 .admin-users-page .admin-main {
     flex: 1;
     min-width: 0;
-    padding: 3.5rem 3rem 5rem;
-    animation: adminFadeIn 0.8s var(--ease) both;
+    padding: 2rem 2.25rem 4rem;
+    animation: adminFadeIn 0.5s ease both;
 }
 
-.admin-container .admin-main h1,
+.admin-container .admin-main > div > h1,
 .admin-users-page .admin-main h1 {
-    margin: 0 0 2.5rem;
-    font-family: var(--font-display);
-    font-size: clamp(2.2rem, 4vw, 3rem);
-    font-weight: 500;
-    color: var(--cream);
+    margin: 0 0 1.75rem;
+    color: var(--adm-text);
+    font-family: var(--adm-font);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
 }
 
-.admin-container .admin-main h1::after,
-.admin-users-page .admin-main h1::after {
-    content: "";
-    display: block;
-    width: 56px;
-    height: 1px;
-    margin-top: 1.25rem;
-    background: var(--gold);
+.admin-container .admin-main > div > h1::before,
+.admin-users-page .admin-main h1::before {
+    content: "$ ";
+    color: var(--adm-accent);
 }
 
 .admin-users-page .admin-main > p {
-    color: var(--muted);
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
+    color: var(--adm-muted);
+    font-size: 0.8rem;
 }
 
 
 /* ==================================================
-   STAT CARDS
-================================================== */
-
-.admin-container .admin-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-}
-
-.admin-container .admin-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-    padding: 2rem;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    transition: border-color 0.4s var(--ease);
-}
-
-.admin-container .admin-card:hover {
-    border-color: var(--line-strong);
-}
-
-.admin-container .admin-card-label {
-    color: var(--gold);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-}
-
-.admin-container .admin-card-value {
-    color: var(--cream);
-    font-family: var(--font-display);
-    font-size: 3rem;
-    font-weight: 500;
-    line-height: 1;
-}
-
-
-/* ==================================================
-   TABLE
+   TABLE (appointments + users)
 ================================================== */
 
 .admin-container .table-card,
 .admin-users-page .table-card {
     overflow-x: auto;
-    padding: 0.5rem 2rem;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
+    padding: 0.25rem 1.25rem;
+    background: var(--adm-surface);
+    border: 1px solid var(--adm-line);
+    border-radius: 8px;
 }
 
 .admin-container .admin-table,
 .admin-users-page .admin-table {
     width: 100%;
     border-collapse: collapse;
-    color: var(--text);
-    font-size: 0.9rem;
-    font-weight: 400;
+    color: var(--adm-text);
+    font-size: 0.8rem;
 }
 
 .admin-container .admin-table th,
 .admin-container .admin-table td,
 .admin-users-page .admin-table th,
 .admin-users-page .admin-table td {
-    padding: 1.15rem 1rem;
-    border-bottom: 1px solid var(--line);
+    padding: 0.85rem 0.75rem;
+    border-bottom: 1px solid var(--adm-line);
     text-align: left;
     white-space: nowrap;
 }
 
 .admin-container .admin-table th,
 .admin-users-page .admin-table th {
-    padding-top: 1.4rem;
-    color: var(--muted);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.26em;
+    padding-top: 1rem;
+    color: var(--adm-muted);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
 }
 
@@ -222,14 +244,9 @@
     border-bottom: none;
 }
 
-.admin-container .admin-table tbody tr,
-.admin-users-page .admin-table tbody tr {
-    transition: background 0.4s var(--ease);
-}
-
 .admin-container .admin-table tbody tr:hover,
 .admin-users-page .admin-table tbody tr:hover {
-    background: rgba(var(--gold-rgb), 0.04);
+    background: var(--adm-accent-wash);
 }
 
 
@@ -239,38 +256,37 @@
 
 .admin-table .status {
     display: inline-block;
-    padding: 0.3rem 0.65rem;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    background: transparent;
-    color: var(--text);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--adm-line-strong);
+    border-radius: 4px;
+    color: var(--adm-text-2);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
 }
 
 .admin-table .status.pending,
 .admin-table .status.booked {
-    color: var(--gold-light);
-    border-color: var(--line-strong);
+    color: #9db4c8;
+    border-color: rgba(93, 114, 134, 0.6);
 }
 
 .admin-table .status.confirmed {
-    color: #a9bccf;
-    border-color: rgba(169, 188, 207, 0.4);
+    color: #9db4c8;
+    border-color: rgba(93, 114, 134, 0.6);
 }
 
 .admin-table .status.completed,
 .admin-table .status.active {
-    color: #9fbf9a;
-    border-color: rgba(159, 191, 154, 0.4);
+    color: var(--adm-good-text);
+    border-color: rgba(12, 163, 12, 0.5);
 }
 
 .admin-table .status.cancelled,
 .admin-table .status.banned {
-    color: #d29a8b;
-    border-color: rgba(210, 154, 139, 0.4);
+    color: var(--adm-critical-text);
+    border-color: rgba(208, 59, 59, 0.5);
 }
 
 
@@ -279,53 +295,45 @@
 ================================================== */
 
 .admin-table button {
-    margin-right: 0.5rem;
-    padding: 0.5rem 0.85rem;
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius);
+    margin-right: 0.4rem;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid var(--adm-line-strong);
+    border-radius: 4px;
     background: transparent;
-    color: var(--cream);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    color: var(--adm-text);
+    font-family: var(--adm-font);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
     cursor: pointer;
-    transition: background 0.4s var(--ease), border-color 0.4s var(--ease), color 0.4s var(--ease);
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
 
 .admin-table button:last-child {
     margin-right: 0;
 }
 
-.admin-table button.complete {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: var(--ink);
-}
-
-.admin-table button.complete:hover {
-    background: var(--gold-light);
-    border-color: var(--gold-light);
-}
-
+.admin-table button.complete,
 .admin-table button.confirm {
-    color: var(--gold);
-    border-color: var(--gold);
+    color: var(--adm-accent);
+    border-color: rgba(74, 222, 128, 0.45);
 }
 
+.admin-table button.complete:hover,
 .admin-table button.confirm:hover {
-    background: rgba(var(--gold-rgb), 0.08);
-    color: var(--gold-light);
+    background: var(--adm-accent-wash);
+    border-color: var(--adm-accent);
 }
 
 .admin-table button.cancel {
-    color: #d29a8b;
-    border-color: rgba(210, 154, 139, 0.5);
+    color: var(--adm-critical-text);
+    border-color: rgba(208, 59, 59, 0.5);
 }
 
 .admin-table button.cancel:hover {
-    background: rgba(210, 154, 139, 0.08);
-    border-color: #d29a8b;
+    background: rgba(208, 59, 59, 0.08);
+    border-color: var(--adm-critical);
 }
 
 
@@ -349,31 +357,29 @@
     }
 
     .admin-container .admin-sidebar {
+        position: static;
         flex-direction: row;
         flex-wrap: wrap;
         align-items: center;
         width: auto;
-        padding: 1.5rem 1.25rem;
+        height: auto;
+        padding: 1rem;
         border-right: none;
-        border-bottom: 1px solid var(--line);
+        border-bottom: 1px solid var(--adm-line);
     }
 
     .admin-container .admin-logo {
         width: 100%;
-        margin-bottom: 0.75rem;
-        padding-bottom: 1rem;
-        font-size: 1.4rem;
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .admin-container .admin-nav-label {
+        display: none;
     }
 
     .admin-container .admin-sidebar button {
         width: auto;
-        padding: 0.65rem 0.85rem;
-        border-left: none;
-        border-bottom: 1px solid transparent;
-    }
-
-    .admin-container .admin-sidebar button.active {
-        border-bottom-color: var(--gold);
     }
 
     .admin-container .admin-sidebar .logout-btn {
@@ -383,11 +389,11 @@
 
     .admin-container .admin-main,
     .admin-users-page .admin-main {
-        padding: 2.5rem 1.25rem 4rem;
+        padding: 1.5rem 1rem 3rem;
     }
 
     .admin-container .table-card,
     .admin-users-page .table-card {
-        padding: 0.25rem 1rem;
+        padding: 0.25rem 0.75rem;
     }
 }
